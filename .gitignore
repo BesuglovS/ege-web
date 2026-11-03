@@ -1,0 +1,22 @@
+# Локальная конфигурация деплоя
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Служебные файлы
+version.json
+*.log
+*.tar.gz
+
+# IDE / OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+Desktop.ini
+*.swp
+*.swo
+*~

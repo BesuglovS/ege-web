@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задание 13 ЕГЭ по информатике — Ход исполнения алгоритма</title>
+<meta name="description" content="Проследить выполнение алгоритма исполнителя и посчитать количество программ, ведущих к нужному результату. Теория, способы решения и типичные ошибки. ЕГЭ-2027, информатика.">
+<meta name="theme-color" content="#F0F1EB">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="На главную">
+    <span class="brand-mark" aria-hidden="true">И</span>
+    <span class="brand-text">ЕГЭ · Информатика<small>подготовка по заданиям</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a href="../index.html">Главная</a>
+    <a href="../tasks/index.html" class="is-active" aria-current="page">Задания</a>
+    <a href="../documents.html">Документы</a>
+  </nav>
+  <div class="topbar-meta"><span>Задание 13 из 27</span><span>Алгоритмы</span></div>
+</header>
+<main id="main">
+
+<nav class="breadcrumb" aria-label="Хлебные крошки"><a href="../index.html">Главная</a><span class="crumb-sep">/</span><a href="index.html">Задания</a><span class="crumb-sep">/</span><span aria-current="page">Задание 13</span></nav>
+
+<section class="task-hero">
+  <div class="task-number" aria-hidden="true">13</div>
+  <div class="task-hero-copy">
+    <p class="eyebrow">Алгоритмы и программирование · 1 балл</p>
+    <h1>Ход исполнения алгоритма</h1>
+    <p class="task-subtitle">Трассировка и подсчёт программ</p>
+    <p class="lead">Проследить выполнение алгоритма исполнителя и посчитать количество программ, ведущих к нужному результату.</p>
+    <div class="task-badges">
+      <span class="badge badge-section badge-section--algo">Алгоритмы</span>
+      <span class="badge badge-answer">целое число</span>
+      <span class="badge badge-project">новая тема 2027</span>
+    </div>
+  </div>
+</section>
+
+
+<nav class="task-toc" aria-label="На странице задания">
+  <span class="task-toc-label">На странице</span>
+  
+  <a href="#theory">Теория</a>
+  <a href="#methods">Способы решения</a>
+  <a href="#mistakes">Ошибки</a>
+  <a href="#practice">Практика</a>
+</nav>
+
+<div class="task-layout">
+  <div class="task-main">
+    
+<div class="callout callout--change">
+  <span class="callout-label">2027</span>
+  <p>В 2027 тема задания изменена: теперь исполнитель, траектория и подсчёт программ. В 2026 задание проверяло маску подсети.</p>
+</div>
+    
+    <section class="task-block">
+      <h2>Что проверяет</h2>
+      <p class="task-checked">Определение возможных результатов работы простейших алгоритмов управления исполнителями и вычислительных алгоритмов.</p>
+      <p class="task-source">Основание: проект спецификации и кодификатора КИМ 2027. <a href="../documents.html#kim2027">Открыть документы <span aria-hidden="true">↗</span></a></p>
+    </section>
+    
+    
+<section class="task-block task-block--theory" id="theory">
+  <div class="block-head">
+    <p class="eyebrow">Теория</p>
+    <h2>Что нужно знать</h2>
+    <p class="block-lead">Задание 13 проверяет работу с исполнителем, который преобразует число на экране. В демоверсии 2027 нужно посчитать, сколько существует программ, переводящих одно число в другое, с ограничениями на траекторию. Это 1 первичный балл, раздел «Алгоритмы и программирование».</p>
+  </div>
+  <div class="theory-checklist">
+    <p class="mini-label">Минимум для задания 13</p>
+    <ul class="check-list"><li>чем программа отличается от траектории</li><li>команды исполнителя и условия их применимости</li><li>рекурсивный перебор с запоминанием</li><li>динамика по числу</li><li>обязательные и запрещённые числа</li><li>ограничения на команды: не подряд, не более k раз</li><li>команды над цифрами числа</li><li>проверка ответа на малом примере</li></ul>
+  </div>
+  <div class="theory-grid">
+<article class="theory-card">
+  <h3>Программа и траектория</h3>
+  <p>Программа — это последовательность команд исполнителя. Траектория — последовательность чисел, которые получаются после каждой команды. В задании чаще всего нужно количество программ, а не количество различных траекторий.</p>
+  <ul class="theory-list"><li>Стартовое число в траекторию не включают: для программы ABA из 13 траектория — 14, 41, 42.</li><li>Разные программы могут приводить к одним и тем же числам, но считаются отдельно.</li><li>Если спрашивают «сколько различных чисел», ответ — мощность множества результатов.</li><li>Читайте, входит ли конечное число в траекторию: формулировки различаются.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Команды и условия применимости</h3>
+  <p>Сначала выпишите все команды и проверьте, когда каждая доступна. Если команда запрещена условием, соответствующая ветка не создаётся.</p>
+  <ul class="theory-list"><li>«Поменяй местами» — только если цифра десятков меньше цифры единиц.</li><li>«Разделить на 2» — только для чётного, иногда только положительного числа.</li><li>«Возвести в квадрат» и «умножить на 3» могут перескочить цель.</li><li>«Прибавить сумму цифр» и «прибавить максимальную цифру» зависят от записи числа.</li><li>Для отрицательных чисел отдельно проверяйте целую часть и модуль.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Рекурсивная формула</h3>
+  <p>Пусть f(x) — число программ из текущего числа x в целевое. Тогда f(x) равно сумме f(next) по всем допустимым командам. Граничные случаи отсекают лишние ветки.</p>
+  <ul class="theory-list"><li>f(target) = 1: пустая программа уже приводит к цели.</li><li>Если x &gt; target при командах, которые только увеличивают, f(x) = 0.</li><li>Если x — запрещённое число, f(x) = 0.</li><li>Если команда недоступна, её слагаемое не добавляется.</li><li>Мемоизация (@lru_cache) убирает повторные вычисления.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Направление и динамика</h3>
+  <p>Рекурсию можно запускать от старта к цели или от цели к старту. Для монотонных команд удобно считать f(x) с конца: f(target) = 1, затем двигаться к старту.</p>
+  <ul class="theory-list"><li>Снизу вверх: массив dp от target до start, если команды только увеличивают.</li><li>Сверху вниз: рекурсия с memo, если состояний немного.</li><li>При командах уменьшения меняйте направление и условия границ.</li><li>Если возможны циклы, постройте граф состояний и топологический порядок.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Обязательные числа</h3>
+  <p>Если траектория обязана содержать число X, разбейте путь на два независимых участка: start → X и X → target. Количество программ перемножается.</p>
+  <ul class="theory-list"><li>Для нескольких чисел: f(start, x1) · f(x1, x2) · … · f(xk, target).</li><li>Числа должны идти в том порядке, в котором их можно пройти.</li><li>Если порядок не задан, рассмотрите все допустимые порядки и сложите варианты.</li><li>Запрещённые числа исключаются на каждом участке.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Запреты и «не оба»</h3>
+  <p>Запрещённое число просто обнуляет ветку. Формулировка «не содержит A и B одновременно» требует вычитания: из всех программ вычитаем те, где встретились оба.</p>
+  <ul class="theory-list"><li>«Не содержит X»: if x == X: return 0.</li><li>«Не содержит A и B одновременно»: всего − (через A, затем B) − (через B, затем A), если оба порядка возможны.</li><li>«Содержит хотя бы одно из A, B»: сложите пути через A и через B и вычтите пересечение.</li><li>Проверьте, может ли исполнитель проходить числа в обратном порядке.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Ограничения на команды</h3>
+  <p>Если есть ограничение на количество или порядок команд, добавьте в состояние дополнительный параметр: последняя команда, сколько раз использована команда, сколько чисел было чётным и т. п.</p>
+  <ul class="theory-list"><li>«Не более k раз»: параметр used; при used == k команда не добавляется.</li><li>«Не более двух одинаковых команд подряд»: храните последнюю команду и длину серии.</li><li>«После команды B только A или C»: параметр last и отдельный набор команд.</li><li>«Ровно k команд»: считайте состояния (число, шаг), а не только пути.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Команды над цифрами</h3>
+  <p>Команды могут менять не значение, а запись числа. Реализуйте их отдельными функциями и проверяйте применимость до вызова.</p>
+  <ul class="theory-list"><li>Поменять две младшие цифры: проверить s[-2] &lt; s[-1], затем переставить.</li><li>Перевернуть число: int(str(x)[::-1]); ведущие нули исчезают.</li><li>Прибавить сумму цифр: sum(map(int, str(x))).</li><li>Прибавить максимальную цифру: max(map(int, str(x))).</li><li>Отбросить последний разряд: x // 10.</li><li>Для двоичной записи: bin(x)[2:].</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Когда перебор, а не формула</h3>
+  <p>Если нужны все различные результаты или ровно k команд, рекурсия по путям может быть проще динамики по числу.</p>
+  <ul class="theory-list"><li>«Сколько различных чисел можно получить»: складывайте результаты в set.</li><li>«Ровно k команд»: передавайте номер шага и добавляйте число в set на последнем шаге.</li><li>Малые k (до 15–20) удобно перебирать через itertools.product.</li><li>Для больших k ищите закономерность или динамику по состояниям.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Проверка</h3>
+  <p>Перед записью ответа проверьте программу на маленьком примере и оцените порядок числа.</p>
+  <ul class="theory-list"><li>Сравните с ручным перебором для target ≤ 20.</li><li>Проверьте, что не считаете пустую программу, если start ≠ target.</li><li>Убедитесь, что запрещённое число не совпало со стартом или целью.</li><li>Для больших ответов используйте Python: целые числа не переполняются.</li><li>Если ответ слишком велик, проверьте, не считаете ли траектории вместо программ.</li></ul>
+  
+</article></div>
+  
+<div class="theory-example">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Разбор примера</p>
+    <h3>Учебный пример: 3 → 10, команды +1 и ×2</h3>
+    <p>Посчитаем количество программ. Из каждого числа можно перейти в x + 1 и, если не перескочили цель, в 2x.</p>
+  </div>
+  <div class="theory-example-grid theory-example-grid--single"><div class="table-wrap"><table class="example-table">
+  <caption>f(x) — число программ из x в 10</caption>
+  <thead><tr><th>x</th><th>10</th><th>9</th><th>8</th><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th></tr></thead>
+  <tbody><tr><th>f(x)</th><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>2</td><td>3</td><td>4</td></tr></tbody>
+</table></div></div>
+  <ol class="task-steps"><li>f(10) = 1: пустая программа уже приводит к цели.</li><li>Для 9, 8 и 7 работает только команда +1, поэтому f(x) = 1.</li><li>f(6) = f(7) = 1: команда ×2 даёт 12 &gt; 10 и не рассматривается.</li><li>f(5) = f(6) + f(10) = 1 + 1 = 2; f(4) = f(5) + f(8) = 2 + 1 = 3.</li><li>f(3) = f(4) + f(6) = 3 + 1 = 4.</li><li>Если запретить число 6, ветка 3 → 6 исчезает, и остаётся 3 программы.</li></ol>
+  <p class="example-answer"><span>Ответ</span>4 программы; 3, если число 6 запрещено.</p>
+</div>
+</section>
+    
+<section class="task-block task-block--methods" id="methods">
+  <div class="block-head">
+    <p class="eyebrow">Способы решения</p>
+    <h2>Выберите метод под формулировку</h2>
+    <p class="block-lead">Методы собраны по решениям задания 13 из базы Kompege. Начните с того, что именно нужно найти в условии.</p>
+  </div>
+  <div class="methods-list">
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">01</span>
+    <div>
+      <p class="eyebrow">когда нет дополнительных условий</p>
+      <h3>Базовая рекурсия: из A в B</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно просто посчитать программы из одного числа в другое, а команды только увеличивают число.</p>
+  <ol class="task-steps"><li>Выпишите команды и убедитесь, что они увеличивают число.</li><li>Определите границы: если x &gt; target, вернуть 0.</li><li>Если x == target, вернуть 1.</li><li>Сложите результаты для каждой команды.</li><li>Добавьте @lru_cache, если состояний много.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Команды +1 и ×2, из 3 в 24. Функция перебирает оба продолжения и суммирует количество программ.</p>
+  <pre class="code-block"><code>from functools import lru_cache
+
+@lru_cache(None)
+def f(x, target):
+    if x &gt; target:
+        return 0
+    if x == target:
+        return 1
+    return f(x + 1, target) + f(x * 2, target)
+
+print(f(3, 24))</code></pre>
+  <p class="method-answer"><span>Ответ</span>28.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 26869 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">02</span>
+    <div>
+      <p class="eyebrow">когда траектория должна содержать X</p>
+      <h3>Обязательное число: умножаем участки</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> В условии есть «траектория вычислений содержит число X».</p>
+  <ol class="task-steps"><li>Найдите обязательное число X.</li><li>Посчитайте программы A → X и X → B отдельно.</li><li>Перемножьте количества.</li><li>Если обязательных чисел несколько, перемножьте все участки.</li><li>Проверьте, что порядок чисел возможен.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Команды +1, +3 и ×2; из 1 в 27; траектория содержит 9 и не содержит 15. Считаем два участка: 1 → 9 и 9 → 27.</p>
+  <pre class="code-block"><code>def f(x, target):
+    if x &gt; target or x == 15:
+        return 0
+    if x == target:
+        return 1
+    return f(x + 1, target) + f(x + 3, target) + f(x * 2, target)
+
+print(f(1, 9) * f(9, 27))</code></pre>
+  <p class="method-answer"><span>Ответ</span>10 686.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 9949 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">03</span>
+    <div>
+      <p class="eyebrow">когда траектория не должна содержать X</p>
+      <h3>Запрещённое число: обнуляем ветку</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> В условии есть «не содержит число X» или «не проходит через X».</p>
+  <ol class="task-steps"><li>Добавьте проверку x == X в начало функции.</li><li>Верните 0, не рассматривая команды.</li><li>Проверьте, что X не совпадает со стартом или целью.</li><li>Если запретов несколько, перечислите их через or.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Команды +2, ×3 и ×2; из 13 в 45; запрещено число 16.</p>
+  <pre class="code-block"><code>def f(x, target):
+    if x &gt;= target or x == 16:
+        return x == target
+    return f(x + 2, target) + f(x * 3, target) + f(x * 2, target)
+
+print(f(13, 45))</code></pre>
+  <p class="method-answer"><span>Ответ</span>3.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 11261 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">04</span>
+    <div>
+      <p class="eyebrow">когда нужно пройти 28 и 31</p>
+      <h3>Несколько обязательных чисел: порядок и произведение</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Траектория должна содержать несколько чисел.</p>
+  <ol class="task-steps"><li>Расположите обязательные числа по порядку.</li><li>Разбейте путь на участки между ними.</li><li>Перемножьте количества программ на участках.</li><li>Если порядок не очевиден, проверьте все варианты.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Команды +2 и +4; из 9 в 37; траектория содержит 27 и 29 и не содержит 32.</p>
+  <pre class="code-block"><code>def f(x, target):
+    if x &gt;= target or x == 32:
+        return x == target
+    return f(x + 2, target) + f(x + 4, target)
+
+print(f(9, 27) * f(27, 29) * f(29, 37))</code></pre>
+  <p class="method-answer"><span>Ответ</span>275.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 11264 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">05</span>
+    <div>
+      <p class="eyebrow">когда условия комбинируются</p>
+      <h3>«Содержит X, но не Y» и «не оба»</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно пройти через одно число и обойти другое или исключить одновременное появление.</p>
+  <ol class="task-steps"><li>Для «содержит X, не содержит Y»: f(A, X) · f(X, B), где Y запрещён на обоих участках.</li><li>Для «не содержит A и B одновременно»: из всех программ вычитаем те, где встретились оба.</li><li>Проверьте, в каком порядке можно пройти A и B.</li><li>Если возможны оба порядка, вычтите оба произведения.</li><li>Если порядок один, достаточно одного вычитания.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Команды ×2, квадрат и куб; из 2 в 131 072; траектория не должна содержать 4 и 16 одновременно. Всего программ 68, через 4 и 16 проходит 36.</p>
+  <pre class="code-block"><code>def f(a, b):
+    if a == b:
+        return 1
+    if a &gt; b:
+        return 0
+    return f(a * 2, b) + f(a ** 2, b) + f(a ** 3, b)
+
+total = f(2, 131072)
+both = f(2, 4) * f(4, 16) * f(16, 131072)
+print(total - both)</code></pre>
+  <p class="method-answer"><span>Ответ</span>32.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 24804 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">06</span>
+    <div>
+      <p class="eyebrow">когда команду можно использовать не всегда</p>
+      <h3>Ограничения на команды: добавляем параметр</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> В условии есть «не более k раз», «не подряд», «после B только A или C».</p>
+  <ol class="task-steps"><li>Определите, чего не хватает в состоянии f(x).</li><li>Добавьте параметр: последняя команда, число использований, длина серии.</li><li>При переходе обновляйте параметр.</li><li>В базовом случае проверьте все ограничения.</li><li>Мемоизируйте по всем параметрам.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Команды +2, квадрат и ×3; из 2 в 64; после квадрата разрешены только +2 и ×3.</p>
+  <pre class="code-block"><code>def f(x, target, last):
+    if x &gt; target:
+        return 0
+    if x == target:
+        return 1
+    if last == &quot;square&quot;:
+        return f(x + 2, target, &quot;add&quot;) + f(x * 3, target, &quot;mul&quot;)
+    return (f(x + 2, target, &quot;add&quot;)
+            + f(x ** 2, target, &quot;square&quot;)
+            + f(x * 3, target, &quot;mul&quot;))
+
+print(f(2, 64, &quot;&quot;))</code></pre>
+  <p class="method-answer"><span>Ответ</span>55.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 11240 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">07</span>
+    <div>
+      <p class="eyebrow">когда команда зависит от цифр</p>
+      <h3>Команды над цифрами: меняем запись числа</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Поменять местами, перевернуть, прибавить сумму или максимум цифр, отбросить разряд.</p>
+  <ol class="task-steps"><li>Напишите отдельную функцию для каждой команды.</li><li>Проверьте условие применимости до вызова.</li><li>Помните про ведущие нули и длину числа.</li><li>Для отрицательных чисел определите, как трактуется запись.</li><li>Не смешивайте десятичную и двоичную запись.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Демоверсия 2027: из 100 в 141; A — прибавить 1; B — поменять две младшие цифры, если десятки меньше единиц.</p>
+  <pre class="code-block"><code>def swap_last_two(x):
+    s = str(x)
+    if len(s) &lt; 2 or int(s[-2]) &gt;= int(s[-1]):
+        return x
+    return int(s[:-2] + s[-1] + s[-2])
+
+def f(x, target):
+    if x &gt; target:
+        return 0
+    if x == target:
+        return 1
+    result = f(x + 1, target)
+    y = swap_last_two(x)
+    if y != x:
+        result += f(y, target)
+    return result
+
+print(f(100, 141))</code></pre>
+  <p class="method-answer"><span>Ответ</span>16.</p>
+</div>
+  <p class="method-source">Демоверсия 2027, задание 13; по мотивам задачи № 31079 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">08</span>
+    <div>
+      <p class="eyebrow">когда спрашивают не программы</p>
+      <h3>«Сколько различных чисел»: множество результатов</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно количество уникальных чисел после программ фиксированной длины.</p>
+  <ol class="task-steps"><li>Создайте set для результатов.</li><li>Передавайте номер шага.</li><li>На последнем шаге добавляйте число в set.</li><li>Не считайте одинаковые числа повторно.</li><li>Для малых k можно перебрать itertools.product.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Команды +3 и −2; из 1; ровно 68 команд. Храним множество чисел после каждого шага.</p>
+  <pre class="code-block"><code>states = {1}
+for _ in range(68):
+    states = {x + 3 for x in states} | {x - 2 for x in states}
+print(len(states))</code></pre>
+  <p class="method-answer"><span>Ответ</span>69.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 12475 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">09</span>
+    <div>
+      <p class="eyebrow">когда удобнее считать от цели</p>
+      <h3>Обратный ход и динамика по таблице</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Команды уменьшают число или состояний немного.</p>
+  <ol class="task-steps"><li>Постройте таблицу dp для чисел от target до start.</li><li>dp[target] = 1.</li><li>Для каждого x переберите команды, ведущие в уже посчитанные состояния.</li><li>Сложите значения.</li><li>Проверьте границы и запреты.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Команды −1 и −2; из 50 в 2. Считаем f(x) от 2 к 50; это числа Фибоначчи.</p>
+  <pre class="code-block"><code>from functools import lru_cache
+
+@lru_cache(None)
+def f(x, target):
+    if x &lt; target:
+        return 0
+    if x == target:
+        return 1
+    return f(x - 1, target) + f(x - 2, target)
+
+print(f(50, 2))</code></pre>
+  <p class="method-answer"><span>Ответ</span>7 778 742 049.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 25559 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">10</span>
+    <div>
+      <p class="eyebrow">перед записью ответа</p>
+      <h3>Проверка и типичные ловушки</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Ответ уже получен, но нужно быстро найти обидную ошибку.</p>
+  
+  <ul class="task-list"><li>Проверьте, что стартовое число не считается программой, если start ≠ target.</li><li>Убедитесь, что обязательное число действительно входит в траекторию, а не только в программу.</li><li>Проверьте условие применимости каждой команды: особенно «поменяй местами» и «раздели на 2».</li><li>Не забудьте, что команда может перескочить цель; такие ветки дают 0.</li><li>Для «не содержит A и B одновременно» проверьте, не вычли ли пересечение дважды.</li><li>Для «ровно k команд» не путайте количество программ и количество различных результатов.</li><li>Для больших чисел используйте Python и memoization; проверьте глубину рекурсии.</li><li>Сделайте ручной перебор для target ≤ 20 и сравните ответ.</li><li>Проверьте, не нужно ли вернуть сумму цифр ответа или остаток.</li><li>Если ответ — количество программ, он не может быть отрицательным.</li></ul>
+  
+  
+</article></div>
+  
+<div class="cheatsheet">
+  <p class="mini-label">Шпаргалка: формулировка → метод</p>
+  <div class="cheatsheet-wrap">
+    <table class="cheatsheet-table">
+      <thead><tr><th>В условии</th><th>Что делать</th></tr></thead>
+      <tbody><tr><td>«сколько существует программ»</td><td>рекурсия f(x) = сумма f(next)</td></tr><tr><td>«траектория содержит X»</td><td>f(start, X) · f(X, target)</td></tr><tr><td>«траектория не содержит X»</td><td>if x == X: return 0</td></tr><tr><td>«содержит X и Y»</td><td>произведение участков в порядке прохождения</td></tr><tr><td>«не содержит A и B одновременно»</td><td>всего − пути через A и B</td></tr><tr><td>«содержит хотя бы два из …»</td><td>сумма по парам с включением-исключением</td></tr><tr><td>«команда B только после A»</td><td>параметр last</td></tr><tr><td>«не более k раз»</td><td>параметр used</td></tr><tr><td>«ровно k команд»</td><td>состояние (число, шаг)</td></tr><tr><td>«сколько различных чисел»</td><td>set результатов</td></tr><tr><td>«поменяй местами»</td><td>проверить цифры и собрать число</td></tr><tr><td>«переверни число»</td><td>int(str(x)[::-1])</td></tr><tr><td>«разделить на 2»</td><td>только чётное; x // 2</td></tr><tr><td>«возвести в квадрат»</td><td>x ** 2, следить за перескоком</td></tr><tr><td>«прибавить сумму цифр»</td><td>sum(map(int, str(x)))</td></tr><tr><td>«большой ответ»</td><td>Python int и memoization</td></tr><tr><td>«проверка»</td><td>перебор для малых target</td></tr></tbody>
+    </table>
+  </div>
+</div>
+  
+<div class="video-block">
+  <p class="mini-label">Видеоразборы по теме</p>
+  <div class="video-list"><a class="video-link" href="https://vkvideo.ru/video-231931349_456239075?t=5258" target="_blank" rel="noopener noreferrer"><span class="video-label">Команда «поменяй местами»</span><span class="video-meta">№ 27130 · 1:27:38</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://vkvideo.ru/video-231931349_456239048?t=3975" target="_blank" rel="noopener noreferrer"><span class="video-label">Три команды и ограничения</span><span class="video-meta">№ 24330 · 1:06:15</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://vkvideo.ru/video-205865487_456240544?t=4155" target="_blank" rel="noopener noreferrer"><span class="video-label">Длинная траектория: +1, +3, ×2</span><span class="video-meta">№ 28764 · 1:09:15</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://rutube.ru/video/45a16bc221edd87bb714019dff9dc370/?t=5518" target="_blank" rel="noopener noreferrer"><span class="video-label">Исполнитель Гепард: скрытый параметр D</span><span class="video-meta">№ 29457 · 1:31:58</span><span class="video-host" title="RuTube"><span class="video-host-icon"><svg viewBox="0 0 132 132" aria-hidden="true" focusable="false"><rect width="132" height="132" fill="#100943"/><circle cx="132" cy="66" r="66" fill="#ED143B"/><path fill="#fff" d="M81.5361 62.9865H42.5386V47.5547H81.5361C83.814 47.5547 85.3979 47.9518 86.1928 48.6451C86.9877 49.3385 87.4801 50.6245 87.4801 52.5031V58.0441C87.4801 60.0234 86.9877 61.3094 86.1928 62.0028C85.3979 62.6961 83.814 62.9925 81.5361 62.9925V62.9865ZM84.2115 33.0059H26V99H42.5386V77.5294H73.0176L87.4801 99H106L90.0546 77.4287C95.9333 76.5575 98.573 74.756 100.75 71.7869C102.927 68.8179 104.019 64.071 104.019 57.7359V52.7876C104.019 49.0303 103.621 46.0613 102.927 43.7857C102.233 41.51 101.047 39.5307 99.362 37.7528C97.5824 36.0698 95.6011 34.8845 93.2223 34.0904C90.8435 33.3971 87.8716 33 84.2115 33V33.0059Z"/></svg></span><span class="video-host-name">RuTube</span></span></a><a class="video-link" href="https://youtu.be/WKOVgdjP1Ik" target="_blank" rel="noopener noreferrer"><span class="video-label">Базовая задача: +1 и ×2</span><span class="video-meta">№ 1035</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/BMVaYPPqB2k?t=5428" target="_blank" rel="noopener noreferrer"><span class="video-label">Ограничение после команды «возвести в квадрат»</span><span class="video-meta">№ 11240 · 1:30:28</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/w7du6qYh4TQ?t=10191" target="_blank" rel="noopener noreferrer"><span class="video-label">Квадрат и запрещённое число</span><span class="video-meta">№ 16268 · 2:49:51</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/YjHKqD4d6Bc?t=13055" target="_blank" rel="noopener noreferrer"><span class="video-label">68 команд: сколько различных чисел</span><span class="video-meta">№ 12475 · 3:37:35</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/dqEglv3sTvo?t=5945" target="_blank" rel="noopener noreferrer"><span class="video-label">Обратный ход: вычитание и деление</span><span class="video-meta">№ 313 · 1:39:05</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/YPap1DCaaXU?t=6699" target="_blank" rel="noopener noreferrer"><span class="video-label">Две команды: +2 и −3</span><span class="video-meta">№ 3374 · 1:51:39</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/Hgy39lvyoL8?t=5580" target="_blank" rel="noopener noreferrer"><span class="video-label">Три команды: +1, ×3, ×4</span><span class="video-meta">№ 678 · 1:33:00</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/ZD4A_s3MIM4?t=4530" target="_blank" rel="noopener noreferrer"><span class="video-label">Прибавь 1, умножь на 2, возведи в квадрат</span><span class="video-meta">№ 18448 · 1:15:30</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/y7N-5jX99X0?t=11737" target="_blank" rel="noopener noreferrer"><span class="video-label">Прибавить сумму цифр</span><span class="video-meta">№ 3084 · 3:15:37</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a></div>
+  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+</div>
+  <p class="method-source-note">По базе Kompege: в нумерации до 2027 года тема исполнителей и подсчёта программ хранилась под № 23 — 1 009 задач, 107 решений (102 программных и 5 текстовых) и 257 видеоразборов (168 YouTube, 55 VK, 34 Rutube). Для методов отобраны решения задач № 26869, 9949, 11261, 11264, 24804, 11240, 31079, 12475 и 25559; дополнительные примеры и видеоразборы — задачи № 313, 678, 1035, 3084, 3374, 16268, 18448, 24330, 27130, 28764 и 29457; примеры переработаны в учебные.</p>
+</section>
+    <section class="task-block" id="mistakes">
+      <h2>Типичные ошибки</h2>
+      <ul class="task-list task-list--mistakes"><li>считают траектории вместо программ</li><li>забывают проверить условие применимости команды</li><li>не учитывают обязательное или запрещённое число</li><li>теряют параметр ограничения</li><li>неверно обрабатывают команды над цифрами</li><li>слишком глубокая рекурсия без memoization</li></ul>
+    </section>
+    
+    
+    <section class="task-block" id="practice">
+      <h2>Практика</h2>
+      
+<div class="practice-grid">
+  <a class="practice-link" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener noreferrer">
+    <span class="practice-label">ФИПИ</span><span class="practice-title">Открытый банк заданий</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80.%20%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D1%8B%20%D0%B8%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Навигатор · 2026</span><span class="practice-title">Алгоритмы</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/inf_11_2027/%D0%98%D0%9D%D0%A4-11%20%D0%95%D0%93%D0%AD%202027%20%D0%94%D0%95%D0%9C%D0%9E.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Демоверсия</span><span class="practice-title">КИМ 2027</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0.%202026.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Методика</span><span class="practice-title">Разбор ошибок 2026</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+</div>
+<p class="practice-note">Навигатор и методические рекомендации опубликованы в 2026 году: номера заданий в них могут отличаться от нумерации 2027 года. Ориентируйтесь на тему.</p>
+    </section>
+    
+<div class="related-links">
+  <span class="related-label">Смотрите также</span>
+  <a class="related-link" href="05.html">05 · Алгоритмы исполнителя</a><a class="related-link" href="06.html">06 · Исполнители и координаты</a><a class="related-link" href="12.html">12 · Исполнитель МТ</a>
+</div>
+    <nav class="prev-next" aria-label="Соседние задания">
+      <a class="prev-next-link" href="12.html"><span>← Предыдущее</span><strong>12 · Исполнитель МТ</strong></a>
+      <a class="prev-next-link prev-next-link--next" href="14.html"><span>Следующее →</span><strong>14 · Системы счисления</strong></a>
+    </nav>
+  </div>
+
+  <aside class="task-aside">
+    <div class="aside-card">
+      <div class="aside-head">
+        <span>Карта заданий</span>
+        <span class="map-progress" data-progress-count>0 / 27</span>
+      </div>
+      <div class="task-map task-map--compact" data-task-map><a class="task-cell task-cell--digital task-cell--compact" href="01.html" data-task="1" data-section="digital" data-title="Графы и таблицы" data-caption="&lt;strong&gt;Задание 1&lt;/strong&gt; · Графы и таблицы · Цифровая грамотность · 1 балл" aria-label="Задание 1: Графы и таблицы"><span>1</span></a><a class="task-cell task-cell--theory task-cell--compact" href="02.html" data-task="2" data-section="theory" data-title="Логические функции" data-caption="&lt;strong&gt;Задание 2&lt;/strong&gt; · Логические функции · Теория · 1 балл" aria-label="Задание 2: Логические функции"><span>2</span></a><a class="task-cell task-cell--it task-cell--compact" href="03.html" data-task="3" data-section="it" data-title="Базы данных" data-caption="&lt;strong&gt;Задание 3&lt;/strong&gt; · Базы данных · Информационные технологии · 1 балл" aria-label="Задание 3: Базы данных"><span>3</span></a><a class="task-cell task-cell--theory task-cell--compact" href="04.html" data-task="4" data-section="theory" data-title="Коды и условие Фано" data-caption="&lt;strong&gt;Задание 4&lt;/strong&gt; · Коды и условие Фано · Теория · 1 балл" aria-label="Задание 4: Коды и условие Фано"><span>4</span></a><a class="task-cell task-cell--algo task-cell--compact" href="05.html" data-task="5" data-section="algo" data-title="Алгоритмы исполнителя" data-caption="&lt;strong&gt;Задание 5&lt;/strong&gt; · Алгоритмы исполнителя · Алгоритмы · 1 балл" aria-label="Задание 5: Алгоритмы исполнителя"><span>5</span></a><a class="task-cell task-cell--algo task-cell--compact" href="06.html" data-task="6" data-section="algo" data-title="Исполнители и координаты" data-caption="&lt;strong&gt;Задание 6&lt;/strong&gt; · Исполнители и координаты · Алгоритмы · 1 балл" aria-label="Задание 6: Исполнители и координаты"><span>6</span></a><a class="task-cell task-cell--theory task-cell--compact" href="07.html" data-task="7" data-section="theory" data-title="Графика и звук" data-caption="&lt;strong&gt;Задание 7&lt;/strong&gt; · Графика и звук · Теория · 1 балл" aria-label="Задание 7: Графика и звук"><span>7</span></a><a class="task-cell task-cell--theory task-cell--compact" href="08.html" data-task="8" data-section="theory" data-title="Комбинаторика и коды" data-caption="&lt;strong&gt;Задание 8&lt;/strong&gt; · Комбинаторика и коды · Теория · 1 балл" aria-label="Задание 8: Комбинаторика и коды"><span>8</span></a><a class="task-cell task-cell--it task-cell--compact" href="09.html" data-task="9" data-section="it" data-title="Электронные таблицы" data-caption="&lt;strong&gt;Задание 9&lt;/strong&gt; · Электронные таблицы · Информационные технологии · 1 балл" aria-label="Задание 9: Электронные таблицы"><span>9</span></a><a class="task-cell task-cell--digital task-cell--compact" href="10.html" data-task="10" data-section="digital" data-title="IP-адреса и маски" data-caption="&lt;strong&gt;Задание 10&lt;/strong&gt; · IP-адреса и маски · Цифровая грамотность · 1 балл" aria-label="Задание 10: IP-адреса и маски"><span>10</span></a><a class="task-cell task-cell--theory task-cell--compact" href="11.html" data-task="11" data-section="theory" data-title="Объём сообщения" data-caption="&lt;strong&gt;Задание 11&lt;/strong&gt; · Объём сообщения · Теория · 1 балл" aria-label="Задание 11: Объём сообщения"><span>11</span></a><a class="task-cell task-cell--algo task-cell--compact" href="12.html" data-task="12" data-section="algo" data-title="Исполнитель МТ" data-caption="&lt;strong&gt;Задание 12&lt;/strong&gt; · Исполнитель МТ · Алгоритмы · 1 балл" aria-label="Задание 12: Исполнитель МТ"><span>12</span></a><a class="task-cell task-cell--algo is-current task-cell--compact" href="13.html" data-task="13" data-section="algo" data-title="Ход исполнения алгоритма" data-caption="&lt;strong&gt;Задание 13&lt;/strong&gt; · Ход исполнения алгоритма · Алгоритмы · 1 балл" aria-label="Задание 13: Ход исполнения алгоритма"><span>13</span></a><a class="task-cell task-cell--theory task-cell--compact" href="14.html" data-task="14" data-section="theory" data-title="Системы счисления" data-caption="&lt;strong&gt;Задание 14&lt;/strong&gt; · Системы счисления · Теория · 1 балл" aria-label="Задание 14: Системы счисления"><span>14</span></a><a class="task-cell task-cell--theory task-cell--compact" href="15.html" data-task="15" data-section="theory" data-title="Логика и множества" data-caption="&lt;strong&gt;Задание 15&lt;/strong&gt; · Логика и множества · Теория · 1 балл" aria-label="Задание 15: Логика и множества"><span>15</span></a><a class="task-cell task-cell--algo task-cell--compact" href="16.html" data-task="16" data-section="algo" data-title="Рекурсия" data-caption="&lt;strong&gt;Задание 16&lt;/strong&gt; · Рекурсия · Алгоритмы · 1 балл" aria-label="Задание 16: Рекурсия"><span>16</span></a><a class="task-cell task-cell--algo task-cell--compact" href="17.html" data-task="17" data-section="algo" data-title="Обработка последовательности" data-caption="&lt;strong&gt;Задание 17&lt;/strong&gt; · Обработка последовательности · Алгоритмы · 1 балл" aria-label="Задание 17: Обработка последовательности"><span>17</span></a><a class="task-cell task-cell--it task-cell--compact" href="18.html" data-task="18" data-section="it" data-title="Таблицы: анализ и оптимизация" data-caption="&lt;strong&gt;Задание 18&lt;/strong&gt; · Таблицы: анализ и оптимизация · Информационные технологии · 1 балл" aria-label="Задание 18: Таблицы: анализ и оптимизация"><span>18</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html" data-task="19" data-section="theory" data-title="Теория игр" data-caption="&lt;strong&gt;Задание 19&lt;/strong&gt; · Теория игр · Теория · 1 балл" aria-label="Задание 19: Теория игр"><span>19</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-20" data-task="20" data-section="theory" data-title="Теория игр: две кучи" data-caption="&lt;strong&gt;Задание 20&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 20: Теория игр: две кучи"><span>20</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-21" data-task="21" data-section="theory" data-title="Теория игр: стратегия" data-caption="&lt;strong&gt;Задание 21&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 21: Теория игр: стратегия"><span>21</span></a><a class="task-cell task-cell--theory task-cell--compact" href="22.html" data-task="22" data-section="theory" data-title="Параллельные вычисления" data-caption="&lt;strong&gt;Задание 22&lt;/strong&gt; · Параллельные вычисления · Теория · 1 балл" aria-label="Задание 22: Параллельные вычисления"><span>22</span></a><a class="task-cell task-cell--theory task-cell--compact" href="23.html" data-task="23" data-section="theory" data-title="Графы: пути" data-caption="&lt;strong&gt;Задание 23&lt;/strong&gt; · Графы: пути · Теория · 1 балл" aria-label="Задание 23: Графы: пути"><span>23</span></a><a class="task-cell task-cell--algo task-cell--compact" href="24.html" data-task="24" data-section="algo" data-title="Символьные строки" data-caption="&lt;strong&gt;Задание 24&lt;/strong&gt; · Символьные строки · Алгоритмы · 1 балл" aria-label="Задание 24: Символьные строки"><span>24</span></a><a class="task-cell task-cell--algo task-cell--compact" href="25.html" data-task="25" data-section="algo" data-title="Натуральные числа" data-caption="&lt;strong&gt;Задание 25&lt;/strong&gt; · Натуральные числа · Алгоритмы · 1 балл" aria-label="Задание 25: Натуральные числа"><span>25</span></a><a class="task-cell task-cell--algo task-cell--compact" href="26.html" data-task="26" data-section="algo" data-title="Массив: сортировка" data-caption="&lt;strong&gt;Задание 26&lt;/strong&gt; · Массив: сортировка · Алгоритмы · 2 балла" aria-label="Задание 26: Массив: сортировка"><span>26</span></a><a class="task-cell task-cell--it task-cell--compact" href="27.html" data-task="27" data-section="it" data-title="Анализ данных" data-caption="&lt;strong&gt;Задание 27&lt;/strong&gt; · Анализ данных · Информационные технологии · 2 балла" aria-label="Задание 27: Анализ данных"><span>27</span></a></div>
+      <a class="aside-link" href="index.html">Все задания <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="aside-card aside-card--progress">
+      <p class="aside-label">Прогресс</p>
+      <button class="btn btn-primary progress-toggle" type="button" data-progress-toggle="13" aria-pressed="false">Отметить как изученное</button>
+      <p class="progress-note" data-progress-text>0 из 27 изучено</p>
+      <div class="progress-line" aria-hidden="true"><span data-progress-bar></span></div>
+    </div>
+    <div class="aside-card">
+      <p class="aside-label">Быстрые ссылки</p>
+      <a class="aside-link" href="../documents.html#kim2027">Демоверсия 2027 <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html#method">Навигатор и методика <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html">Все документы <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-mark">ЕГЭ · Информатика · 2027</p>
+      <p class="footer-note">Разбор заданий, ключевые темы и официальные документы. Составлено 3 ноября 2026. Не является официальным ресурсом ФИПИ или Рособрнадзора.</p>
+    </div>
+    <div>
+      <p class="footer-title">Разделы</p>
+      <p class="footer-note"><a href="../index.html">Главная</a> · <a href="../tasks/index.html">Все задания</a> · <a href="../documents.html">Документы</a></p>
+      <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
+    </div>
+    <div>
+      <p class="footer-title">Первоисточники</p>
+      <p class="footer-note"><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ</a> · <a href="https://obrnadzor.gov.ru/gia/gia-11/" target="_blank" rel="noopener noreferrer">Рособрнадзор</a> · <a href="https://regulation.gov.ru/projects/172223/" target="_blank" rel="noopener noreferrer">проект расписания</a></p>
+      <p class="footer-note">Права на документы принадлежат их правообладателям. Копии сохранены для ознакомления и подготовки.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

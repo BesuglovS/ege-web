@@ -1,0 +1,431 @@
+{
+  "generated": "2026-11-03",
+  "subject": "Информатика",
+  "exam": "ЕГЭ",
+  "note": "Проекты КИМ 2027 и проекты приказов на 2027 год; утверждённые версии на 03.11.2026 не опубликованы.",
+  "documents": [
+    {
+      "code": "27·ДЕМО",
+      "title": "Демонстрационный вариант",
+      "path": "Исходники/inf_11_2027/ИНФ-11 ЕГЭ 2027 ДЕМО.pdf",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/inf_11_2027.zip",
+      "pages": 14,
+      "size": 1027818,
+      "sha256": "d3c6efb8357481a4ab11fa04460965bda49287260885afeb241fbc7f84df154c"
+    },
+    {
+      "code": "27·СПЕЦ",
+      "title": "Спецификация",
+      "path": "Исходники/inf_11_2027/ИНФ-11 ЕГЭ 2027 СПЕЦ.pdf",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/inf_11_2027.zip",
+      "pages": 8,
+      "size": 364595,
+      "sha256": "7eb1bbda8ecc8f3a1f2f1a4b75bc81271dce2a20bd6811650f3cd3163307a3d2"
+    },
+    {
+      "code": "27·КОДИФ",
+      "title": "Кодификатор",
+      "path": "Исходники/inf_11_2027/ИНФ-11 ЕГЭ 2027 КОДИФ.pdf",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/inf_11_2027.zip",
+      "pages": 8,
+      "size": 401328,
+      "sha256": "9d5a2a8dcffbe7a7bc57a93e9a82f5143333b4e42824e434c79ab9720dda22e8"
+    },
+    {
+      "code": "27·ИЗМ",
+      "title": "Планируемые изменения",
+      "path": "Исходники/inf_11_2027/Планируемые изменения в КИМ ЕГЭ 2027.pdf",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/Plan_izmeneniya_KIM_EGE_2027.pdf",
+      "pages": 2,
+      "size": 217700,
+      "sha256": "3e88c4f506dd5f21d530675d326282d6c15a24fbe97e709e0eb22880d2df633d"
+    },
+    {
+      "code": "27·ZIP",
+      "title": "Полный архив ФИПИ",
+      "path": "Исходники/inf_11_2027/inf_11_2027.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/inf_11_2027.zip",
+      "pages": null,
+      "size": 6576330,
+      "sha256": "10805acfde358f4855ed5b5d866ebb47b0f14cb3e70113da45de2d65a097312c"
+    },
+    {
+      "code": "27·ФАЙЛЫ",
+      "title": "Файлы к заданиям",
+      "path": "Исходники/inf_11_2027/Файлы к демоверсии 2027.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2027/inf_11_2027.zip",
+      "pages": null,
+      "size": 4884297,
+      "sha256": "1ff4d0bf4610d40cef9aaa48f35f13c0396a6c7d642d3a63ebb5839c3baf9ec0"
+    },
+    {
+      "code": "27·РАСП",
+      "title": "Проект расписания ЕГЭ 2027",
+      "path": "Исходники/Нормативные документы/Проект приказа. Расписание ЕГЭ 2027 (PDF).pdf",
+      "source": "https://regulation.gov.ru/projects/172223/",
+      "pages": 6,
+      "size": 192092,
+      "sha256": "330cbb0a90580acfc2e0c923f30051cb9ffe232e5ac709c96ed846cc248ef5a8"
+    },
+    {
+      "code": "27·БАЛЛ",
+      "title": "Проект минимальных баллов на 2027/28",
+      "path": "Исходники/Нормативные документы/Проект приказа. Минимальные баллы ЕГЭ 2027-28 (PDF).pdf",
+      "source": "https://regulation.gov.ru/projects/172213/",
+      "pages": 3,
+      "size": 182243,
+      "sha256": "6a9f8d3b650fe30e408089d4196fe949e019e8aabb83ccf288748069399e09df"
+    },
+    {
+      "code": "26·ДЕМО",
+      "title": "Демонстрационный вариант",
+      "path": "Исходники/inf_11_2026/ИНФ-11 ЕГЭ 2026 ДЕМО.pdf",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2026/inf_11_2026.zip",
+      "pages": 14,
+      "size": 1314476,
+      "sha256": "da9191d50d0f7d9707ed4f7f8efa1d3d1c68efcebc103f91c27eba0e44d81a40"
+    },
+    {
+      "code": "26·СПЕЦ",
+      "title": "Спецификация",
+      "path": "Исходники/inf_11_2026/ИНФ-11 ЕГЭ 2026 СПЕЦ.pdf",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2026/inf_11_2026.zip",
+      "pages": 9,
+      "size": 897601,
+      "sha256": "fc068a3fcbd8cf34b8550df547c9e341f240793fe9bb719f259bd2562f84a299"
+    },
+    {
+      "code": "26·КОДИФ",
+      "title": "Кодификатор",
+      "path": "Исходники/inf_11_2026/ИНФ-11 ЕГЭ 2026 КОДИФ.pdf",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2026/inf_11_2026.zip",
+      "pages": 13,
+      "size": 1152379,
+      "sha256": "95b377d56d00933229719cb83f0644f1e4fd549223ef6171729b9557664546c8"
+    },
+    {
+      "code": "26·ZIP",
+      "title": "Полный архив ФИПИ",
+      "path": "Исходники/inf_11_2026/inf_11_2026.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2026/inf_11_2026.zip",
+      "pages": null,
+      "size": 6211057,
+      "sha256": "e2d7280d7c4bcac279ef7c09c43b70c4ea34a11d61e132ceab160e5fce29f713"
+    },
+    {
+      "code": "26·ВАРИАНТ",
+      "title": "Открытый вариант КИМ 2026",
+      "path": "Исходники/inf_11_2026/Открытый вариант 2026/Открытый вариант КИМ ЕГЭ 2026 (Информатика).pdf",
+      "source": "https://doc.fipi.ru/ege/otkrytyy-bank-zadaniy-ege/otkrytyye-varianty-kim-ege/2026/Inf_1_ege2026.zip",
+      "pages": 28,
+      "size": 379859,
+      "sha256": "6695c779fa205871845557802462231f8eb9a5ff0d98c1ee3a47e77daba22777"
+    },
+    {
+      "code": "26·ВАР-ZIP",
+      "title": "Открытый вариант: оригинальный ZIP",
+      "path": "Исходники/inf_11_2026/Открытый вариант КИМ ЕГЭ 2026 (Информатика).zip",
+      "source": "https://doc.fipi.ru/ege/otkrytyy-bank-zadaniy-ege/otkrytyye-varianty-kim-ege/2026/Inf_1_ege2026.zip",
+      "pages": null,
+      "size": 4359435,
+      "sha256": "59cda21ddfdf6ca17d3a6c3fd0dd7c67cbf7cd8d2065c88c4cf0da8379c10bb5"
+    },
+    {
+      "code": "26·ФАЙЛЫ",
+      "title": "Файлы к демоверсии 2026",
+      "path": "Исходники/inf_11_2026/Файлы к демоверсии 2026.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2026/inf_11_2026.zip",
+      "pages": null,
+      "size": 3206344,
+      "sha256": "804b41ab9641294436f51b91506d27ae159f93036fe6006b6168a1260e5c3f55"
+    },
+    {
+      "code": "МЕТ·2026",
+      "title": "Методические рекомендации для учителей",
+      "path": "Исходники/Методические материалы/Методические рекомендации для учителей. Информатика. 2026.pdf",
+      "source": "https://doc.fipi.ru/ege/analiticheskie-i-metodicheskie-materialy/2026/inf_mr_2026.pdf",
+      "pages": 31,
+      "size": 1015892,
+      "sha256": "e94967757aece4abd9febcc9819e21f5e5d09cb15f47945769fe02126ac89bd8"
+    },
+    {
+      "code": "НАВ·2026",
+      "title": "Навигатор самостоятельной подготовки",
+      "path": "Исходники/Методические материалы/Навигатор самостоятельной подготовки. Информатика. 2026.pdf",
+      "source": "https://fipi.ru/navigator-podgotovki/navigator-ege",
+      "pages": 20,
+      "size": 804006,
+      "sha256": "4da8f1526f315c4f114b63bc6a9f5db456afa19716528744a3d549949010ca1f"
+    },
+    {
+      "code": "НАВ·01",
+      "title": "Навигатор: цифровая грамотность",
+      "path": "Исходники/Методические материалы/Навигатор. Цифровая грамотность.pdf",
+      "source": "https://doc.fipi.ru/navigator-podgotovki/navigator-ege/2026/Inf_1_gramotnost.pdf",
+      "pages": 2,
+      "size": 219431,
+      "sha256": "8f8688594836e2eb68e88126d13c25215fa83eb6208a1fa3c6adecc80ae8b72c"
+    },
+    {
+      "code": "НАВ·02",
+      "title": "Навигатор: теоретические основы",
+      "path": "Исходники/Методические материалы/Навигатор. Теоретические основы информатики.pdf",
+      "source": "https://doc.fipi.ru/navigator-podgotovki/navigator-ege/2026/Inf_2_teoriya.pdf",
+      "pages": 6,
+      "size": 254505,
+      "sha256": "de74ba6f127c31ed5c7db77c0c8f57f45e01c06fbd74391e7c8625d4ca5a0757"
+    },
+    {
+      "code": "НАВ·03",
+      "title": "Навигатор: алгоритмы и программирование",
+      "path": "Исходники/Методические материалы/Навигатор. Алгоритмы и программирование.pdf",
+      "source": "https://doc.fipi.ru/navigator-podgotovki/navigator-ege/2026/Inf_3_algoritm.pdf",
+      "pages": 4,
+      "size": 240682,
+      "sha256": "6cee8890283bb1e8f56ec4e428fe0068832908447a2fbdab115e469a45c7d72d"
+    },
+    {
+      "code": "НАВ·04",
+      "title": "Навигатор: информационные технологии",
+      "path": "Исходники/Методические материалы/Навигатор. Информационные технологии.pdf",
+      "source": "https://doc.fipi.ru/navigator-podgotovki/navigator-ege/2026/Inf_4_tehnologii.pdf",
+      "pages": 3,
+      "size": 233672,
+      "sha256": "5b88b7aecf140c9d2f151d9baf67fbc40d9282f3c25c8f78375f01c8f00a2787"
+    },
+    {
+      "code": "НОРМ·01",
+      "title": "Порядок проведения ГИА-11",
+      "path": "Исходники/Нормативные документы/Порядок проведения ГИА-11 (приказ 233-552 от 04.04.2023).pdf",
+      "source": "https://doc.fipi.ru/ege/normativno-pravovye-dokumenty/Poriadok-provedeniia-GIA-11.pdf",
+      "pages": 62,
+      "size": 5163002,
+      "sha256": "7190e82d1e9b8bd50a5b390f7856d4347774370816a1a0d46b949b82477bf86c"
+    },
+    {
+      "code": "НОРМ·02",
+      "title": "Изменения в Порядок ГИА-11",
+      "path": "Исходники/Нормативные документы/Изменения в Порядок ГИА-11 (приказ 243-802 от 12.04.2024).pdf",
+      "source": "https://doc.fipi.ru/ege/normativno-pravovye-dokumenty/Prikaz_243_802_12.04.24.pdf",
+      "pages": 3,
+      "size": 157944,
+      "sha256": "45b2f918e152046e2050f00858df0e68aed70e08839d217790f25b88b774b2f4"
+    },
+    {
+      "code": "НОРМ·03",
+      "title": "Порядок разработки и хранения КИМ",
+      "path": "Исходники/Нормативные документы/Порядок разработки и хранения КИМ (приказ 871 от 11.08.2022).pdf",
+      "source": "https://doc.fipi.ru/ege/normativno-pravovye-dokumenty/poryadok-razrabotki-kim.pdf",
+      "pages": 12,
+      "size": 849682,
+      "sha256": "7072f503a8e4e6354d0406371cd891fd84930e7780b09c7f8ff3d71985697451"
+    },
+    {
+      "code": "НОРМ·04",
+      "title": "Изменения в Порядок разработки КИМ",
+      "path": "Исходники/Нормативные документы/Изменения в Порядок разработки КИМ (приказ 73 от 19.01.2024).pdf",
+      "source": "https://doc.fipi.ru/ege/normativno-pravovye-dokumenty/poryadok-razrabotki-kim_izm_2024.pdf",
+      "pages": 5,
+      "size": 274142,
+      "sha256": "2c2e5c3e3dbfe88ed41819ffa9934d00f31ac3fe600fb6f472652bf0f1f39fbf"
+    },
+    {
+      "code": "НОРМ·05",
+      "title": "Изменения в Порядок разработки КИМ",
+      "path": "Исходники/Нормативные документы/Изменения в Порядок разработки КИМ (приказ 1555 от 27.08.2025).pdf",
+      "source": "https://doc.fipi.ru/ege/normativno-pravovye-dokumenty/Prikaz_1555_2025.pdf",
+      "pages": 8,
+      "size": 574733,
+      "sha256": "6e69acd31d4f06763c24cc2aeaeca6775513794b21b514d3d44272a6b37a9621"
+    },
+    {
+      "code": "НОРМ·06",
+      "title": "Единое расписание ЕГЭ 2026",
+      "path": "Исходники/Нормативные документы/Единое расписание ЕГЭ 2026 (приказ 798-1094 от 07.11.2025).pdf",
+      "source": "https://doc.fipi.ru/ege/normativno-pravovye-dokumenty/ege2026.pdf",
+      "pages": 6,
+      "size": 359085,
+      "sha256": "7993a7cf91a6e35e87339306469aa65edda80fb4cbdd9fe46c90c743dd039331"
+    },
+    {
+      "code": "НОРМ·07",
+      "title": "Правила заполнения бланков",
+      "path": "Исходники/Нормативные документы/Правила заполнения бланков ЕГЭ и ГВЭ-11 в 2026 году.pdf",
+      "source": "https://doc.fipi.ru/ege/normativno-pravovye-dokumenty/Pravila_zapolneniya_blankov_2026.pdf",
+      "pages": 45,
+      "size": 2453561,
+      "sha256": "768029ccccf79226069e982b2cac3f8c865044cad871ceb6dddfe8bc16667ec8"
+    },
+    {
+      "code": "НОРМ·08",
+      "title": "Методические документы ГИА 2026",
+      "path": "Исходники/Нормативные документы/Методические документы ГИА 2026 (Рособрнадзор).zip",
+      "source": "https://doc.fipi.ru/ege/normativno-pravovye-dokumenty/MR_RON_GIA_2026.zip",
+      "pages": null,
+      "size": 17406849,
+      "sha256": "8064da56bbce7806d8deda391ed6327c17c4920293c79380b1ada595cb71489d"
+    },
+    {
+      "code": "АРХИВ·2025",
+      "title": "Архив демоверсий 2025",
+      "path": "Исходники/Архив демоверсий/inf_11_2025.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2025/inf_11_2025.zip",
+      "pages": null,
+      "size": 11816611,
+      "sha256": "b5791cfe541343551faddba80deaad86ab7e584f15d25e8e0f3c8c54a1963337"
+    },
+    {
+      "code": "АРХИВ·2024",
+      "title": "Архив демоверсий 2024",
+      "path": "Исходники/Архив демоверсий/inf_11_2024.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2024/inf_11_2024.zip",
+      "pages": null,
+      "size": 8322965,
+      "sha256": "7a37a1865a1e4e6c455f38bba36eb9df81891a2dc1caf0416f192377e9f824bc"
+    },
+    {
+      "code": "АРХИВ·2023",
+      "title": "Архив демоверсий 2023",
+      "path": "Исходники/Архив демоверсий/inf_11_2023.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2023/inf_11_2023.zip",
+      "pages": null,
+      "size": 8913764,
+      "sha256": "65fe09e5fa029b74508fdabca7b892234bf5ae58bd4cd0bf861c4a30738fc94e"
+    },
+    {
+      "code": "АРХИВ·2022",
+      "title": "Архив демоверсий 2022",
+      "path": "Исходники/Архив демоверсий/inf_11_2022.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2022/inf_11_2022.zip",
+      "pages": null,
+      "size": 6457452,
+      "sha256": "a18109c617ab7731ce8943bd277b423a17f2d7f9083e7e2d09cdbedddcc77b12"
+    },
+    {
+      "code": "АРХИВ·2021",
+      "title": "Архив демоверсий 2021",
+      "path": "Исходники/Архив демоверсий/inf_11_2021.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2021/inf-ege-2021.zip",
+      "pages": null,
+      "size": 3423658,
+      "sha256": "5cd93a59927c9d9437b94ceb77b8a800dbebce2641cdd721239fea3a75ede426"
+    },
+    {
+      "code": "АРХИВ·2020",
+      "title": "Архив демоверсий 2020",
+      "path": "Исходники/Архив демоверсий/inf_11_2020.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2020/inf_ege_2020.zip",
+      "pages": null,
+      "size": 5328247,
+      "sha256": "0bf8acca58aaa1927e1893c064842e00422b123da64f3f56e8b470d064951192"
+    },
+    {
+      "code": "АРХИВ·2019",
+      "title": "Архив демоверсий 2019",
+      "path": "Исходники/Архив демоверсий/inf_11_2019.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2019/inf_ege_2019.zip",
+      "pages": null,
+      "size": 1818134,
+      "sha256": "e915e08201c2bfb5a5e5724bfd032c140536cb0aaa8a81cab91f3f23b4f06ecb"
+    },
+    {
+      "code": "АРХИВ·2018",
+      "title": "Архив демоверсий 2018",
+      "path": "Исходники/Архив демоверсий/inf_11_2018.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2018/ing_ege_2018.zip",
+      "pages": null,
+      "size": 917379,
+      "sha256": "d242061a86a7eecbe3ccf9b423d74125cb7c6978ea3495882bfd6a7333e5e935"
+    },
+    {
+      "code": "АРХИВ·2017",
+      "title": "Архив демоверсий 2017",
+      "path": "Исходники/Архив демоверсий/inf_11_2017.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2017/inf_ege_2017.zip",
+      "pages": null,
+      "size": 879880,
+      "sha256": "b9811f1dafe2554e46f781324ed4bc73d5e15e6381fdbab1ae7a1606d8649db4"
+    },
+    {
+      "code": "АРХИВ·2016",
+      "title": "Архив демоверсий 2016",
+      "path": "Исходники/Архив демоверсий/inf_11_2016.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2016/inf_11_2016.zip",
+      "pages": null,
+      "size": 932857,
+      "sha256": "4c11b03b23c6a391d31fe02d4cdcf1eae42edf477e02d95acb8a8c19be34f774"
+    },
+    {
+      "code": "АРХИВ·2015",
+      "title": "Архив демоверсий 2015",
+      "path": "Исходники/Архив демоверсий/inf_11_2015.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2015/inf_11_2015.zip",
+      "pages": null,
+      "size": 889806,
+      "sha256": "c327d60d07e9d440517ce2753eb025c079d06d9d9f3431fc26697ec3cc638ab4"
+    },
+    {
+      "code": "АРХИВ·2014",
+      "title": "Архив демоверсий 2014",
+      "path": "Исходники/Архив демоверсий/inf_11_2014.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2014/Inf_ege14.zip",
+      "pages": null,
+      "size": 815489,
+      "sha256": "a760ffb2f1d5da8a2b61be8e752823576261d811a579c8d520b2be16105e6f70"
+    },
+    {
+      "code": "АРХИВ·2013",
+      "title": "Архив демоверсий 2013",
+      "path": "Исходники/Архив демоверсий/inf_11_2013.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2013/inf11.zip",
+      "pages": null,
+      "size": 817223,
+      "sha256": "69c765378a78dcfe5731479732b2616e32849b839952acce94ad7d97e16f4041"
+    },
+    {
+      "code": "АРХИВ·2012",
+      "title": "Архив демоверсий 2012",
+      "path": "Исходники/Архив демоверсий/inf_11_2012.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2012/infEGE2012.zip",
+      "pages": null,
+      "size": 846714,
+      "sha256": "552d57441046d584932abc51541924dd65fb470d5c68e320b50d66be9b64e7c0"
+    },
+    {
+      "code": "АРХИВ·2011",
+      "title": "Архив демоверсий 2011",
+      "path": "Исходники/Архив демоверсий/inf_11_2011.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2011/inf_10_11_10.zip",
+      "pages": null,
+      "size": 849066,
+      "sha256": "b2b7e0d56f636b9b321d5dcdbd031302d2c4b3c7d8706e436dfa07e55f756972"
+    },
+    {
+      "code": "АРХИВ·2010",
+      "title": "Архив демоверсий 2010",
+      "path": "Исходники/Архив демоверсий/inf_11_2010.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2010/inf.zip",
+      "pages": null,
+      "size": 1130677,
+      "sha256": "1b2154250ff6f3e0a86120fc837a7f57f84ac6d56b3471656ca0f24c786cff21"
+    },
+    {
+      "code": "АРХИВ·2009",
+      "title": "Архив демоверсий 2009",
+      "path": "Исходники/Архив демоверсий/inf_11_2009.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2009/inf.zip",
+      "pages": null,
+      "size": 1056990,
+      "sha256": "5f42debbac966bb5e38607a52d82132ab62d183297641c922458beacc02afd84"
+    },
+    {
+      "code": "АРХИВ·2007",
+      "title": "Архив демоверсий 2007",
+      "path": "Исходники/Архив демоверсий/inf_11_2007.zip",
+      "source": "https://doc.fipi.ru/ege/demoversii-specifikacii-kodifikatory/2007/inf.zip",
+      "pages": null,
+      "size": 256632,
+      "sha256": "5931792ce009b436f0cabd07f65e6f27074aa4942170516268d8a16a52253858"
+    }
+  ]
+}

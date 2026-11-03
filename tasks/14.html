@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задание 14 ЕГЭ по информатике — Системы счисления</title>
+<meta name="description" content="Перевести число, найти цифру или выполнить арифметику в разных системах счисления. Теория, способы решения и типичные ошибки. ЕГЭ-2027, информатика.">
+<meta name="theme-color" content="#F0F1EB">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="На главную">
+    <span class="brand-mark" aria-hidden="true">И</span>
+    <span class="brand-text">ЕГЭ · Информатика<small>подготовка по заданиям</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a href="../index.html">Главная</a>
+    <a href="../tasks/index.html" class="is-active" aria-current="page">Задания</a>
+    <a href="../documents.html">Документы</a>
+  </nav>
+  <div class="topbar-meta"><span>Задание 14 из 27</span><span>Теория</span></div>
+</header>
+<main id="main">
+
+<nav class="breadcrumb" aria-label="Хлебные крошки"><a href="../index.html">Главная</a><span class="crumb-sep">/</span><a href="index.html">Задания</a><span class="crumb-sep">/</span><span aria-current="page">Задание 14</span></nav>
+
+<section class="task-hero">
+  <div class="task-number" aria-hidden="true">14</div>
+  <div class="task-hero-copy">
+    <p class="eyebrow">Теоретические основы информатики · 1 балл</p>
+    <h1>Системы счисления</h1>
+    <p class="task-subtitle">Перевод и арифметика</p>
+    <p class="lead">Перевести число, найти цифру или выполнить арифметику в разных системах счисления.</p>
+    <div class="task-badges">
+      <span class="badge badge-section badge-section--theory">Теория</span>
+      <span class="badge badge-answer">целое число</span>
+      
+    </div>
+  </div>
+</section>
+
+
+<nav class="task-toc" aria-label="На странице задания">
+  <span class="task-toc-label">На странице</span>
+  
+  <a href="#theory">Теория</a>
+  <a href="#methods">Способы решения</a>
+  <a href="#mistakes">Ошибки</a>
+  <a href="#practice">Практика</a>
+</nav>
+
+<div class="task-layout">
+  <div class="task-main">
+    
+    
+    <section class="task-block">
+      <h2>Что проверяет</h2>
+      <p class="task-checked">Системы счисления: перевод целых чисел, арифметические операции, двоичная, восьмеричная и шестнадцатеричная запись.</p>
+      <p class="task-source">Основание: проект спецификации и кодификатора КИМ 2027. <a href="../documents.html#kim2027">Открыть документы <span aria-hidden="true">↗</span></a></p>
+    </section>
+    
+    
+<section class="task-block task-block--theory" id="theory">
+  <div class="block-head">
+    <p class="eyebrow">Теория</p>
+    <h2>Что нужно знать</h2>
+    <p class="block-lead">Задание 14 проверяет системы счисления: перевод чисел, арифметику в разных основаниях и разбор записи числа по цифрам. В базе Kompege по этой теме 1 377 задач, 121 решение (115 программных) и 287 видеоразборов. Тема сохраняется в 2027 году без изменения номера.</p>
+  </div>
+  <div class="theory-checklist">
+    <p class="mini-label">Минимум для задания 14</p>
+    <ul class="check-list"><li>позиционные системы счисления и алфавит цифр</li><li>перевод в десятичную: развёрнутая запись и схема Горнера</li><li>перевод из десятичной: деление с остатком</li><li>связь оснований 2, 4, 8, 16</li><li>арифметические операции и переносы в основании p</li><li>количество разрядов и границы p^{k−1} ≤ N &lt; p^k</li><li>неизвестная цифра x и её допустимый диапазон</li><li>неизвестное основание p</li><li>анализ цифр: количество, сумма, частота, серии, палиндром</li><li>большие степени и вычитание без вычисления числа</li><li>проверка допустимости цифр и обратный перевод</li></ul>
+  </div>
+  <div class="theory-grid">
+<article class="theory-card">
+  <h3>Позиционная запись</h3>
+  <p>В системе счисления с основанием p используются цифры от 0 до p − 1. Значение числа складывается из цифр, умноженных на степени основания: чем левее цифра, тем больше её вес. Цифры после 9 обозначают латинскими буквами: A = 10, B = 11, …, F = 15, Z = 35.</p>
+  <ul class="theory-list"><li>Основание p показывает, во сколько раз вес следующего разряда больше предыдущего.</li><li>Цифра не может быть больше или равна основанию: в семеричной записи нет цифры 7.</li><li>В основании 2 допустимы только 0 и 1, в основании 16 — 0–9 и A–F.</li><li>Если основание больше 36, в условии отдельно задают обозначения цифр.</li><li>Ведущие нули не меняют значение, но могут изменить количество разрядов.</li></ul>
+  <div class="formula-inline"><code>N = d_k·p^k + d_{k−1}·p^{k−1} + … + d_1·p + d_0</code><code>0 ≤ d_i ≤ p − 1</code></div>
+</article>
+<article class="theory-card">
+  <h3>Перевод в десятичную</h3>
+  <p>Значение числа считают по развёрнутой записи. Схема Горнера делает то же самое без степеней: начинаем с нуля, для каждой цифры умножаем накопленный результат на p и прибавляем цифру.</p>
+  <ul class="theory-list"><li>Схема Горнера: (((d_k·p + d_{k−1})·p + d_{k−2})·p + …)·p + d_0.</li><li>В Python строку без неизвестных переводит int(s, p); буквы A–Z понимаются как 10–35.</li><li>Для неизвестной цифры строку собирают после подстановки или считают коэффициенты вручную.</li><li>Проверка: число цифр и старшая цифра должны соответствовать основанию.</li></ul>
+  <div class="formula-inline"><code>N = ((…((d_k·p + d_{k−1})·p + d_{k−2})·p + …)·p + d_0)</code><code>int(&quot;2A7&quot;, 16) = 679</code></div>
+</article>
+<article class="theory-card">
+  <h3>Перевод из десятичной</h3>
+  <p>Чтобы перевести целое число в основание p, делят его на p с остатком, пока результат не станет нулём. Остатки, записанные в обратном порядке, дают цифры числа.</p>
+  <ul class="theory-list"><li>Остаток от деления — очередная младшая цифра.</li><li>Частное становится новым числом для следующего шага.</li><li>Остатки выписывают снизу вверх: последний остаток — старшая цифра.</li><li>Ноль записывают одной цифрой 0.</li><li>Проверка: обратный перевод должен дать исходное число.</li></ul>
+  <div class="formula-inline"><code>d_i = n mod p</code><code>n ← n div p</code><code>679_10 = 10204_5</code></div>
+</article>
+<article class="theory-card">
+  <h3>Количество разрядов и границы</h3>
+  <p>k-значное число в основании p лежит в полуинтервале от p^{k−1} до p^k. Это позволяет находить основание по количеству цифр и наоборот.</p>
+  <ul class="theory-list"><li>p^{k−1} ≤ N &lt; p^k — ровно k цифр.</li><li>Трёхзначность: p^2 ≤ N &lt; p^3.</li><li>Наименьшее основание для k цифр: p = ⌊N^{1/(k−1)}⌋ + 1 с проверкой.</li><li>Старшая цифра d: d·p^{k−1} ≤ N &lt; (d + 1)·p^{k−1}.</li><li>Для N = 6^30 и трёх цифр: p^2 ≤ 6^30 &lt; p^3, значит p ≈ 6^15.</li></ul>
+  <div class="formula-inline"><code>p^{k−1} ≤ N &lt; p^k</code><code>k = ⌊log_p N⌋ + 1</code></div>
+</article>
+<article class="theory-card">
+  <h3>Основания 2, 4, 8, 16</h3>
+  <p>Если одно основание — степень другого, перевод делают группами битов. Одна шестнадцатеричная цифра — это 4 бита, восьмеричная — 3 бита, четверичная — 2 бита.</p>
+  <ul class="theory-list"><li>16 = 2^4: каждой цифре 0–F соответствует ровно 4 бита.</li><li>8 = 2^3: каждой цифре 0–7 — 3 бита.</li><li>4 = 2^2: каждой цифре 0–3 — 2 бита.</li><li>Группы набирают справа налево; в старшей группе ведущие нули отбрасывают.</li><li>Обратный перевод: двоичную запись разбивают на группы по 3 или 4 бита.</li></ul>
+  <div class="formula-inline"><code>4FDC_16 = 0100 1111 1101 1100_2</code><code>14206_8 = 001 100 010 000 110_2</code></div>
+</article>
+<article class="theory-card">
+  <h3>Арифметика в основании p</h3>
+  <p>Сложение, вычитание и умножение выполняют поразрядно, но перенос и заём равны p, а не 10. Умножение на p сдвигает запись на один разряд влево и дописывает ноль.</p>
+  <ul class="theory-list"><li>При сложении цифр: если сумма ≥ p, записываем сумму − p и переносим 1.</li><li>При вычитании: если уменьшаемое меньше, занимаем p у старшего разряда.</li><li>Умножение на p — сдвиг влево; деление на p — сдвиг вправо.</li><li>Сложение и вычитание удобно проверять переводом в десятичную.</li><li>Нельзя складывать цифры разных оснований без перевода.</li></ul>
+  <div class="formula-inline"><code>a + b = c + carry·p</code><code>a − b = c − borrow·p</code></div>
+</article>
+<article class="theory-card">
+  <h3>Неизвестная цифра</h3>
+  <p>Если цифра x встречается в записи, выражение линейно по x: каждое вхождение даёт x·p^r, где r — позиция разряда. Поэтому E(x) = A + B·x, и перебор нужен только по допустимым цифрам.</p>
+  <ul class="theory-list"><li>x — цифра основания p: 0 ≤ x ≤ p − 1.</li><li>Если x стоит первой цифрой, то 1 ≤ x ≤ p − 1.</li><li>Если в условии x &gt; 0, ноль исключается.</li><li>Коэффициент B — сумма p^r по всем позициям, где стоит x.</li><li>Для двух цифр x и y перебирают пары; порядок и ограничения проверяют отдельно.</li><li>Перебор p ≤ 40 — это не более 40 значений, его всегда можно написать.</li></ul>
+  <div class="formula-inline"><code>E(x) = A + B·x</code><code>E(x) ≡ 0 (mod m)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Неизвестное основание</h3>
+  <p>Основание p должно быть больше каждой цифры, встречающейся в записи. Если p входит в веса разрядов, значение выражения — многочлен от p; его проверяют перебором от максимальной цифры плюс один.</p>
+  <ul class="theory-list"><li>Минимальное основание: p &gt; максимальная цифра в записи.</li><li>Для цифры Z минимальное основание 36, для F — 16.</li><li>Если операнды в разных основаниях, для каждого своё ограничение.</li><li>Основание может быть больше 36; тогда цифры задаются условием.</li><li>Ищите наименьшее p с нужным остатком и не забывайте про верхнюю границу перебора.</li></ul>
+  <div class="formula-inline"><code>p ≥ max(d_i) + 1</code><code>N(p) = d_k·p^k + … + d_0</code></div>
+</article>
+<article class="theory-card">
+  <h3>Анализ цифр записи</h3>
+  <p>Многие задачи просят не число, а характеристику его записи: количество заданных цифр, сумму цифр, самую частую цифру, длину серии одинаковых цифр или палиндромность.</p>
+  <ul class="theory-list"><li>Количество цифр d: считайте остатки n % p при переводе.</li><li>Сумма цифр: складывайте остатки.</li><li>Самая частая цифра: collections.Counter или max(a, key=a.count).</li><li>Серия одинаковых цифр: сравнивайте соседние элементы.</li><li>Палиндром: s == s[::-1]; для перестановок — не более одной нечётной частоты.</li><li>Цифры больше 9 сравнивайте по числовому значению, а не по символу.</li></ul>
+  <div class="formula-inline"><code>count(d) = |{i : d_i = d}|</code><code>sum_digits = Σ d_i</code></div>
+</article>
+<article class="theory-card">
+  <h3>Большие степени и вычитание</h3>
+  <p>Выражения из степеней удобно считать в Python: целые числа не переполняются. Но степени вида 10^{10^{12}} физически не вычислить — тогда анализируют структуру записи.</p>
+  <ul class="theory-list"><li>p^k в основании p — единица и k нулей.</li><li>p^k − 1 в основании p — k цифр p − 1.</li><li>Вычитание из степени превращает нули в p − 1 с заёмом.</li><li>Используйте // вместо /: деление с плавающей точкой теряет точность.</li><li>Для огромных чисел ищите закономерность или считайте по частям.</li></ul>
+  <div class="formula-inline"><code>p^k → 1 и k нулей</code><code>p^k − 1 → k цифр (p − 1)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Проверка</h3>
+  <p>Перед записью ответа проверьте допустимость цифр, количество разрядов и арифметику.</p>
+  <ul class="theory-list"><li>Каждая цифра должна быть меньше основания.</li><li>Ведущая цифра не может быть нулём.</li><li>Сверьте количество цифр с границами p^{k−1} ≤ N &lt; p^k.</li><li>Сделайте обратный перевод результата.</li><li>Убедитесь, что ответ требуется в десятичной системе, а не в исходной.</li></ul>
+  
+</article></div>
+  
+<div class="theory-example">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Разбор примера</p>
+    <h3>Учебный пример: сколько цифр 6 в записи 49^7 + 7^21 − 7</h3>
+    <p>Переведём выражение в степени семёрки и разберём запись по разрядам — без вычисления огромного числа.</p>
+  </div>
+  <div class="theory-example-grid theory-example-grid--single"><div class="table-wrap"><table class="example-table">
+  <caption>Цифры семеричной записи по разрядам</caption>
+  <thead><tr><th>Разряд</th><th>21</th><th>15–20</th><th>14</th><th>1–13</th><th>0</th></tr></thead>
+  <tbody><tr><th>Цифра</th><td>1</td><td>0</td><td>1</td><td>6</td><td>0</td></tr></tbody>
+</table></div></div>
+  <ol class="task-steps"><li>49^7 = (7^2)^7 = 7^14, поэтому выражение равно 7^21 + 7^14 − 7.</li><li>7^14 − 7 = 7·(7^13 − 1) = 6·7 + 6·7^2 + … + 6·7^13: в разрядах с 1-го по 13-й стоят шестёрки.</li><li>Слагаемое 7^21 добавляет единицу в 21-й разряд, а 7^14 — единицу в 14-й.</li><li>Разряды между единицами нулевые, поэтому шестёрки не перекрываются.</li><li>Считаем шестёрки: их ровно 13.</li></ol>
+  <p class="example-answer"><span>Ответ</span>13 шестёрок.</p>
+</div>
+</section>
+    
+<section class="task-block task-block--methods" id="methods">
+  <div class="block-head">
+    <p class="eyebrow">Способы решения</p>
+    <h2>Выберите метод под формулировку</h2>
+    <p class="block-lead">Методы собраны по решениям задания 14 из базы Kompege. Начните с того, что именно нужно найти в условии.</p>
+  </div>
+  <div class="methods-list">
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">01</span>
+    <div>
+      <p class="eyebrow">базовый инструмент</p>
+      <h3>Перевод в десятичную и обратно</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно сравнить числа из разных систем, найти значение выражения или проверить ответ.</p>
+  <ol class="task-steps"><li>Выпишите основание и цифры каждого числа.</li><li>Переведите числа в десятичную по развёрнутой записи или через int(s, p).</li><li>Выполните арифметику в десятичной системе.</li><li>Переведите результат в нужное основание делением с остатком.</li><li>Проверьте обратным переводом.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Переведём 2A7_16 в десятичную, а результат — в пятеричную систему.</p>
+  <pre class="code-block"><code>n = int(&#x27;2A7&#x27;, 16)          # 679
+print(n)
+
+digits = []
+while n:
+    digits.append(n % 5)
+    n //= 5
+
+print(&#x27;&#x27;.join(map(str, digits[::-1])))  # 10204</code></pre>
+  <p class="method-answer"><span>Ответ</span>2A7_16 = 679_10 = 10204_5.</p>
+</div>
+  <p class="method-source">Учебный пример по материалам базы Kompege.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">02</span>
+    <div>
+      <p class="eyebrow">когда x — одна цифра</p>
+      <h3>Неизвестная цифра: перебор по алфавиту</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> В записи есть неизвестная цифра x, и нужно наименьшее или наибольшее x, при котором выражение делится на m.</p>
+  <ol class="task-steps"><li>Определите основание p и допустимый диапазон x.</li><li>Соберите строку числа, подставляя символ цифры.</li><li>Переведите операнды через int(s, p).</li><li>Проверьте остаток от деления на m.</li><li>Выберите наименьшее или наибольшее подходящее x; при необходимости вычислите частное.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Основание 15, выражение 6x839_15 + 5793xx5_15 + 53129x_15 + 14x677935_15. Ищем наименьшее x, при котором значение кратно 14.</p>
+  <pre class="code-block"><code>digits = &#x27;0123456789ABCDE&#x27;
+for x in digits:
+    s = (int(f&#x27;6{x}839&#x27;, 15)
+         + int(f&#x27;5793{x}{x}5&#x27;, 15)
+         + int(f&#x27;53129{x}&#x27;, 15)
+         + int(f&#x27;14{x}677935&#x27;, 15))
+    if s % 14 == 0:
+        print(x, s // 14)
+        break</code></pre>
+  <p class="method-answer"><span>Ответ</span>x = D (13), частное 247 598 743.</p>
+</div>
+  <p class="method-source">Задача № 11301 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">03</span>
+    <div>
+      <p class="eyebrow">когда x входит линейно</p>
+      <h3>Неизвестная цифра: коэффициенты и сравнение</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно объяснить решение без перебора или быстро оценить, какие x подходят.</p>
+  <ol class="task-steps"><li>Представьте выражение в виде A + B·x, собрав коэффициенты при x.</li><li>Запишите условие делимости: A + B·x ≡ 0 (mod m).</li><li>Переберите только x из допустимого диапазона — обычно их меньше 40.</li><li>Проверьте, что x — допустимая цифра и не ведущий ноль.</li><li>Для двух переменных постройте таблицу или двойной цикл.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>442x18_9 + 1x273_9 кратно 7. Найдём все подходящие x и выберем наибольшее.</p>
+  <pre class="code-block"><code>best = None
+for x in &#x27;012345678&#x27;:
+    n = int(f&#x27;442{x}18&#x27;, 9) + int(f&#x27;1{x}273&#x27;, 9)
+    if n % 7 == 0:
+        best = (x, n // 7)
+
+print(best)   # (&#x27;7&#x27;, 39482)</code></pre>
+  <p class="method-answer"><span>Ответ</span>x = 7, частное 39 482.</p>
+</div>
+  <p class="method-source">Задача № 28812 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">04</span>
+    <div>
+      <p class="eyebrow">когда основание не задано</p>
+      <h3>Неизвестное основание p</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> В условии сказано «в системе счисления с некоторым основанием p»; нужно найти наименьшее или наибольшее p.</p>
+  <ol class="task-steps"><li>Найдите максимальную цифру в записи: p должно быть больше неё.</li><li>Переберите p от максимальной цифры плюс один вверх.</li><li>Для каждого p переведите операнды и проверьте условие.</li><li>Остановитесь на первом подходящем p или просмотрите все.</li><li>Вычислите требуемое значение и проверьте его.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>11353712_p + 135421_p кратно 31. Ищем наименьшее основание p.</p>
+  <pre class="code-block"><code>for p in range(8, 40):          # цифра 7 =&gt; p &gt;= 8
+    s = int(&#x27;11353712&#x27;, p) + int(&#x27;135421&#x27;, p)
+    if s % 31 == 0:
+        print(p, s // 31)       # 15 5991033
+        break</code></pre>
+  <p class="method-answer"><span>Ответ</span>p = 15, частное 5 991 033.</p>
+</div>
+  <p class="method-source">Задача № 23933 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">05</span>
+    <div>
+      <p class="eyebrow">когда переменных две</p>
+      <h3>Две неизвестные цифры x и y</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> В выражении две цифры, возможно в разных основаниях; нужно максимизировать сумму, разность или само значение.</p>
+  <ol class="task-steps"><li>Определите диапазоны x и y по основаниям.</li><li>Добавьте ограничения из условия: x &gt; 0, x &lt; y, разные цифры.</li><li>Переберите пары вложенными циклами.</li><li>Для каждой пары вычислите выражение и проверьте делимость.</li><li>Выберите пару с нужным экстремумом и посчитайте ответ.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>943697x21_21 − 2y9253_21 кратно 20. Нужно наибольшее x − y.</p>
+  <pre class="code-block"><code>digits = &#x27;0123456789ABCDEFGHIJK&#x27;
+best = None
+for x in range(21):
+    for y in range(21):
+        a = int(&#x27;943697&#x27; + digits[x] + &#x27;21&#x27;, 21)
+        b = int(&#x27;2&#x27; + digits[y] + &#x27;9253&#x27;, 21)
+        if (a - b) % 20 == 0:
+            if best is None or x - y &gt; best[0]:
+                best = (x - y, x, y, (a - b) // 20)
+
+print(best)   # (20, 20, 0, 17394273143)</code></pre>
+  <p class="method-answer"><span>Ответ</span>x = 20, y = 0, частное 17 394 273 143.</p>
+</div>
+  <p class="method-source">Задача № 16261 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">06</span>
+    <div>
+      <p class="eyebrow">2, 4, 8, 16</p>
+      <h3>Основания — степени двойки</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно перевести между двоичной, четверичной, восьмеричной и шестнадцатеричной системами.</p>
+  <ol class="task-steps"><li>Определите, сколько битов приходится на одну цифру: 2, 3 или 4.</li><li>Разбейте двоичную запись на группы справа налево.</li><li>Дополните старшую группу нулями слева при необходимости.</li><li>Замените каждую группу на цифру нужной системы.</li><li>Для обратного перехода замените каждую цифру группой битов.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>4FDC_16 + 14206_8 + 1100010000110_2. Сколько значащих нулей в двоичной записи?</p>
+  <pre class="code-block"><code>n = int(&#x27;4fdc&#x27;, 16) + int(&#x27;14206&#x27;, 8) + int(&#x27;1100010000110&#x27;, 2)
+print(bin(n)[2:])             # 1000000011101000
+print(bin(n)[2:].count(&#x27;0&#x27;))  # 11</code></pre>
+  <p class="method-answer"><span>Ответ</span>11 нулей.</p>
+</div>
+  <p class="method-source">Задача № 12077 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">07</span>
+    <div>
+      <p class="eyebrow">количество, сумма, частота</p>
+      <h3>Анализ цифр записи</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Спрашивают количество заданных цифр, сумму цифр, самую частую цифру или длину серии.</p>
+  <ol class="task-steps"><li>Переведите число в нужное основание, сохраняя остатки.</li><li>Для количества и суммы обрабатывайте остатки сразу.</li><li>Для частоты используйте Counter.</li><li>Для серии сравнивайте соседние цифры.</li><li>Сверьте ответ с длиной записи и границами.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>5·3^1917 + 6·2^1878 + 7·3^1870 − 1991 записали в 17-ричной системе. Какая цифра встречается чаще всего?</p>
+  <pre class="code-block"><code>from collections import Counter
+
+n = 5 * 3**1917 + 6 * 2**1878 + 7 * 3**1870 - 1991
+digits = []
+while n:
+    digits.append(n % 17)
+    n //= 17
+
+print(Counter(digits).most_common(1))  # [(5, 56)]</code></pre>
+  <p class="method-answer"><span>Ответ</span>цифра 5 (56 раз).</p>
+</div>
+  <p class="method-source">Задача № 9916 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">08</span>
+    <div>
+      <p class="eyebrow">когда число огромное</p>
+      <h3>Большие степени и вычитание</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Выражение состоит из степеней, и нужно количество цифр или сумма цифр.</p>
+  <ol class="task-steps"><li>Проверьте, можно ли вычислить число в Python (обычно да).</li><li>Используйте целочисленное деление //, а не /.</li><li>Для очень больших степеней анализируйте структуру: p^k, p^k − 1, заём.</li><li>Считайте цифры при переводе, не храните лишние данные.</li><li>Проверьте ответ на малом примере.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>((8^200 − ((2^4 − 7)·2^(9+7)) + 11) / 3) записали в восьмеричной системе. Сколько цифр 2?</p>
+  <pre class="code-block"><code>a = (8**200 - (2**4 - 7) * 2**(9 + 7) + 11) // 3
+digits = []
+while a:
+    digits.append(a % 8)
+    a //= 8
+
+print(digits.count(2))   # 98</code></pre>
+  <p class="method-answer"><span>Ответ</span>98 цифр.</p>
+</div>
+  <p class="method-source">Задача № 25512 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">09</span>
+    <div>
+      <p class="eyebrow">последняя цифра, длина, палиндром</p>
+      <h3>Условия на запись числа</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно найти число или сумму чисел по свойствам его записи в разных системах.</p>
+  <ol class="task-steps"><li>Последняя цифра d: N mod p = d.</li><li>Первая цифра d: d·p^{k−1} ≤ N &lt; (d + 1)·p^{k−1}.</li><li>Ровно k цифр: p^{k−1} ≤ N &lt; p^k.</li><li>Палиндром: цифры читаются одинаково в обе стороны.</li><li>Переберите диапазон или выведите шаг арифметической прогрессии.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Найдите сумму положительных чисел ≤ 95, запись которых в пятеричной системе оканчивается на 21, а в троичной начинается с 1.</p>
+  <pre class="code-block"><code>def to_base(n, p):
+    digits = []
+    while n:
+        digits.append(n % p)
+        n //= p
+    return digits[::-1]
+
+total = 0
+for n in range(1, 96):
+    b5, b3 = to_base(n, 5), to_base(n, 3)
+    if b5[-2:] == [2, 1] and b3[0] == 1:
+        total += n
+
+print(total)   # 133</code></pre>
+  <p class="method-answer"><span>Ответ</span>133 (числа 11, 36 и 86).</p>
+</div>
+  <p class="method-source">Задача № 26589 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">10</span>
+    <div>
+      <p class="eyebrow">перед записью ответа</p>
+      <h3>Проверка и типичные ловушки</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Ответ получен, но нужно исключить обидную ошибку.</p>
+  
+  <ul class="task-list"><li>Проверьте, что каждая цифра меньше основания.</li><li>Ведущая цифра не может быть нулём.</li><li>Не путайте значение цифры и её символ: A — это 10, а не 1.</li><li>Для оснований больше 10 переводите буквы в числа.</li><li>Не используйте / там, где нужна целочисленная арифметика.</li><li>Проверьте, что нашли именно min или max, а не первое подходящее значение.</li><li>Убедитесь, что ответ требуется в десятичной системе, а не в исходной.</li><li>Сверьте количество цифр с ожидаемым диапазоном.</li><li>Для двух переменных проверьте ограничения x &lt; y и x &gt; 0.</li><li>Сделайте обратный перевод результата.</li></ul>
+  
+  
+</article></div>
+  
+<div class="cheatsheet">
+  <p class="mini-label">Шпаргалка: формулировка → метод</p>
+  <div class="cheatsheet-wrap">
+    <table class="cheatsheet-table">
+      <thead><tr><th>В условии</th><th>Что делать</th></tr></thead>
+      <tbody><tr><td>«перевести число в десятичную»</td><td>развёрнутая запись или int(s, p)</td></tr><tr><td>«перевести из десятичной»</td><td>деление с остатком, остатки снизу вверх</td></tr><tr><td>«сколько цифр d»</td><td>считать n % p при переводе</td></tr><tr><td>«сумма цифр»</td><td>складывать остатки n % p</td></tr><tr><td>«самая частая цифра»</td><td>Counter(digits)</td></tr><tr><td>«сколько значащих нулей»</td><td>считать остатки, равные 0</td></tr><tr><td>«наибольшая серия одинаковых»</td><td>сравнивать соседние цифры</td></tr><tr><td>«x — неизвестная цифра»</td><td>перебор 0…p−1, int(s, p)</td></tr><tr><td>«наименьшее/наибольшее x»</td><td>перебор по возрастанию/убыванию</td></tr><tr><td>«неизвестное основание p»</td><td>p &gt; max цифры, перебор p</td></tr><tr><td>«две неизвестные x и y»</td><td>двойной цикл и ограничения</td></tr><tr><td>«кратно m»</td><td>проверка s % m == 0</td></tr><tr><td>«найти частное»</td><td>s // m</td></tr><tr><td>«основания 2, 4, 8, 16»</td><td>группы по 1, 2, 3, 4 бита</td></tr><tr><td>«k-значное число»</td><td>p^{k−1} ≤ N &lt; p^k</td></tr><tr><td>«оканчивается на d»</td><td>N % p == d</td></tr><tr><td>«начинается с d»</td><td>d·p^{k−1} ≤ N &lt; (d+1)·p^{k−1}</td></tr><tr><td>«палиндром»</td><td>s == s[::-1]</td></tr><tr><td>«огромная степень»</td><td>p^k — единица и k нулей; p^k − 1 — k цифр p−1</td></tr><tr><td>«проверка»</td><td>обратный перевод и допустимость цифр</td></tr></tbody>
+    </table>
+  </div>
+</div>
+  
+<div class="video-block">
+  <p class="mini-label">Видеоразборы по теме</p>
+  <div class="video-list"><a class="video-link" href="https://vkvideo.ru/video-233744568_456239017?t=3954" target="_blank" rel="noopener noreferrer"><span class="video-label">Неизвестные основания и буквенные цифры</span><span class="video-meta">№ 24619 · 1:05:54</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://youtu.be/fYxg0H0wTr8?t=3015" target="_blank" rel="noopener noreferrer"><span class="video-label">Сколько цифр 6 в семеричной записи</span><span class="video-meta">№ 13 · 50:15</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/TM6hheV1rmQ" target="_blank" rel="noopener noreferrer"><span class="video-label">Значащие нули в двоичной записи</span><span class="video-meta">№ 230</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/7oyG0Zlzi2I?t=4930" target="_blank" rel="noopener noreferrer"><span class="video-label">Сумма цифр в семеричной записи</span><span class="video-meta">№ 3576 · 1:22:10</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/Lia5hJuwplg?t=447" target="_blank" rel="noopener noreferrer"><span class="video-label">Самая частая цифра</span><span class="video-meta">№ 2860 · 7:27</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/EOu-GMFhJYk" target="_blank" rel="noopener noreferrer"><span class="video-label">Максимальная серия одинаковых цифр</span><span class="video-meta">№ 4326</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/BMVaYPPqB2k?t=2747" target="_blank" rel="noopener noreferrer"><span class="video-label">Неизвестная цифра в основании 26</span><span class="video-meta">№ 11233 · 45:47</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/YjHKqD4d6Bc?t=6145" target="_blank" rel="noopener noreferrer"><span class="video-label">Неизвестная цифра в основании 19</span><span class="video-meta">№ 12468 · 1:42:25</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/w7du6qYh4TQ?t=6155" target="_blank" rel="noopener noreferrer"><span class="video-label">Две неизвестные цифры x и y</span><span class="video-meta">№ 16261 · 1:42:35</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/ZD4A_s3MIM4?t=2580" target="_blank" rel="noopener noreferrer"><span class="video-label">Поиск x по количеству нулей</span><span class="video-meta">№ 17788 · 43:00</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/gTgHaHHb4mE?t=3473" target="_blank" rel="noopener noreferrer"><span class="video-label">Перевод между 2, 8 и 16</span><span class="video-meta">№ 97 · 57:53</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/SOj_CnlrGv8" target="_blank" rel="noopener noreferrer"><span class="video-label">Решение уравнения с основаниями</span><span class="video-meta">№ 239</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/YYEzVBnXcr8" target="_blank" rel="noopener noreferrer"><span class="video-label">Сколько существует систем счисления</span><span class="video-meta">№ 245</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a></div>
+  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+</div>
+  <p class="method-source-note">По базе Kompege: в нумерации ЕГЭ тема систем счисления хранится под № 14 — 1 377 задач, 121 решение (115 программных и 6 текстовых) и 287 видеоразборов (190 YouTube, 63 VK, 34 Rutube). Для методов отобраны задачи № 11301, 28812, 23933, 16261, 12077, 9916, 25512 и 26589; дополнительные примеры и видеоразборы — задачи № 13, 97, 230, 239, 245, 2860, 3576, 4326, 12468, 17788 и 24619; примеры переработаны в учебные.</p>
+</section>
+    <section class="task-block" id="mistakes">
+      <h2>Типичные ошибки</h2>
+      <ul class="task-list task-list--mistakes"><li>неверное основание</li><li>потеря ведущих нулей</li><li>арифметика в основании</li><li>путаница цифры и значения</li></ul>
+    </section>
+    
+    
+    <section class="task-block" id="practice">
+      <h2>Практика</h2>
+      
+<div class="practice-grid">
+  <a class="practice-link" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener noreferrer">
+    <span class="practice-label">ФИПИ</span><span class="practice-title">Открытый банк заданий</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80.%20%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B8.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Навигатор · 2026</span><span class="practice-title">Теория</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/inf_11_2027/%D0%98%D0%9D%D0%A4-11%20%D0%95%D0%93%D0%AD%202027%20%D0%94%D0%95%D0%9C%D0%9E.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Демоверсия</span><span class="practice-title">КИМ 2027</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0.%202026.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Методика</span><span class="practice-title">Разбор ошибок 2026</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+</div>
+<p class="practice-note">Навигатор и методические рекомендации опубликованы в 2026 году: номера заданий в них могут отличаться от нумерации 2027 года. Ориентируйтесь на тему.</p>
+    </section>
+    
+<div class="related-links">
+  <span class="related-label">Смотрите также</span>
+  <a class="related-link" href="08.html">08 · Комбинаторика и коды</a><a class="related-link" href="11.html">11 · Объём сообщения</a>
+</div>
+    <nav class="prev-next" aria-label="Соседние задания">
+      <a class="prev-next-link" href="13.html"><span>← Предыдущее</span><strong>13 · Ход исполнения алгоритма</strong></a>
+      <a class="prev-next-link prev-next-link--next" href="15.html"><span>Следующее →</span><strong>15 · Логика и множества</strong></a>
+    </nav>
+  </div>
+
+  <aside class="task-aside">
+    <div class="aside-card">
+      <div class="aside-head">
+        <span>Карта заданий</span>
+        <span class="map-progress" data-progress-count>0 / 27</span>
+      </div>
+      <div class="task-map task-map--compact" data-task-map><a class="task-cell task-cell--digital task-cell--compact" href="01.html" data-task="1" data-section="digital" data-title="Графы и таблицы" data-caption="&lt;strong&gt;Задание 1&lt;/strong&gt; · Графы и таблицы · Цифровая грамотность · 1 балл" aria-label="Задание 1: Графы и таблицы"><span>1</span></a><a class="task-cell task-cell--theory task-cell--compact" href="02.html" data-task="2" data-section="theory" data-title="Логические функции" data-caption="&lt;strong&gt;Задание 2&lt;/strong&gt; · Логические функции · Теория · 1 балл" aria-label="Задание 2: Логические функции"><span>2</span></a><a class="task-cell task-cell--it task-cell--compact" href="03.html" data-task="3" data-section="it" data-title="Базы данных" data-caption="&lt;strong&gt;Задание 3&lt;/strong&gt; · Базы данных · Информационные технологии · 1 балл" aria-label="Задание 3: Базы данных"><span>3</span></a><a class="task-cell task-cell--theory task-cell--compact" href="04.html" data-task="4" data-section="theory" data-title="Коды и условие Фано" data-caption="&lt;strong&gt;Задание 4&lt;/strong&gt; · Коды и условие Фано · Теория · 1 балл" aria-label="Задание 4: Коды и условие Фано"><span>4</span></a><a class="task-cell task-cell--algo task-cell--compact" href="05.html" data-task="5" data-section="algo" data-title="Алгоритмы исполнителя" data-caption="&lt;strong&gt;Задание 5&lt;/strong&gt; · Алгоритмы исполнителя · Алгоритмы · 1 балл" aria-label="Задание 5: Алгоритмы исполнителя"><span>5</span></a><a class="task-cell task-cell--algo task-cell--compact" href="06.html" data-task="6" data-section="algo" data-title="Исполнители и координаты" data-caption="&lt;strong&gt;Задание 6&lt;/strong&gt; · Исполнители и координаты · Алгоритмы · 1 балл" aria-label="Задание 6: Исполнители и координаты"><span>6</span></a><a class="task-cell task-cell--theory task-cell--compact" href="07.html" data-task="7" data-section="theory" data-title="Графика и звук" data-caption="&lt;strong&gt;Задание 7&lt;/strong&gt; · Графика и звук · Теория · 1 балл" aria-label="Задание 7: Графика и звук"><span>7</span></a><a class="task-cell task-cell--theory task-cell--compact" href="08.html" data-task="8" data-section="theory" data-title="Комбинаторика и коды" data-caption="&lt;strong&gt;Задание 8&lt;/strong&gt; · Комбинаторика и коды · Теория · 1 балл" aria-label="Задание 8: Комбинаторика и коды"><span>8</span></a><a class="task-cell task-cell--it task-cell--compact" href="09.html" data-task="9" data-section="it" data-title="Электронные таблицы" data-caption="&lt;strong&gt;Задание 9&lt;/strong&gt; · Электронные таблицы · Информационные технологии · 1 балл" aria-label="Задание 9: Электронные таблицы"><span>9</span></a><a class="task-cell task-cell--digital task-cell--compact" href="10.html" data-task="10" data-section="digital" data-title="IP-адреса и маски" data-caption="&lt;strong&gt;Задание 10&lt;/strong&gt; · IP-адреса и маски · Цифровая грамотность · 1 балл" aria-label="Задание 10: IP-адреса и маски"><span>10</span></a><a class="task-cell task-cell--theory task-cell--compact" href="11.html" data-task="11" data-section="theory" data-title="Объём сообщения" data-caption="&lt;strong&gt;Задание 11&lt;/strong&gt; · Объём сообщения · Теория · 1 балл" aria-label="Задание 11: Объём сообщения"><span>11</span></a><a class="task-cell task-cell--algo task-cell--compact" href="12.html" data-task="12" data-section="algo" data-title="Исполнитель МТ" data-caption="&lt;strong&gt;Задание 12&lt;/strong&gt; · Исполнитель МТ · Алгоритмы · 1 балл" aria-label="Задание 12: Исполнитель МТ"><span>12</span></a><a class="task-cell task-cell--algo task-cell--compact" href="13.html" data-task="13" data-section="algo" data-title="Ход исполнения алгоритма" data-caption="&lt;strong&gt;Задание 13&lt;/strong&gt; · Ход исполнения алгоритма · Алгоритмы · 1 балл" aria-label="Задание 13: Ход исполнения алгоритма"><span>13</span></a><a class="task-cell task-cell--theory is-current task-cell--compact" href="14.html" data-task="14" data-section="theory" data-title="Системы счисления" data-caption="&lt;strong&gt;Задание 14&lt;/strong&gt; · Системы счисления · Теория · 1 балл" aria-label="Задание 14: Системы счисления"><span>14</span></a><a class="task-cell task-cell--theory task-cell--compact" href="15.html" data-task="15" data-section="theory" data-title="Логика и множества" data-caption="&lt;strong&gt;Задание 15&lt;/strong&gt; · Логика и множества · Теория · 1 балл" aria-label="Задание 15: Логика и множества"><span>15</span></a><a class="task-cell task-cell--algo task-cell--compact" href="16.html" data-task="16" data-section="algo" data-title="Рекурсия" data-caption="&lt;strong&gt;Задание 16&lt;/strong&gt; · Рекурсия · Алгоритмы · 1 балл" aria-label="Задание 16: Рекурсия"><span>16</span></a><a class="task-cell task-cell--algo task-cell--compact" href="17.html" data-task="17" data-section="algo" data-title="Обработка последовательности" data-caption="&lt;strong&gt;Задание 17&lt;/strong&gt; · Обработка последовательности · Алгоритмы · 1 балл" aria-label="Задание 17: Обработка последовательности"><span>17</span></a><a class="task-cell task-cell--it task-cell--compact" href="18.html" data-task="18" data-section="it" data-title="Таблицы: анализ и оптимизация" data-caption="&lt;strong&gt;Задание 18&lt;/strong&gt; · Таблицы: анализ и оптимизация · Информационные технологии · 1 балл" aria-label="Задание 18: Таблицы: анализ и оптимизация"><span>18</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html" data-task="19" data-section="theory" data-title="Теория игр" data-caption="&lt;strong&gt;Задание 19&lt;/strong&gt; · Теория игр · Теория · 1 балл" aria-label="Задание 19: Теория игр"><span>19</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-20" data-task="20" data-section="theory" data-title="Теория игр: две кучи" data-caption="&lt;strong&gt;Задание 20&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 20: Теория игр: две кучи"><span>20</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-21" data-task="21" data-section="theory" data-title="Теория игр: стратегия" data-caption="&lt;strong&gt;Задание 21&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 21: Теория игр: стратегия"><span>21</span></a><a class="task-cell task-cell--theory task-cell--compact" href="22.html" data-task="22" data-section="theory" data-title="Параллельные вычисления" data-caption="&lt;strong&gt;Задание 22&lt;/strong&gt; · Параллельные вычисления · Теория · 1 балл" aria-label="Задание 22: Параллельные вычисления"><span>22</span></a><a class="task-cell task-cell--theory task-cell--compact" href="23.html" data-task="23" data-section="theory" data-title="Графы: пути" data-caption="&lt;strong&gt;Задание 23&lt;/strong&gt; · Графы: пути · Теория · 1 балл" aria-label="Задание 23: Графы: пути"><span>23</span></a><a class="task-cell task-cell--algo task-cell--compact" href="24.html" data-task="24" data-section="algo" data-title="Символьные строки" data-caption="&lt;strong&gt;Задание 24&lt;/strong&gt; · Символьные строки · Алгоритмы · 1 балл" aria-label="Задание 24: Символьные строки"><span>24</span></a><a class="task-cell task-cell--algo task-cell--compact" href="25.html" data-task="25" data-section="algo" data-title="Натуральные числа" data-caption="&lt;strong&gt;Задание 25&lt;/strong&gt; · Натуральные числа · Алгоритмы · 1 балл" aria-label="Задание 25: Натуральные числа"><span>25</span></a><a class="task-cell task-cell--algo task-cell--compact" href="26.html" data-task="26" data-section="algo" data-title="Массив: сортировка" data-caption="&lt;strong&gt;Задание 26&lt;/strong&gt; · Массив: сортировка · Алгоритмы · 2 балла" aria-label="Задание 26: Массив: сортировка"><span>26</span></a><a class="task-cell task-cell--it task-cell--compact" href="27.html" data-task="27" data-section="it" data-title="Анализ данных" data-caption="&lt;strong&gt;Задание 27&lt;/strong&gt; · Анализ данных · Информационные технологии · 2 балла" aria-label="Задание 27: Анализ данных"><span>27</span></a></div>
+      <a class="aside-link" href="index.html">Все задания <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="aside-card aside-card--progress">
+      <p class="aside-label">Прогресс</p>
+      <button class="btn btn-primary progress-toggle" type="button" data-progress-toggle="14" aria-pressed="false">Отметить как изученное</button>
+      <p class="progress-note" data-progress-text>0 из 27 изучено</p>
+      <div class="progress-line" aria-hidden="true"><span data-progress-bar></span></div>
+    </div>
+    <div class="aside-card">
+      <p class="aside-label">Быстрые ссылки</p>
+      <a class="aside-link" href="../documents.html#kim2027">Демоверсия 2027 <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html#method">Навигатор и методика <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html">Все документы <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-mark">ЕГЭ · Информатика · 2027</p>
+      <p class="footer-note">Разбор заданий, ключевые темы и официальные документы. Составлено 3 ноября 2026. Не является официальным ресурсом ФИПИ или Рособрнадзора.</p>
+    </div>
+    <div>
+      <p class="footer-title">Разделы</p>
+      <p class="footer-note"><a href="../index.html">Главная</a> · <a href="../tasks/index.html">Все задания</a> · <a href="../documents.html">Документы</a></p>
+      <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
+    </div>
+    <div>
+      <p class="footer-title">Первоисточники</p>
+      <p class="footer-note"><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ</a> · <a href="https://obrnadzor.gov.ru/gia/gia-11/" target="_blank" rel="noopener noreferrer">Рособрнадзор</a> · <a href="https://regulation.gov.ru/projects/172223/" target="_blank" rel="noopener noreferrer">проект расписания</a></p>
+      <p class="footer-note">Права на документы принадлежат их правообладателям. Копии сохранены для ознакомления и подготовки.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

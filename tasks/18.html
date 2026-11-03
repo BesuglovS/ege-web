@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задание 18 ЕГЭ по информатике — Таблицы: анализ и оптимизация</title>
+<meta name="description" content="Пройти по таблице-лабиринту, собрать числа и найти максимальную и минимальную суммы. Теория, способы решения и типичные ошибки. ЕГЭ-2027, информатика.">
+<meta name="theme-color" content="#F0F1EB">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="На главную">
+    <span class="brand-mark" aria-hidden="true">И</span>
+    <span class="brand-text">ЕГЭ · Информатика<small>подготовка по заданиям</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a href="../index.html">Главная</a>
+    <a href="../tasks/index.html" class="is-active" aria-current="page">Задания</a>
+    <a href="../documents.html">Документы</a>
+  </nav>
+  <div class="topbar-meta"><span>Задание 18 из 27</span><span>Информационные технологии</span></div>
+</header>
+<main id="main">
+
+<nav class="breadcrumb" aria-label="Хлебные крошки"><a href="../index.html">Главная</a><span class="crumb-sep">/</span><a href="index.html">Задания</a><span class="crumb-sep">/</span><span aria-current="page">Задание 18</span></nav>
+
+<section class="task-hero">
+  <div class="task-number" aria-hidden="true">18</div>
+  <div class="task-hero-copy">
+    <p class="eyebrow">Информационные технологии · 1 балл</p>
+    <h1>Таблицы: анализ и оптимизация</h1>
+    <p class="task-subtitle">Робот и лабиринт</p>
+    <p class="lead">Пройти по таблице-лабиринту, собрать числа и найти максимальную и минимальную суммы.</p>
+    <div class="task-badges">
+      <span class="badge badge-section badge-section--it">Информационные технологии</span>
+      <span class="badge badge-answer">два целых числа</span>
+      
+    </div>
+  </div>
+</section>
+
+
+<nav class="task-toc" aria-label="На странице задания">
+  <span class="task-toc-label">На странице</span>
+  
+  <a href="#theory">Теория</a>
+  <a href="#methods">Способы решения</a>
+  <a href="#mistakes">Ошибки</a>
+  <a href="#practice">Практика</a>
+</nav>
+
+<div class="task-layout">
+  <div class="task-main">
+    
+    
+    <section class="task-block">
+      <h2>Что проверяет</h2>
+      <p class="task-checked">Анализ данных с помощью электронных таблиц, задачи оптимизации.</p>
+      <p class="task-source">Основание: проект спецификации и кодификатора КИМ 2027. <a href="../documents.html#kim2027">Открыть документы <span aria-hidden="true">↗</span></a></p>
+    </section>
+    
+    
+<section class="task-block task-block--theory" id="theory">
+  <div class="block-head">
+    <p class="eyebrow">Теория</p>
+    <h2>Что нужно знать</h2>
+    <p class="block-lead">Задание 18 — это задача оптимизации на таблице: поле-лабиринт, в каждой клетке число, исполнитель идёт по разрешённым командам и собирает числа. В 2027 году задание относится к разделу «Информационные технологии», стоит 1 первичный балл, а ответ — два целых числа.</p>
+  </div>
+  <div class="theory-checklist">
+    <p class="mini-label">Минимум для задания 18</p>
+    <ul class="check-list"><li>находить стартовую и конечную клетки</li><li>различать внешние и внутренние стены</li><li>определять конечные (угловые) клетки</li><li>выписывать разрешённые команды и смещения</li><li>задавать стартовое значение динамики</li><li>учитывать стены при переходе</li><li>считать максимум и минимум отдельно</li><li>собирать ответ по всем конечным клеткам</li><li>заменять вес клетки при изменённых правилах</li><li>проверять порядок двух чисел в ответе</li></ul>
+  </div>
+  <div class="theory-grid">
+<article class="theory-card">
+  <h3>Поле, старт и финиш</h3>
+  <p>Поле — квадрат N×N (в некоторых вариантах прямоугольная таблица; обычно N от 10 до 30). В каждой клетке записано число: монета, бонус, плата, высота или заряд. Исполнитель за один ход перемещается по командам условия. Число посещённой клетки добавляется к счёту; стартовая и конечная клетки тоже учитываются, если в условии не сказано иначе.</p>
+  <ul class="theory-list"><li>Старт может быть в любом углу, а не только в левом верхнем.</li><li>Финиш может быть один (правый нижний угол) или несколько «угловых» клеток.</li><li>Путь монотонный: назад и по кругу обычно ходить нельзя.</li><li>Числа могут быть отрицательными — тогда «максимум» и «минимум» особенно важно не перепутать.</li><li>Если в условии сказано «из любой левой клетки», стартов несколько.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Стены и запрещённые клетки</h3>
+  <p>Стена — это утолщённая линия между клетками или по границе поля. Переход через неё запрещён. Иногда запрет задан не линией, а цветом клетки, значением 0 или диапазоном 101–499.</p>
+  <ul class="theory-list"><li>Проверяйте стену со стороны той клетки, из которой идёт ход.</li><li>Внешняя граница тоже стена: за пределы поля выходить нельзя.</li><li>Стена справа от (i, j) запрещает переход (i, j) → (i, j+1).</li><li>Стена снизу от (i, j) запрещает переход (i, j) → (i+1, j).</li><li>Запрещённую клетку удобно считать недостижимой: dp = None или −∞/+∞.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Динамика по клеткам</h3>
+  <p>Главная идея: лучший результат в клетке зависит только от лучших результатов в клетках, из которых в неё можно прийти. Для команд «вправо» и «вниз» это верхний и левый соседи. Для минимума нужна отдельная копия таблицы: значения максимума не равны значениям минимума, поэтому таблицу нужно пересчитать с MIN.</p>
+  <ul class="theory-list"><li>Если сверху стена, верхний сосед не рассматривается.</li><li>Если слева стена, левый сосед не рассматривается.</li><li>Если оба перехода запрещены, клетка недостижима.</li><li>Для минимума нельзя инициализировать нулём: ноль может оказаться «лучше» реального пути.</li></ul>
+  <div class="formula-inline"><code>dp_max[i][j] = a[i][j] + max(dp_max[i-1][j], dp_max[i][j-1])</code><code>dp_min[i][j] = a[i][j] + min(dp_min[i-1][j], dp_min[i][j-1])</code><code>dp[0][0] = a[0][0]</code><code>недостижимо: −∞ для максимума, +∞ для минимума</code></div>
+</article>
+<article class="theory-card">
+  <h3>Порядок обхода</h3>
+  <p>Формулы работают, только если к моменту обработки клетки все её предшественники уже посчитаны. Порядок зависит от команд.</p>
+  <ul class="theory-list"><li>«вправо/вниз»: строки сверху вниз, внутри строки слева направо.</li><li>«влево/вниз»: строки сверху вниз, внутри строки справа налево.</li><li>«вверх/вправо»: строки снизу вверх, внутри строки слева направо.</li><li>«вверх/влево»: строки снизу вверх, внутри строки справа налево.</li><li>Если направлений несколько, ориентируйтесь на то, что все предшественники должны быть раньше.</li></ul>
+  <div class="formula-inline"><code>«влево/вниз»: dp[i][j] = a[i][j] + max(dp[i][j+1], dp[i-1][j])</code><code>«вверх/вправо»: dp[i][j] = a[i][j] + max(dp[i+1][j], dp[i][j-1])</code><code>«вверх/влево»: dp[i][j] = a[i][j] + max(dp[i+1][j], dp[i][j+1])</code></div>
+</article>
+<article class="theory-card">
+  <h3>Конечные клетки</h3>
+  <p>В формулировке «угловые клетки, справа и снизу ограниченные стенами» финишей может быть несколько. Это не только правый нижний угол: любая клетка, из которой нельзя пойти вправо и вниз, даёт итоговую сумму.</p>
+  <ul class="theory-list"><li>Сначала отметьте все такие клетки, затем считайте динамику по всему полю.</li><li>Максимум и минимум берите по значениям во всех конечных клетках.</li><li>Если в условии прямо сказано «в правую нижнюю клетку», финиш один.</li><li>Для «Коня» или «Попрыгуна» конечная клетка — та, из которой нет ни одного разрешённого хода.</li><li>Не отбрасывайте конечную клетку только потому, что она не в правом нижнем углу.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Максимум и минимум</h3>
+  <p>Это две независимые задачи. Их удобно решать на двух копиях листа или двумя массивами в программе.</p>
+  <ul class="theory-list"><li>Сначала заполните таблицу для максимума, сохраните ответ.</li><li>Затем сделайте копию и замените МАКС на МИН (или max на min).</li><li>Не меняйте функцию в уже заполненной таблице без копии — потеряете максимум.</li><li>Для минимума проверяйте, что путь вообще существует.</li><li>В ответе сначала то число, которое просят первым: часто «максимум, затем минимум», но бывает и наоборот.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Изменённые правила сбора</h3>
+  <p>В основе почти всех вариантов — та же динамика. Меняется только вес клетки или условие перехода.</p>
+  <ul class="theory-list"><li>Удвоенный номинал: w = 2·a[i][j].</li><li>Чётное — удвоить, нечётное — половина: w = 2x при x % 2 == 0, иначе x // 2.</li><li>Произведение номинала на число вхождений: w = x · count(x).</li><li>Энергия: старт — a[0][0], шаг вправо вычитает число целевой клетки, шаг вниз — ceil(число целевой клетки / 2).</li><li>Обязательная клетка: считайте путь старт → клетка и клетка → финиш отдельно.</li><li>Заправки: храните в динамике запас энергии, а не только сумму.</li><li>Шаг зависит от числа в текущей клетке: для каждого состояния перебирайте только разрешённые смещения (№ 29454).</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Excel или программа</h3>
+  <p>Оба способа допустимы. В Excel удобно видеть разметку стен, в программе — автоматически обрабатывать сложные правила и проверять себя.</p>
+  <ul class="theory-list"><li>Excel: формулы МАКС/МИН, относительные ссылки, заливка клеток по типу перехода.</li><li>Excel: для стен вручную уберите запрещённого соседа из формулы.</li><li>Python: openpyxl для .xlsx, pandas.read_excel(..., engine=&#x27;odf&#x27;) для .ods.</li><li>Python: стены читайте из cell.border или задавайте матрицей запретов.</li><li>Проверка: пройдите найденный маршрут вручную и сложите числа.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Формат ответа</h3>
+  <p>Ответ — два целых числа. В задании 18 почти всегда просят пару «максимум и минимум», но порядок задаётся условием.</p>
+  <ul class="theory-list"><li>Записывайте числа через пробел, без единиц и пояснений.</li><li>Если просят «сначала минимальную, затем максимальную» — не переставляйте.</li><li>Если в ответе одно число (например, количество маршрутов), не добавляйте второе.</li><li>Проверьте, что оба числа целые и не содержат разделителей тысяч.</li></ul>
+  
+</article></div>
+  
+<div class="theory-example">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Разбор примера</p>
+    <h3>Учебный пример: две конечные клетки</h3>
+    <p>Поле 4×4. Старт — левая верхняя клетка, команды — «вправо» и «вниз». Справа и снизу от клетки 1 в первой строке стоят стены, поэтому она тоже конечная. Найдите максимальную и минимальную итоговые суммы.</p>
+  </div>
+  <div class="theory-example-grid theory-example-grid--single"><div class="table-wrap"><table class="example-table">
+  <caption>Монеты в клетках. Стены: справа и снизу от клетки 1 в первой строке.</caption>
+  <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+  <tbody>
+    <tr><th>1</th><td>2</td><td>5</td><td>1</td><td>9</td></tr>
+    <tr><th>2</th><td>4</td><td>8</td><td>7</td><td>2</td></tr>
+    <tr><th>3</th><td>1</td><td>3</td><td>9</td><td>5</td></tr>
+    <tr><th>4</th><td>7</td><td>2</td><td>6</td><td>8</td></tr>
+  </tbody>
+</table>
+<table class="example-table">
+  <caption>Значения динамики: максимум / минимум. «—» — клетка недостижима.</caption>
+  <thead><tr><th></th><th>1</th><th>2</th><th>3</th><th>4</th></tr></thead>
+  <tbody>
+    <tr><th>1</th><td>2 / 2</td><td>7 / 7</td><td>8 / 8</td><td>— / —</td></tr>
+    <tr><th>2</th><td>6 / 6</td><td>15 / 14</td><td>22 / 21</td><td>24 / 23</td></tr>
+    <tr><th>3</th><td>7 / 7</td><td>18 / 10</td><td>31 / 19</td><td>36 / 24</td></tr>
+    <tr><th>4</th><td>14 / 14</td><td>20 / 12</td><td>37 / 18</td><td>45 / 26</td></tr>
+  </tbody>
+</table></div></div>
+  <ol class="task-steps"><li>Отмечаем старт (1,1) и конечные клетки: (1,3) — справа и снизу стены; (4,4) — правый нижний угол.</li><li>Заполняем первую строку: 2, 7, 8; в (1,4) перейти нельзя из-за стены справа от (1,3).</li><li>Заполняем первый столбец: 2, 6, 7, 14 — здесь ход только сверху.</li><li>Для внутренних клеток берём максимум (или минимум) из верхней и левой, прибавляем число клетки. Например, (2,3): сверху мешает стена снизу от (1,3), поэтому 15 + 7 = 22 для максимума и 14 + 7 = 21 для минимума.</li><li>В конечных клетках получились 8 и 45 для максимума, 8 и 26 для минимума.</li><li>Максимум — 45, минимум — 8. Ответ записываем в порядке условия.</li></ol>
+  <p class="example-answer"><span>Ответ</span>45 8 — максимальная и минимальная суммы.</p>
+</div>
+</section>
+    
+<section class="task-block task-block--methods" id="methods">
+  <div class="block-head">
+    <p class="eyebrow">Способы решения</p>
+    <h2>Выберите метод под формулировку</h2>
+    <p class="block-lead">Методы собраны по решениям задания 18 из базы Kompege. Начните с того, что именно нужно найти в условии.</p>
+  </div>
+  <div class="methods-list">
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">01</span>
+    <div>
+      <p class="eyebrow">когда поле до 30×30 и стены видны</p>
+      <h3>Волна формул в Excel</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Классическая задача: старт в углу, команды «вправо» и «вниз», нужно найти максимум и минимум.</p>
+  <ol class="task-steps"><li>Перенесите числа на новый лист и сохраните утолщённые границы — это стены.</li><li>Разметьте клетки по числу разрешённых входов: «только сверху», «только слева», «с двух сторон», «недостижима».</li><li>В стартовую клетку таблицы результатов запишите число стартовой клетки.</li><li>Для «только сверху»: =A2 + A6; для «только слева»: =B1 + A6; для «с двух сторон»: =B2 + МАКС(A7; B6) — подставьте свои адреса.</li><li>Протяните формулы на всё поле. Для минимума сделайте копию листа и замените МАКС на МИН через Ctrl+H.</li><li>Соберите значения в конечных клетках и возьмите максимум или минимум.</li><li>Проверьте ответ, пройдя найденный маршрут вручную.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Поле 4×4 из демоверсии: 1 8 8 4 / 10 1 1 3 / 1 3 12 2 / 2 3 5 6. Старт (1,1), финиш (4,4), стен нет.</p>
+  <pre class="code-block"><code>A6:  =A1
+B6:  =B1 + A6
+C6:  =C1 + B6
+D6:  =D1 + C6
+A7:  =A2 + A6
+A8:  =A3 + A7
+A9:  =A4 + A8
+B7:  =B2 + МАКС(A7; B6)
+C7:  =C2 + МАКС(B7; C6)
+D7:  =D2 + МАКС(C7; D6)
+B8:  =B3 + МАКС(A8; B7)
+C8:  =C3 + МАКС(B8; C7)
+D8:  =D3 + МАКС(C8; D7)
+B9:  =B4 + МАКС(A9; B8)
+C9:  =C4 + МАКС(B9; C8)
+D9:  =D4 + МАКС(C9; D8)</code></pre>
+  <p class="method-answer"><span>Ответ</span>Максимум 41, минимум 22. В ответ: 41 22.</p>
+</div>
+  <p class="method-source">По мотивам задач № 9962, 10127 и 1971 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">02</span>
+    <div>
+      <p class="eyebrow">когда нужны стены и несколько финишей</p>
+      <h3>Динамика в Python</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Поле большое, стены заданы границами ячеек, конечных клеток несколько, нужна автоматическая проверка.</p>
+  <ol class="task-steps"><li>Прочитайте числа: openpyxl для .xlsx, pandas.read_excel(..., engine=&#x27;odf&#x27;) для .ods.</li><li>Соберите матрицу чисел a и матрицы запретов: right_wall, down_wall или blocked.</li><li>Заведите таблицу dp размера N×N; старт dp[0][0] = a[0][0].</li><li>Обходите клетки в порядке движения; для каждой собирайте только допустимых предшественников.</li><li>Для максимума берите max(prev), для минимума — min(prev); если предшественников нет, клетка недостижима.</li><li>Соберите значения в конечных клетках и выведите ответ в нужном порядке.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Поле из учебного примера: стены справа и снизу от (0,2), конечные клетки — (0,2) и (3,3).</p>
+  <pre class="code-block"><code>a = [[2, 5, 1, 9],
+     [4, 8, 7, 2],
+     [1, 3, 9, 5],
+     [7, 2, 6, 8]]
+
+right_wall = {(0, 2)}   # стена справа от клетки (0, 2)
+down_wall = {(0, 2)}    # стена снизу от клетки (0, 2)
+finals = [(0, 2), (3, 3)]
+
+def best(maximize=True):
+    n = len(a)
+    dp = [[None] * n for _ in range(n)]
+    dp[0][0] = a[0][0]
+    for i in range(n):
+        for j in range(n):
+            if i == 0 and j == 0:
+                continue
+            prev = []
+            if j &gt; 0 and (i, j - 1) not in right_wall and dp[i][j - 1] is not None:
+                prev.append(dp[i][j - 1])
+            if i &gt; 0 and (i - 1, j) not in down_wall and dp[i - 1][j] is not None:
+                prev.append(dp[i - 1][j])
+            if prev:
+                dp[i][j] = a[i][j] + (max(prev) if maximize else min(prev))
+    values = [dp[i][j] for i, j in finals if dp[i][j] is not None]
+    return max(values) if maximize else min(values)
+
+print(best(True), best(False))  # 45 8</code></pre>
+  <p class="method-answer"><span>Ответ</span>45 8.</p>
+</div>
+  <p class="method-source">По мотивам задач № 16706, 17836 и 31034.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">03</span>
+    <div>
+      <p class="eyebrow">когда команды не «вправо/вниз»</p>
+      <h3>Другие направления и старт</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Старт в другом углу, команды «влево/вниз», «вверх/вправо» или «вверх/влево».</p>
+  <ol class="task-steps"><li>Определите старт и финиш по тексту условия.</li><li>Для каждой команды найдите, из какой стороны приходит исполнитель.</li><li>Выберите порядок обхода: для «влево/вниз» — сверху вниз и справа налево.</li><li>В формуле оставьте только те предшественники, которые не отделены стеной.</li><li>При отражении поля не забудьте отразить и стены.</li><li>Соберите ответ в указанном порядке.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Поле 3×3: 1 2 3 / 4 5 6 / 7 8 9. Команды «влево» и «вниз», старт в правом верхнем углу, финиш в левом нижнем.</p>
+  <pre class="code-block"><code># «влево/вниз»: обход сверху вниз, справа налево
+for i in range(n):
+    for j in range(n - 1, -1, -1):
+        # предшественники: (i, j + 1) и (i - 1, j)
+        ...</code></pre>
+  <p class="method-answer"><span>Ответ</span>Максимум 33, минимум 17.</p>
+</div>
+  <p class="method-source">По мотивам задач № 16265, 21114, 2389 и 930.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">04</span>
+    <div>
+      <p class="eyebrow">диагональ, прыжок, ход на две клетки</p>
+      <h3>Три и более команд</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Разрешены диагональ, прыжок коня, ход на две клетки или команда зависит от клетки.</p>
+  <ol class="task-steps"><li>Выпишите все команды и смещения: (0,1), (1,0), (1,1), прыжок коня и т. п.</li><li>Для клетки переберите все команды; предшественник — клетка минус смещение.</li><li>Проверьте, что предшественник внутри поля и переход не перекрыт стеной.</li><li>Если команда разрешена только из части клеток, добавьте условие на предшественника.</li><li>Обходите клетки так, чтобы предшественники были готовы.</li><li>Для «жёлтых» клеток, где разрешена только диагональ, формулы меняются по цвету клетки.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Поле 3×3: 1 2 3 / 4 5 6 / 7 8 9; команды «вправо», «вниз» и «вправо-вниз»; старт (1,1), финиш (3,3).</p>
+  <pre class="code-block"><code>prev = []
+if i &gt; 0:
+    prev.append(dp[i - 1][j])          # сверху
+if j &gt; 0:
+    prev.append(dp[i][j - 1])          # слева
+if i &gt; 0 and j &gt; 0:
+    prev.append(dp[i - 1][j - 1])      # по диагонали
+
+dp[i][j] = a[i][j] + (max(prev) if maximize else min(prev))</code></pre>
+  <p class="method-answer"><span>Ответ</span>Максимум 29, минимум 15.</p>
+</div>
+  <p class="method-source">По мотивам задач № 2711, 2680, 3081, 3159 и 2162.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">05</span>
+    <div>
+      <p class="eyebrow">когда просят не сумму, а число путей</p>
+      <h3>Количество маршрутов</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> В условии «количество различных маршрутов», «сколько способов», а не максимум и минимум.</p>
+  <ol class="task-steps"><li>В стартовой клетке поставьте 1.</li><li>В каждой клетке сложите числа путей из разрешённых предшественников.</li><li>Стена или запрещённая клетка просто не добавляет путей.</li><li>Если стартов несколько, поставьте 1 в каждой; если финишей несколько, сложите ответы.</li><li>Проверьте, что путь не проходит через запрещённые клетки.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Поле 3×3 без стен, движение «вправо/вниз», старт (1,1), финиш (3,3).</p>
+  <pre class="code-block"><code>dp = [[0] * n for _ in range(n)]
+dp[0][0] = 1
+
+for i in range(n):
+    for j in range(n):
+        if i:
+            dp[i][j] += dp[i - 1][j]
+        if j:
+            dp[i][j] += dp[i][j - 1]
+
+print(dp[-1][-1])  # 6</code></pre>
+  <p class="method-answer"><span>Ответ</span>6 маршрутов.</p>
+</div>
+  <p class="method-source">По мотивам задач № 13995 и 2156; у № 2156 есть видеоразбор.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">06</span>
+    <div>
+      <p class="eyebrow">удвоение, половина, произведение, энергия</p>
+      <h3>Изменённые правила сбора</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Сумма считается не как «число клетки», а по особому правилу; или есть обязательная клетка и заправки.</p>
+  <ol class="task-steps"><li>Выпишите вес клетки w(i,j) по правилу условия.</li><li>Подставьте w вместо a в рекуррентную формулу.</li><li>Если вес зависит от направления входа, добавьте его в конкретный переход.</li><li>Для обязательной клетки считайте два участка и вычтите её число один раз.</li><li>Для энергии храните в динамике запас, а не сумму; проверяйте, что ход возможен.</li><li>Проверьте, что стартовая клетка обрабатывается по тому же правилу, если условие не делает исключения.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Поле 2×2: 1 2 / 3 4. Каждая посещённая клетка удваивается, включая старт.</p>
+  <pre class="code-block"><code># максимальный путь 1 -&gt; 3 -&gt; 4: 2 + 6 + 8 = 16
+# минимальный путь 1 -&gt; 2 -&gt; 4: 2 + 4 + 8 = 14</code></pre>
+  <p class="method-answer"><span>Ответ</span>16 14.</p>
+</div>
+  <p class="method-source">По мотивам задач № 17983, 3371, 22499, 3896 и 832.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">07</span>
+    <div>
+      <p class="eyebrow">несколько таблиц и особые ходы</p>
+      <h3>Нестандартные поля и два исполнителя</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Полей несколько, числа стоят не во всех клетках, ходы нестандартные.</p>
+  
+  <ul class="task-list"><li>«Попрыгун»: числа только в части клеток; постройте граф «ближайшее число справа/снизу» и считайте динамику по числам (№ 17098).</li><li>Два исполнителя: считайте две независимые таблицы и сравнивайте результаты (№ 470, 14314).</li><li>«Ладья»: ход на любое расстояние вправо/вниз; перебирайте всю строку и столбец или поддерживайте лучший префикс (№ 2162).</li><li>«Змейка»: в нечётных строках движение вправо/вниз, в чётных — влево/вниз (№ 583).</li><li>«Переход через поле»: старт — любая клетка первой строки/столбца, финиш — любой клетки последней; добавьте фиктивный старт и финиш (№ 1757, 2126).</li><li>Заблокированные цветом клетки (голубые, серые) считайте стенами (№ 2527, 726).</li></ul>
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Поле 2×2: 1 2 / 3 4. Исполнитель A идёт из левого верхнего угла вправо/вниз, исполнитель B — из левого нижнего вверх/вправо.</p>
+  
+  <p class="method-answer"><span>Ответ</span>У A максимум 8 (1→3→4), у B максимум 9 (3→4→2). Побеждает B с результатом 9.</p>
+</div>
+  <p class="method-source">По мотивам задач № 17098, 470, 2162, 583, 1757 и 2527.</p>
+</article></div>
+  
+<div class="cheatsheet">
+  <p class="mini-label">Шпаргалка: формулировка → метод</p>
+  <div class="cheatsheet-wrap">
+    <table class="cheatsheet-table">
+      <thead><tr><th>В условии</th><th>Что делать</th></tr></thead>
+      <tbody><tr><td>«максимальная и минимальная суммы»</td><td>два прохода динамики: max и min</td></tr><tr><td>«несколько конечных клеток»</td><td>собрать все угловые клетки и взять max/min</td></tr><tr><td>«стены»</td><td>убрать запрещённые переходы</td></tr><tr><td>«вправо/вниз»</td><td>обход слева направо, сверху вниз</td></tr><tr><td>«влево/вниз»</td><td>обход сверху вниз, справа налево</td></tr><tr><td>«вверх/вправо»</td><td>обход снизу вверх, слева направо</td></tr><tr><td>«диагональ/прыжок»</td><td>перебрать все команды-предшественники</td></tr><tr><td>«количество маршрутов»</td><td>сложение вместо max/min</td></tr><tr><td>«удвоить/половина/произведение»</td><td>заменить вес клетки</td></tr><tr><td>«обязательная клетка»</td><td>два участка пути</td></tr><tr><td>«два исполнителя»</td><td>две независимые таблицы</td></tr><tr><td>«ладья»</td><td>перебор по строке и столбцу</td></tr><tr><td>«шаг зависит от числа»</td><td>перебрать разрешённые смещения</td></tr><tr><td>«порядок ответа»</td><td>сначала то, что просят в условии</td></tr></tbody>
+    </table>
+  </div>
+</div>
+  
+<div class="video-block">
+  <p class="mini-label">Видеоразборы по теме</p>
+  <div class="video-list"><a class="video-link" href="https://vkvideo.ru/video-205865487_456240082" target="_blank" rel="noopener noreferrer"><span class="video-label">Количество маршрутов</span><span class="video-meta">№ 2156</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://rutube.ru/video/45a16bc221edd87bb714019dff9dc370/?t=3682" target="_blank" rel="noopener noreferrer"><span class="video-label">20×20: шаг зависит от числа</span><span class="video-meta">№ 29454 · 1:01:22</span><span class="video-host" title="RuTube"><span class="video-host-icon"><svg viewBox="0 0 132 132" aria-hidden="true" focusable="false"><rect width="132" height="132" fill="#100943"/><circle cx="132" cy="66" r="66" fill="#ED143B"/><path fill="#fff" d="M81.5361 62.9865H42.5386V47.5547H81.5361C83.814 47.5547 85.3979 47.9518 86.1928 48.6451C86.9877 49.3385 87.4801 50.6245 87.4801 52.5031V58.0441C87.4801 60.0234 86.9877 61.3094 86.1928 62.0028C85.3979 62.6961 83.814 62.9925 81.5361 62.9925V62.9865ZM84.2115 33.0059H26V99H42.5386V77.5294H73.0176L87.4801 99H106L90.0546 77.4287C95.9333 76.5575 98.573 74.756 100.75 71.7869C102.927 68.8179 104.019 64.071 104.019 57.7359V52.7876C104.019 49.0303 103.621 46.0613 102.927 43.7857C102.233 41.51 101.047 39.5307 99.362 37.7528C97.5824 36.0698 95.6011 34.8845 93.2223 34.0904C90.8435 33.3971 87.8716 33 84.2115 33V33.0059Z"/></svg></span><span class="video-host-name">RuTube</span></span></a><a class="video-link" href="https://youtu.be/k6KbLR7vkj4?t=5568" target="_blank" rel="noopener noreferrer"><span class="video-label">Робот: волна формул и МАКС/МИН</span><span class="video-meta">№ 1971 · 1:32:48</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/DbLCvM4NvMc?t=5495" target="_blank" rel="noopener noreferrer"><span class="video-label">Робот: классическая динамика</span><span class="video-meta">№ 3224 · 1:31:35</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/w7du6qYh4TQ?t=7630" target="_blank" rel="noopener noreferrer"><span class="video-label">Движение влево и вниз</span><span class="video-meta">№ 16265 · 2:07:10</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/xKIutech6oc?t=5689" target="_blank" rel="noopener noreferrer"><span class="video-label">Движение вверх и вправо</span><span class="video-meta">№ 2389 · 1:34:49</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/d0c3P3mcVZQ?t=5420" target="_blank" rel="noopener noreferrer"><span class="video-label">Вверх/вправо со стенами</span><span class="video-meta">№ 930 · 1:30:20</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/6Gxr8I8ZsFo?t=5436" target="_blank" rel="noopener noreferrer"><span class="video-label">Три команды: вправо, вниз, диагональ</span><span class="video-meta">№ 2711 · 1:30:36</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/ZW9Zr7ELVWI?t=4958" target="_blank" rel="noopener noreferrer"><span class="video-label">Диагональ и жёлтые клетки</span><span class="video-meta">№ 2680 · 1:22:38</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/y7N-5jX99X0?t=7517" target="_blank" rel="noopener noreferrer"><span class="video-label">Ход коня по таблице</span><span class="video-meta">№ 3081 · 2:05:17</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/amxHbTyRZhc?t=5425" target="_blank" rel="noopener noreferrer"><span class="video-label">Ходы на две клетки</span><span class="video-meta">№ 3159 · 1:30:25</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/YPap1DCaaXU?t=4910" target="_blank" rel="noopener noreferrer"><span class="video-label">Намагниченные стены и монеты</span><span class="video-meta">№ 3371 · 1:21:50</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/2s52KYjmVVw?t=5430" target="_blank" rel="noopener noreferrer"><span class="video-label">Разница высот и штраф</span><span class="video-meta">№ 832 · 1:30:30</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/0qZpFx1A-so?t=6600" target="_blank" rel="noopener noreferrer"><span class="video-label">Два исполнителя на одном поле</span><span class="video-meta">№ 470 · 1:50:00</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/-vk0fG-qpuI?t=6040" target="_blank" rel="noopener noreferrer"><span class="video-label">Змейка: направление по строкам</span><span class="video-meta">№ 583 · 1:40:40</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/Kp8DSfXoeVc?t=5550" target="_blank" rel="noopener noreferrer"><span class="video-label">Переход с запада на восток</span><span class="video-meta">№ 1757 · 1:32:30</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a></div>
+  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+</div>
+  <p class="method-source-note">По базе Kompege: 851 задача, 17 решений (все текстовые, часть с изображениями) и 231 видеоразбор (131 YouTube, 63 VK, 37 Rutube) по заданию 18. При подготовке методов использованы решения задач № 9962, 10127, 13995, 14314, 16265, 16706, 17098, 17836, 17983, 22499 и 31034; дополнительно использованы условия и видеоразборы задач № 1971, 3224, 2389, 930, 2711, 2680, 3081, 3159, 2162, 3371, 832, 3896, 470, 583, 1757, 2527, 726, 2126, 2156 и 29454; примеры переработаны в учебные.</p>
+</section>
+    <section class="task-block" id="mistakes">
+      <h2>Типичные ошибки</h2>
+      <ul class="task-list task-list--mistakes"><li>не учтена стена</li><li>потеряна конечная клетка</li><li>минимум считается по таблице максимума</li><li>не учтены старт или финиш</li><li>перепутан порядок чисел</li></ul>
+    </section>
+    
+<section class="task-block">
+  <h2>Ключевые формулы</h2>
+  <ul class="formula-list"><li><code>dp_max[i][j] = a[i][j] + max(dp_max сверху, dp_max слева)</code></li><li><code>dp_min[i][j] = a[i][j] + min(dp_min сверху, dp_min слева)</code></li><li><code>старт: dp[0][0] = a[0][0]</code></li><li><code>ответ: max/min по всем конечным клеткам</code></li></ul>
+</section>
+    
+    <section class="task-block" id="practice">
+      <h2>Практика</h2>
+      
+<div class="practice-grid">
+  <a class="practice-link" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener noreferrer">
+    <span class="practice-label">ФИПИ</span><span class="practice-title">Открытый банк заданий</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5%20%D1%82%D0%B5%D1%85%D0%BD%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D0%B8.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Навигатор · 2026</span><span class="practice-title">Информационные технологии</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/inf_11_2027/%D0%98%D0%9D%D0%A4-11%20%D0%95%D0%93%D0%AD%202027%20%D0%94%D0%95%D0%9C%D0%9E.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Демоверсия</span><span class="practice-title">КИМ 2027</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0.%202026.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Методика</span><span class="practice-title">Разбор ошибок 2026</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+</div>
+<p class="practice-note">Навигатор и методические рекомендации опубликованы в 2026 году: номера заданий в них могут отличаться от нумерации 2027 года. Ориентируйтесь на тему.</p>
+    </section>
+    
+<div class="related-links">
+  <span class="related-label">Смотрите также</span>
+  <a class="related-link" href="03.html">03 · Базы данных</a><a class="related-link" href="09.html">09 · Электронные таблицы</a><a class="related-link" href="27.html">27 · Анализ данных</a>
+</div>
+    <nav class="prev-next" aria-label="Соседние задания">
+      <a class="prev-next-link" href="17.html"><span>← Предыдущее</span><strong>17 · Обработка последовательности</strong></a>
+      <a class="prev-next-link prev-next-link--next" href="19.html"><span>Следующее →</span><strong>19–21 · Теория игр</strong></a>
+    </nav>
+  </div>
+
+  <aside class="task-aside">
+    <div class="aside-card">
+      <div class="aside-head">
+        <span>Карта заданий</span>
+        <span class="map-progress" data-progress-count>0 / 27</span>
+      </div>
+      <div class="task-map task-map--compact" data-task-map><a class="task-cell task-cell--digital task-cell--compact" href="01.html" data-task="1" data-section="digital" data-title="Графы и таблицы" data-caption="&lt;strong&gt;Задание 1&lt;/strong&gt; · Графы и таблицы · Цифровая грамотность · 1 балл" aria-label="Задание 1: Графы и таблицы"><span>1</span></a><a class="task-cell task-cell--theory task-cell--compact" href="02.html" data-task="2" data-section="theory" data-title="Логические функции" data-caption="&lt;strong&gt;Задание 2&lt;/strong&gt; · Логические функции · Теория · 1 балл" aria-label="Задание 2: Логические функции"><span>2</span></a><a class="task-cell task-cell--it task-cell--compact" href="03.html" data-task="3" data-section="it" data-title="Базы данных" data-caption="&lt;strong&gt;Задание 3&lt;/strong&gt; · Базы данных · Информационные технологии · 1 балл" aria-label="Задание 3: Базы данных"><span>3</span></a><a class="task-cell task-cell--theory task-cell--compact" href="04.html" data-task="4" data-section="theory" data-title="Коды и условие Фано" data-caption="&lt;strong&gt;Задание 4&lt;/strong&gt; · Коды и условие Фано · Теория · 1 балл" aria-label="Задание 4: Коды и условие Фано"><span>4</span></a><a class="task-cell task-cell--algo task-cell--compact" href="05.html" data-task="5" data-section="algo" data-title="Алгоритмы исполнителя" data-caption="&lt;strong&gt;Задание 5&lt;/strong&gt; · Алгоритмы исполнителя · Алгоритмы · 1 балл" aria-label="Задание 5: Алгоритмы исполнителя"><span>5</span></a><a class="task-cell task-cell--algo task-cell--compact" href="06.html" data-task="6" data-section="algo" data-title="Исполнители и координаты" data-caption="&lt;strong&gt;Задание 6&lt;/strong&gt; · Исполнители и координаты · Алгоритмы · 1 балл" aria-label="Задание 6: Исполнители и координаты"><span>6</span></a><a class="task-cell task-cell--theory task-cell--compact" href="07.html" data-task="7" data-section="theory" data-title="Графика и звук" data-caption="&lt;strong&gt;Задание 7&lt;/strong&gt; · Графика и звук · Теория · 1 балл" aria-label="Задание 7: Графика и звук"><span>7</span></a><a class="task-cell task-cell--theory task-cell--compact" href="08.html" data-task="8" data-section="theory" data-title="Комбинаторика и коды" data-caption="&lt;strong&gt;Задание 8&lt;/strong&gt; · Комбинаторика и коды · Теория · 1 балл" aria-label="Задание 8: Комбинаторика и коды"><span>8</span></a><a class="task-cell task-cell--it task-cell--compact" href="09.html" data-task="9" data-section="it" data-title="Электронные таблицы" data-caption="&lt;strong&gt;Задание 9&lt;/strong&gt; · Электронные таблицы · Информационные технологии · 1 балл" aria-label="Задание 9: Электронные таблицы"><span>9</span></a><a class="task-cell task-cell--digital task-cell--compact" href="10.html" data-task="10" data-section="digital" data-title="IP-адреса и маски" data-caption="&lt;strong&gt;Задание 10&lt;/strong&gt; · IP-адреса и маски · Цифровая грамотность · 1 балл" aria-label="Задание 10: IP-адреса и маски"><span>10</span></a><a class="task-cell task-cell--theory task-cell--compact" href="11.html" data-task="11" data-section="theory" data-title="Объём сообщения" data-caption="&lt;strong&gt;Задание 11&lt;/strong&gt; · Объём сообщения · Теория · 1 балл" aria-label="Задание 11: Объём сообщения"><span>11</span></a><a class="task-cell task-cell--algo task-cell--compact" href="12.html" data-task="12" data-section="algo" data-title="Исполнитель МТ" data-caption="&lt;strong&gt;Задание 12&lt;/strong&gt; · Исполнитель МТ · Алгоритмы · 1 балл" aria-label="Задание 12: Исполнитель МТ"><span>12</span></a><a class="task-cell task-cell--algo task-cell--compact" href="13.html" data-task="13" data-section="algo" data-title="Ход исполнения алгоритма" data-caption="&lt;strong&gt;Задание 13&lt;/strong&gt; · Ход исполнения алгоритма · Алгоритмы · 1 балл" aria-label="Задание 13: Ход исполнения алгоритма"><span>13</span></a><a class="task-cell task-cell--theory task-cell--compact" href="14.html" data-task="14" data-section="theory" data-title="Системы счисления" data-caption="&lt;strong&gt;Задание 14&lt;/strong&gt; · Системы счисления · Теория · 1 балл" aria-label="Задание 14: Системы счисления"><span>14</span></a><a class="task-cell task-cell--theory task-cell--compact" href="15.html" data-task="15" data-section="theory" data-title="Логика и множества" data-caption="&lt;strong&gt;Задание 15&lt;/strong&gt; · Логика и множества · Теория · 1 балл" aria-label="Задание 15: Логика и множества"><span>15</span></a><a class="task-cell task-cell--algo task-cell--compact" href="16.html" data-task="16" data-section="algo" data-title="Рекурсия" data-caption="&lt;strong&gt;Задание 16&lt;/strong&gt; · Рекурсия · Алгоритмы · 1 балл" aria-label="Задание 16: Рекурсия"><span>16</span></a><a class="task-cell task-cell--algo task-cell--compact" href="17.html" data-task="17" data-section="algo" data-title="Обработка последовательности" data-caption="&lt;strong&gt;Задание 17&lt;/strong&gt; · Обработка последовательности · Алгоритмы · 1 балл" aria-label="Задание 17: Обработка последовательности"><span>17</span></a><a class="task-cell task-cell--it is-current task-cell--compact" href="18.html" data-task="18" data-section="it" data-title="Таблицы: анализ и оптимизация" data-caption="&lt;strong&gt;Задание 18&lt;/strong&gt; · Таблицы: анализ и оптимизация · Информационные технологии · 1 балл" aria-label="Задание 18: Таблицы: анализ и оптимизация"><span>18</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html" data-task="19" data-section="theory" data-title="Теория игр" data-caption="&lt;strong&gt;Задание 19&lt;/strong&gt; · Теория игр · Теория · 1 балл" aria-label="Задание 19: Теория игр"><span>19</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-20" data-task="20" data-section="theory" data-title="Теория игр: две кучи" data-caption="&lt;strong&gt;Задание 20&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 20: Теория игр: две кучи"><span>20</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-21" data-task="21" data-section="theory" data-title="Теория игр: стратегия" data-caption="&lt;strong&gt;Задание 21&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 21: Теория игр: стратегия"><span>21</span></a><a class="task-cell task-cell--theory task-cell--compact" href="22.html" data-task="22" data-section="theory" data-title="Параллельные вычисления" data-caption="&lt;strong&gt;Задание 22&lt;/strong&gt; · Параллельные вычисления · Теория · 1 балл" aria-label="Задание 22: Параллельные вычисления"><span>22</span></a><a class="task-cell task-cell--theory task-cell--compact" href="23.html" data-task="23" data-section="theory" data-title="Графы: пути" data-caption="&lt;strong&gt;Задание 23&lt;/strong&gt; · Графы: пути · Теория · 1 балл" aria-label="Задание 23: Графы: пути"><span>23</span></a><a class="task-cell task-cell--algo task-cell--compact" href="24.html" data-task="24" data-section="algo" data-title="Символьные строки" data-caption="&lt;strong&gt;Задание 24&lt;/strong&gt; · Символьные строки · Алгоритмы · 1 балл" aria-label="Задание 24: Символьные строки"><span>24</span></a><a class="task-cell task-cell--algo task-cell--compact" href="25.html" data-task="25" data-section="algo" data-title="Натуральные числа" data-caption="&lt;strong&gt;Задание 25&lt;/strong&gt; · Натуральные числа · Алгоритмы · 1 балл" aria-label="Задание 25: Натуральные числа"><span>25</span></a><a class="task-cell task-cell--algo task-cell--compact" href="26.html" data-task="26" data-section="algo" data-title="Массив: сортировка" data-caption="&lt;strong&gt;Задание 26&lt;/strong&gt; · Массив: сортировка · Алгоритмы · 2 балла" aria-label="Задание 26: Массив: сортировка"><span>26</span></a><a class="task-cell task-cell--it task-cell--compact" href="27.html" data-task="27" data-section="it" data-title="Анализ данных" data-caption="&lt;strong&gt;Задание 27&lt;/strong&gt; · Анализ данных · Информационные технологии · 2 балла" aria-label="Задание 27: Анализ данных"><span>27</span></a></div>
+      <a class="aside-link" href="index.html">Все задания <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="aside-card aside-card--progress">
+      <p class="aside-label">Прогресс</p>
+      <button class="btn btn-primary progress-toggle" type="button" data-progress-toggle="18" aria-pressed="false">Отметить как изученное</button>
+      <p class="progress-note" data-progress-text>0 из 27 изучено</p>
+      <div class="progress-line" aria-hidden="true"><span data-progress-bar></span></div>
+    </div>
+    <div class="aside-card">
+      <p class="aside-label">Быстрые ссылки</p>
+      <a class="aside-link" href="../documents.html#kim2027">Демоверсия 2027 <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html#method">Навигатор и методика <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html">Все документы <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-mark">ЕГЭ · Информатика · 2027</p>
+      <p class="footer-note">Разбор заданий, ключевые темы и официальные документы. Составлено 3 ноября 2026. Не является официальным ресурсом ФИПИ или Рособрнадзора.</p>
+    </div>
+    <div>
+      <p class="footer-title">Разделы</p>
+      <p class="footer-note"><a href="../index.html">Главная</a> · <a href="../tasks/index.html">Все задания</a> · <a href="../documents.html">Документы</a></p>
+      <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
+    </div>
+    <div>
+      <p class="footer-title">Первоисточники</p>
+      <p class="footer-note"><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ</a> · <a href="https://obrnadzor.gov.ru/gia/gia-11/" target="_blank" rel="noopener noreferrer">Рособрнадзор</a> · <a href="https://regulation.gov.ru/projects/172223/" target="_blank" rel="noopener noreferrer">проект расписания</a></p>
+      <p class="footer-note">Права на документы принадлежат их правообладателям. Копии сохранены для ознакомления и подготовки.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задание 17 ЕГЭ по информатике — Обработка последовательности</title>
+<meta name="description" content="Найти характеристики последовательности: сумму, минимум, максимум, количество по условию. Теория, способы решения и типичные ошибки. ЕГЭ-2027, информатика.">
+<meta name="theme-color" content="#F0F1EB">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="На главную">
+    <span class="brand-mark" aria-hidden="true">И</span>
+    <span class="brand-text">ЕГЭ · Информатика<small>подготовка по заданиям</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a href="../index.html">Главная</a>
+    <a href="../tasks/index.html" class="is-active" aria-current="page">Задания</a>
+    <a href="../documents.html">Документы</a>
+  </nav>
+  <div class="topbar-meta"><span>Задание 17 из 27</span><span>Алгоритмы</span></div>
+</header>
+<main id="main">
+
+<nav class="breadcrumb" aria-label="Хлебные крошки"><a href="../index.html">Главная</a><span class="crumb-sep">/</span><a href="index.html">Задания</a><span class="crumb-sep">/</span><span aria-current="page">Задание 17</span></nav>
+
+<section class="task-hero">
+  <div class="task-number" aria-hidden="true">17</div>
+  <div class="task-hero-copy">
+    <p class="eyebrow">Алгоритмы и программирование · 1 балл</p>
+    <h1>Обработка последовательности</h1>
+    <p class="task-subtitle">Массивы и файлы</p>
+    <p class="lead">Найти характеристики последовательности: сумму, минимум, максимум, количество по условию.</p>
+    <div class="task-badges">
+      <span class="badge badge-section badge-section--algo">Алгоритмы</span>
+      <span class="badge badge-answer">два целых числа</span>
+      
+    </div>
+  </div>
+</section>
+
+
+<nav class="task-toc" aria-label="На странице задания">
+  <span class="task-toc-label">На странице</span>
+  
+  <a href="#theory">Теория</a>
+  <a href="#methods">Способы решения</a>
+  <a href="#mistakes">Ошибки</a>
+  <a href="#practice">Практика</a>
+</nav>
+
+<div class="task-layout">
+  <div class="task-main">
+    
+    
+    <section class="task-block">
+      <h2>Что проверяет</h2>
+      <p class="task-checked">Массивы и последовательности чисел: обобщённые характеристики, линейный поиск, сортировка.</p>
+      <p class="task-source">Основание: проект спецификации и кодификатора КИМ 2027. <a href="../documents.html#kim2027">Открыть документы <span aria-hidden="true">↗</span></a></p>
+    </section>
+    
+    
+<section class="task-block task-block--theory" id="theory">
+  <div class="block-head">
+    <p class="eyebrow">Теория</p>
+    <h2>Что нужно знать</h2>
+    <p class="block-lead">Задание 17 проверяет обработку последовательности чисел из файла: нужно найти количество подходящих пар, троек или окон и второй агрегат — максимум, минимум, сумму или среднее. В базе Kompege по теме 984 задачи, 66 решений (63 программных и 3 текстовых) и 232 видеоразбора (144 YouTube, 53 VK, 35 Rutube). В 2027 году тема сохраняется без изменения номера.</p>
+  </div>
+  <div class="theory-checklist">
+    <p class="mini-label">Минимум для задания 17</p>
+    <ul class="check-list"><li>чтение чисел из файла и длина последовательности</li><li>окна: пары, тройки, четвёрки и пятёрки подряд</li><li>опорное значение: максимум или минимум с условием</li><li>условия «ровно k», «хотя бы один» и «только один»</li><li>делимость, остатки и отрицательные числа</li><li>последние цифры, количество цифр, сумма и произведение цифр</li><li>простые числа, полные квадраты и палиндромы</li><li>запись числа в системе счисления p</li><li>пары на расстоянии и элементы «через один»</li><li>кольцевая и симметричная последовательность</li><li>пары различных элементов i &lt; j</li><li>агрегаты: количество, максимум, минимум, сумма и среднее</li><li>начальные значения и пустой список результатов</li><li>проверка на маленьком примере</li><li>порядок вывода двух чисел</li></ul>
+  </div>
+  <div class="theory-grid">
+<article class="theory-card">
+  <h3>Файл и данные</h3>
+  <p>В задании 17 числа лежат в текстовом файле, обычно по одному в строке. Программа читает весь файл в список целых чисел и дальше работает с ним по индексам. Файл 17.txt лежит рядом с программой; при запуске из другой папки путь нужно указывать явно.</p>
+  <ul class="theory-list"><li>a = [int(x) for x in open(&#x27;17.txt&#x27;)] читает все строки файла.</li><li>strip() нужен, если в файле есть пустые строки или пробелы: int(x.strip()).</li><li>Если числа могут быть в одной строке: a = list(map(int, open(&#x27;17.txt&#x27;).read().split())).</li><li>len(a) — количество чисел; допустимые индексы от 0 до len(a) − 1.</li><li>Файл можно не закрывать в короткой программе, но с with open(...) as f надёжнее.</li><li>Храните весь список: опорное значение может стоять в конце файла.</li></ul>
+  <div class="formula-inline"><code>a = [int(x) for x in open(&#x27;17.txt&#x27;)]</code><code>n = len(a)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Каркас решения</h3>
+  <p>Почти все задачи 17 решаются по одной схеме: прочитать данные, найти опорное число по всему файлу, пройти по окнам, проверить условия, собрать подходящие суммы и вывести количество и второй агрегат.</p>
+  <ul class="theory-list"><li>Шаг 1: прочитать последовательность.</li><li>Шаг 2: найти максимум, минимум, среднее или количество по всему файлу.</li><li>Шаг 3: пройти окна нужной длины.</li><li>Шаг 4: проверить все условия задачи и добавить сумму окна в список.</li><li>Шаг 5: вывести len(b) и max(b), min(b), sum(b) или среднее.</li><li>Если подходящих окон нет, max упадёт — проверьте, что ответ существует.</li></ul>
+  <div class="formula-inline"><code>b = [] — суммы подходящих окон</code><code>print(len(b), max(b))</code></div>
+</article>
+<article class="theory-card">
+  <h3>Окна фиксированной длины</h3>
+  <p>Пара — два подряд идущих элемента, тройка — три, четвёрка — четыре. Окно длины k задаётся начальным индексом i и занимает элементы a[i]…a[i+k−1]. Число окон равно n−k+1, а не n−k: последнее окно заканчивается на последнем элементе.</p>
+  <ul class="theory-list"><li>Пара: a[i], a[i+1], цикл range(n-1).</li><li>Тройка: a[i:i+3], цикл range(n-2).</li><li>Окно длины k: range(n-k+1), последний начальный индекс n-k.</li><li>zip(a, a[1:], a[2:]) — короткий способ идти по тройкам.</li><li>Для пар «через один» берите a[i] и a[i+2].</li><li>Для четвёрок и пятёрок срез a[i:i+k] короче и понятнее.</li></ul>
+  <div class="formula-inline"><code>окон = n − k + 1</code><code>for i in range(n - k + 1): w = a[i:i+k]</code></div>
+</article>
+<article class="theory-card">
+  <h3>Опорное число</h3>
+  <p>Во многих условиях есть «максимальный элемент, оканчивающийся на 13» или «минимальный двузначный, кратный сумме цифр». Такое число ищут один раз по всему файлу до основного цикла. Внутри цикла его уже не пересчитывают.</p>
+  <ul class="theory-list"><li>M = max(x for x in a if 10 &lt;= x &lt;= 99 and x % 10 == 3).</li><li>Для отрицательных чисел используйте abs(x) в условиях на цифры.</li><li>Гарантия «такой элемент есть» позволяет не обрабатывать пустой генератор.</li><li>При равенстве максимумов значение всё равно одно и то же.</li><li>Если условие сложное, оформите его функцией-предикатом.</li><li>Опорное число может быть характеристикой всего файла, а не окна.</li></ul>
+  <div class="formula-inline"><code>M = max(x for x in a if P(x))</code><code>m = min(x for x in a if Q(x))</code></div>
+</article>
+<article class="theory-card">
+  <h3>Ровно, хотя бы, только один</h3>
+  <p>В Python True — это 1, а False — 0. Поэтому число выполненных условий считают суммой логических выражений. Это самый короткий способ реализовать «ровно два из трёх», «хотя бы один» и «только один».</p>
+  <ul class="theory-list"><li>«Ровно k»: sum(cond(x) for x in w) == k.</li><li>«Хотя бы один»: any(cond(x) for x in w) или sum(...) &gt;= 1.</li><li>«Ни один»: not any(...).</li><li>«Все»: all(cond(x) for x in w).</li><li>«Только один» для двух элементов: cond(x) ^ cond(y), исключающее ИЛИ.</li><li>Для двух разных условий: (P and not Q) or (Q and not P).</li></ul>
+  <div class="formula-inline"><code>sum(bool) == k</code><code>any(...), all(...), ^</code></div>
+</article>
+<article class="theory-card">
+  <h3>Цифры числа</h3>
+  <p>Свойства цифр проще всего проверять через строку str(abs(x)). Модуль убирает минус, иначе он попадёт в строку и испортит длину и сумму цифр.</p>
+  <ul class="theory-list"><li>Количество цифр: len(str(abs(x))).</li><li>Последняя цифра: abs(x) % 10, две последние: abs(x) % 100.</li><li>Сумма цифр: sum(map(int, str(abs(x)))).</li><li>Произведение цифр: цикл или prod из math.</li><li>Первая цифра: str(abs(x))[0].</li><li>Палиндром: s == s[::-1].</li><li>Цифра в середине трёхзначного числа: str(abs(x))[1].</li><li>Порядок цифр: сравните список цифр с sorted(...).</li></ul>
+  <div class="formula-inline"><code>digits = str(abs(x))</code><code>sum(map(int, digits))</code></div>
+</article>
+<article class="theory-card">
+  <h3>Делимость и остатки</h3>
+  <p>Делимость проверяют остатком %: число делится на d, если x % d == 0. Для отрицательных чисел в Python остаток неотрицательный, поэтому −14 % 7 == 0, а −3 % 10 == 7. Если важна именно последняя цифра, берите модуль.</p>
+  <ul class="theory-list"><li>x % d == 0 — делится на d.</li><li>abs(x) % 10 == 3 — оканчивается на 3, в том числе для отрицательных.</li><li>x % 2 == 0 — чётное; x % 2 == 1 — нечётное.</li><li>Сумма делится на d: (x + y) % d == 0.</li><li>Произведение делится на d: (x * y) % d == 0.</li><li>Разность кратна d: (x - y) % d == 0.</li><li>Остаток от деления на 1000 — последние три цифры.</li><li>Для кратности произведению проверяйте произведение целиком.</li></ul>
+  <div class="formula-inline"><code>x % d == 0</code><code>abs(x) % 100 == 13</code></div>
+</article>
+<article class="theory-card">
+  <h3>Простые, квадраты, НОД</h3>
+  <p>Проверка простоты — цикл до корня. Полный квадрат надёжнее проверять через isqrt, а не через x ** 0.5: плавающая точка даёт ошибки на больших числах. НОД и НОК берут из модуля math.</p>
+  <ul class="theory-list"><li>Простое: n &gt;= 2 и нет делителей от 2 до isqrt(n).</li><li>Полный квадрат: r = isqrt(x); r*r == x при x &gt;= 0.</li><li>НОД: gcd(x, y), НОК: x // gcd(x, y) * y.</li><li>Взаимная простота: gcd(x, y) == 1.</li><li>Количество делителей считают перебором до корня.</li><li>math.prod удобен для произведения цифр или элементов окна.</li></ul>
+  <div class="formula-inline"><code>all(n % d for d in range(2, isqrt(n) + 1))</code><code>gcd(x, y), x*y // gcd(x, y)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Системы счисления</h3>
+  <p>В задании 17 часто встречаются условия про запись в семеричной, восьмеричной или шестнадцатеричной системе. Последняя цифра в системе p — это x % p, а старшую цифру находят делением на p, пока число не станет меньше p.</p>
+  <ul class="theory-list"><li>bin(x), oct(x), hex(x) дают строку с префиксом.</li><li>Последняя цифра в base p: x % p для неотрицательных чисел.</li><li>Старшая цифра: повторяйте x //= p, пока x &gt;= p.</li><li>Количество цифр: цикл делений или длина строки перевода.</li><li>Перевести число в base p: собирайте остатки с конца.</li><li>«Оканчивается на 23 в base 6» — это x % 36 == 15.</li><li>Для отрицательных сначала берите модуль.</li></ul>
+  <div class="formula-inline"><code>x % p — последняя цифра</code><code>x % p**k — последние k цифр</code><code>(23)₆ = 2·6 + 3 = 15</code></div>
+</article>
+<article class="theory-card">
+  <h3>Пары любых элементов i &lt; j</h3>
+  <p>Иногда пара — это не два соседних элемента, а любые два различных элемента, порядок не важен. Полный двойной цикл делает около n²/2 проверок: при n = 10 000 это 50 млн, что на Python медленно. Если условие зависит от остатков, считайте частоты.</p>
+  <ul class="theory-list"><li>Полный перебор: for i in range(n): for j in range(i+1, n).</li><li>j начинается с i+1, иначе элемент сочетается сам с собой.</li><li>Для суммы, кратной d, храните количество предыдущих остатков.</li><li>Нужный остаток: need = (-x) % d.</li><li>Для максимума суммы храните максимальное значение по остатку.</li><li>«Хотя бы один делится на d» разбивайте на два счётчика.</li><li>Для произведения по модулю d перемножайте остатки по модулю d.</li></ul>
+  <div class="formula-inline"><code>need = (-x) % d</code><code>count += cnt[need]</code></div>
+</article>
+<article class="theory-card">
+  <h3>Кольцо, симметрия и расстояние</h3>
+  <p>В закольцованной последовательности после последнего элемента идёт первый: индекс берут по модулю длины. Симметричные пары стоят на равном расстоянии от концов. Тройки на равном расстоянии делят последовательность на три части.</p>
+  <ul class="theory-list"><li>Сосед справа по кругу: a[(i+1) % n], слева: a[(i-1) % n].</li><li>Окно по кругу: индексы (i+k) % n.</li><li>Симметричная пара: a[i] и a[n-1-i].</li><li>Центральный элемент при нечётной длине в пары не входит.</li><li>Тройки на расстоянии d = n//3: zip(a, a[d:], a[2*d:]).</li><li>Для кольца из n элементов окно длины k даёт ровно n окон.</li></ul>
+  <div class="formula-inline"><code>(i + 1) % n</code><code>a[i], a[n - 1 - i]</code><code>d = n // 3</code></div>
+</article>
+<article class="theory-card">
+  <h3>Агрегаты ответа</h3>
+  <p>Почти всегда ответ — два числа: количество подходящих окон и второй агрегат. Вторым агрегатом бывает максимум, минимум, сумма всех сумм, среднее арифметическое или характеристика лучшего окна. Внимательно читайте, что именно просят.</p>
+  <ul class="theory-list"><li>Количество: len(b).</li><li>Максимум суммы: max(b), минимум: min(b).</li><li>Сумма всех найденных сумм: sum(b).</li><li>Среднее с целой частью: sum(b) // len(b).</li><li>Максимальный элемент среди окон: max(max(w) for w in windows).</li><li>Если нужен сам элемент, собирайте элементы, а не суммы.</li><li>Начальное значение для максимума: None или очень маленькое число.</li><li>−10**18 безопаснее, чем 0, если ответ может быть отрицательным.</li></ul>
+  <div class="formula-inline"><code>len(b), max(b), min(b), sum(b)</code><code>sum(b) // len(b)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Проверка и отладка</h3>
+  <p>Перед запуском на большом файле проверьте программу на маленьком примере из условия. Если в условии есть разобранный пример, сравните оба числа. Затем проверьте границы: первое и последнее окно, отрицательные числа и пустой список результатов.</p>
+  <ul class="theory-list"><li>Начните с примера из условия: он есть у многих задач.</li><li>Сделайте файл из 5–10 чисел и посчитайте ответ вручную.</li><li>Проверьте последнее окно: оно должно заканчиваться на a[n-1].</li><li>Проверьте отрицательные числа в условиях на цифры.</li><li>Убедитесь, что порядок вывода: сначала количество, потом второй агрегат.</li><li>Если ответ не совпал, выведите несколько первых подходящих окон.</li><li>Сравните len(b) и количество итераций цикла.</li></ul>
+  <div class="formula-inline"><code>print(len(b), max(b))</code><code>print(b[:5]) для отладки</code></div>
+</article></div>
+  
+<div class="theory-example">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Разбор примера</p>
+    <h3>Учебный пример: пары с опорным числом</h3>
+    <p>Дан файл из десяти чисел: 14, 23, 5, 28, 40, 7, 13, 21, 9, 33. Нужно найти количество пар подряд, в которых ровно одно число делится на 7, а сумма больше максимального элемента, оканчивающегося на 3. Во втором числе ответа — максимальная сумма таких пар.</p>
+  </div>
+  <div class="theory-example-grid theory-example-grid--single"><div class="table-wrap"><table class="example-table">
+  <caption>Пары подряд и проверка условий</caption>
+  <thead><tr><th>Пара</th><th>Сумма</th><th>Подходит</th></tr></thead>
+  <tbody><tr><td>14, 23</td><td>37</td><td>да</td></tr><tr><td>23, 5</td><td>28</td><td>нет: нет кратных 7</td></tr><tr><td>5, 28</td><td>33</td><td>нет: сумма не больше 33</td></tr><tr><td>28, 40</td><td>68</td><td>да</td></tr><tr><td>40, 7</td><td>47</td><td>да</td></tr><tr><td>7, 13</td><td>20</td><td>нет: сумма не больше 33</td></tr><tr><td>13, 21</td><td>34</td><td>да</td></tr><tr><td>21, 9</td><td>30</td><td>нет: сумма не больше 33</td></tr><tr><td>9, 33</td><td>42</td><td>нет: нет кратных 7</td></tr></tbody>
+</table></div></div>
+  <ol class="task-steps"><li>Опорное число: максимальный элемент с последней цифрой 3 — это 33 (23 и 13 меньше).</li><li>Идём по парам подряд и проверяем, что ровно одно число делится на 7: в паре 14 и 23 это 14.</li><li>Сумма 14 + 23 = 37 больше 33 — первая пара найдена.</li><li>Пара 5 и 28 даёт сумму 33, а нужно строго больше 33, поэтому она не подходит.</li><li>Подходят пары с суммами 37, 68, 47 и 34; максимум равен 68.</li></ol>
+  <p class="example-answer"><span>Ответ</span>4 68.</p>
+</div>
+</section>
+    
+<section class="task-block task-block--methods" id="methods">
+  <div class="block-head">
+    <p class="eyebrow">Способы решения</p>
+    <h2>Выберите метод под формулировку</h2>
+    <p class="block-lead">Методы собраны по решениям задания 17 из базы Kompege. Начните с того, что именно нужно найти в условии.</p>
+  </div>
+  <div class="methods-list">
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">01</span>
+    <div>
+      <p class="eyebrow">когда пара — два соседних элемента</p>
+      <h3>Пара подряд: базовый шаблон</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Условие относится к двум идущим подряд числам, а ответ — количество и максимум или минимум суммы.</p>
+  <ol class="task-steps"><li>Прочитайте все числа в список.</li><li>Найдите опорное число, если оно есть в условии.</li><li>Пройдите циклом по парам a[i], a[i+1].</li><li>Проверьте условие и добавьте сумму пары в список.</li><li>Выведите количество и нужный агрегат.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В файле 6, 2, 9, −3, 6. Считаем пары, где хотя бы одно число делится на 3, и ищем максимальную сумму.</p>
+  <pre class="code-block"><code>a = [6, 2, 9, -3, 6]
+
+b = []
+for i in range(len(a) - 1):
+    x, y = a[i], a[i + 1]
+    if x % 3 == 0 or y % 3 == 0:
+        b.append(x + y)
+
+print(len(b), max(b))  # 4 11</code></pre>
+  <p class="method-answer"><span>Ответ</span>4 11.</p>
+</div>
+  <p class="method-source">Задача № 16264 (база Kompege); пример по мотивам задачи № 1970.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">02</span>
+    <div>
+      <p class="eyebrow">когда важна позиция внутри окна</p>
+      <h3>Тройка подряд и центральный элемент</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Условие выделяет средний элемент тройки или проверяет все три позиции по-разному.</p>
+  <ol class="task-steps"><li>Определите длину окна и позиции элементов.</li><li>Опишите проверку одного элемента функцией.</li><li>Пройдите по окнам через zip или срез.</li><li>Проверьте условие для каждой позиции.</li><li>Соберите суммы и выведите ответ.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Ищем тройки, в которых только среднее число — положительное трёхзначное, оканчивающееся на 5.</p>
+  <pre class="code-block"><code>def ok(x):
+    return 100 &lt;= x &lt;= 999 and x % 10 == 5
+
+a = [12, 105, 37, 250, 5, 41, 8, 96, 335, 7]
+b = []
+for x, y, z in zip(a, a[1:], a[2:]):
+    if not ok(x) and ok(y) and not ok(z):
+        b.append(x + y + z)
+
+print(len(b), max(b))  # 2 438</code></pre>
+  <p class="method-answer"><span>Ответ</span>2 438.</p>
+</div>
+  <p class="method-source">Задача № 3834 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">03</span>
+    <div>
+      <p class="eyebrow">когда окно длиннее трёх</p>
+      <h3>Окно длины k: пятёрки и четвёрки</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно проверить четыре, пять или больше подряд идущих элементов, а условия считают элементы окна.</p>
+  <ol class="task-steps"><li>Задайте k — длину окна.</li><li>Пройдите range(n-k+1).</li><li>Возьмите срез a[i:i+k].</li><li>Посчитайте сумму логических условий по элементам.</li><li>Добавьте сумму окна и выведите агрегат.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Пятёрки, где ровно три числа оканчиваются на 4, а максимум пятёрки кратен максимальному трёхзначному числу из одинаковых цифр (777).</p>
+  <pre class="code-block"><code>a = [4, 14, 24, 34, 777, 44, 4, 9, 14, 24, 34, 54]
+m = max(x for x in a if 100 &lt;= abs(x) &lt;= 999 and len(set(str(abs(x)))) == 1)
+
+b = []
+for i in range(len(a) - 4):
+    w = a[i:i + 5]
+    if sum(abs(x) % 10 == 4 for x in w) == 3 and max(w) % m == 0:
+        b.append(sum(w))
+
+print(len(b), max(b))  # 2 868</code></pre>
+  <p class="method-answer"><span>Ответ</span>2 868.</p>
+</div>
+  <p class="method-source">Задача № 11917 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">04</span>
+    <div>
+      <p class="eyebrow">когда сказано «ровно два»</p>
+      <h3>Ровно k условий в окне</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Условие требует посчитать, сколько элементов окна обладают свойством: ровно два, ровно один, не более трёх.</p>
+  <ol class="task-steps"><li>Запишите свойство как логическое выражение.</li><li>Просуммируйте выражения по элементам окна.</li><li>Сравните сумму с k.</li><li>Не путайте «ровно k» с «хотя бы k».</li><li>Проверьте окно, где свойство выполнено у всех элементов.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Тройки, в которых нечётное число ровно одно.</p>
+  <pre class="code-block"><code>a = [12, 35, 8, 7, 20, 11, 14, 9, 6]
+
+b = []
+for i in range(len(a) - 2):
+    w = a[i:i + 3]
+    if sum(x % 2 for x in w) == 1:
+        b.append(sum(w))
+
+print(len(b), max(b))  # 4 55</code></pre>
+  <p class="method-answer"><span>Ответ</span>4 55.</p>
+</div>
+  <p class="method-source">Задача № 11625 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">05</span>
+    <div>
+      <p class="eyebrow">когда есть максимум или минимум по условию</p>
+      <h3>Опорное число с фильтром</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> В условии есть «максимальный элемент, оканчивающийся на 7», «минимальный двузначный» или похожая характеристика всего файла.</p>
+  <ol class="task-steps"><li>Выпишите свойство опорного числа.</li><li>Найдите его генератором max или min.</li><li>Убедитесь, что модуль учтён для отрицательных чисел.</li><li>Используйте опорное число в условии окна.</li><li>Проверьте, что в файле действительно есть такой элемент.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Тройки, где ровно два числа оканчиваются на 2, а сумма больше удвоенного максимума с последней цифрой 7.</p>
+  <pre class="code-block"><code>a = [12, 22, 5, 27, 32, 42, 9, 20, 2, 17]
+M = max(x for x in a if x % 10 == 7)
+
+b = []
+for i in range(len(a) - 2):
+    w = a[i:i + 3]
+    if sum(x % 10 == 2 for x in w) == 2 and sum(w) &gt; 2 * M:
+        b.append(sum(w))
+
+print(len(b), max(b))  # 2 101</code></pre>
+  <p class="method-answer"><span>Ответ</span>2 101: опорное число 27, подходят суммы 101 и 83.</p>
+</div>
+  <p class="method-source">Задача № 10930 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">06</span>
+    <div>
+      <p class="eyebrow">когда сравнивают элементы внутри окна</p>
+      <h3>Порядок элементов: между, больше, меньше</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Условие просит, чтобы центральное число было между крайними, элементы шли по возрастанию или один был больше другого.</p>
+  <ol class="task-steps"><li>Запишите цепочку сравнений.</li><li>Проверьте, что все три элемента различны, если это требуется.</li><li>Для «между» используйте x &lt; y &lt; z or x &gt; y &gt; z.</li><li>Для нестрогого порядка добавьте равенства.</li><li>Проверьте окно с равными элементами.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Тройки, где числа строго возрастают или строго убывают.</p>
+  <pre class="code-block"><code>a = [3, 8, 9, 5, 2, 7, 1, 6]
+
+b = []
+for x, y, z in zip(a, a[1:], a[2:]):
+    if (x &lt; y &lt; z) or (x &gt; y &gt; z):
+        b.append(x + y + z)
+
+print(len(b), max(b))  # 2 20</code></pre>
+  <p class="method-answer"><span>Ответ</span>2 20.</p>
+</div>
+  <p class="method-source">Задача № 9946 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">07</span>
+    <div>
+      <p class="eyebrow">когда важны цифры числа</p>
+      <h3>Свойства цифр и разрядность</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Считают количество четырёхзначных чисел, сумму цифр, последнюю цифру или палиндром.</p>
+  <ol class="task-steps"><li>Возьмите str(abs(x)), чтобы убрать минус.</li><li>Посчитайте длину, сумму цифр или нужную позицию.</li><li>Для последних цифр используйте остатки % 10 и % 100.</li><li>Оформите свойство функцией, если оно повторяется.</li><li>Проверьте на числе с нулями внутри и на отрицательном.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Тройки, где ровно два числа четырёхзначные; во втором числе — максимум суммы модулей.</p>
+  <pre class="code-block"><code>a = [1234, 56, 7890, 4321, 99, 1000, 7, 5555, 12]
+
+b = []
+for i in range(len(a) - 2):
+    w = a[i:i + 3]
+    if sum(len(str(abs(x))) == 4 for x in w) == 2:
+        b.append(sum(abs(x) for x in w))
+
+print(len(b), max(b))  # 5 12310</code></pre>
+  <p class="method-answer"><span>Ответ</span>5 12 310.</p>
+</div>
+  <p class="method-source">Задачи № 11236 и № 14313 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">08</span>
+    <div>
+      <p class="eyebrow">когда есть base 7, 8 или 16</p>
+      <h3>Запись в другой системе счисления</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Условие говорит об окончании, первой цифре или количестве цифр в системе счисления p.</p>
+  <ol class="task-steps"><li>Определите p и что именно нужно: последняя цифра, первая или вся запись.</li><li>Последняя цифра — это x % p.</li><li>Первую цифру ищите делением на p.</li><li>Для полной записи напишите функцию перевода.</li><li>Не забывайте про модуль для отрицательных чисел.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Тройки, где ровно два числа оканчиваются на 5 в семеричной записи, а сумма больше удвоенного максимума, начинающегося с 2 в семеричной записи.</p>
+  <pre class="code-block"><code>def first_base7(x):
+    x = abs(x)
+    while x &gt;= 7:
+        x //= 7
+    return x
+
+a = [5, 12, 19, 15, 40, 9, 26, 7, 33]
+M = max(x for x in a if first_base7(x) == 2)
+
+b = []
+for i in range(len(a) - 2):
+    w = a[i:i + 3]
+    if sum(x % 7 == 5 for x in w) == 2 and sum(w) &gt; 2 * M:
+        b.append(sum(w))
+
+print(len(b), max(b))  # 4 75</code></pre>
+  <p class="method-answer"><span>Ответ</span>4 75.</p>
+</div>
+  <p class="method-source">Задачи № 12746 и № 11717 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">09</span>
+    <div>
+      <p class="eyebrow">когда нужна функция-предикат</p>
+      <h3>Простые, квадраты и палиндромы</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Условие опирается на математическое свойство числа, а не на его цифры.</p>
+  <ol class="task-steps"><li>Напишите функцию is_prime, is_square или is_palindrome.</li><li>Проверьте её на 0, 1, 2 и на большом числе.</li><li>Используйте функцию в условии окна.</li><li>Для квадратов берите isqrt, для палиндромов — строку.</li><li>Не считайте 1 простым числом.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Пары, где простое ровно одно число, а сумма меньше максимального простого в файле.</p>
+  <pre class="code-block"><code>def is_prime(n):
+    if n &lt; 2:
+        return False
+    d = 2
+    while d * d &lt;= n:
+        if n % d == 0:
+            return False
+        d += 1
+    return True
+
+a = [7, 10, 11, 4, 13, 8, 9, 19, 6]
+M = max(x for x in a if is_prime(x))
+b = [x + y for x, y in zip(a, a[1:]) if is_prime(x) ^ is_prime(y) and x + y &lt; M]
+print(len(b), max(b))  # 3 17</code></pre>
+  <p class="method-answer"><span>Ответ</span>3 17.</p>
+</div>
+  <p class="method-source">Задачи № 13075 и № 13994 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">10</span>
+    <div>
+      <p class="eyebrow">когда пара — не соседние числа</p>
+      <h3>Пары различных элементов i &lt; j</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> В условии сказано «два различных элемента», «порядок не важен» или «пара любых элементов». Полный перебор при 10 000 чисел слишком медленный.</p>
+  <ol class="task-steps"><li>Определите, зависит ли условие от остатков или от самих значений.</li><li>Для остатков заведите массив частот длины d.</li><li>Перед добавлением текущего числа найдите нужный остаток.</li><li>Обновите количество и максимум для остатка текущего числа.</li><li>Сверьте с полным перебором на маленьком файле.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Пары различных элементов, сумма которых кратна 60; нужны количество и максимальная сумма.</p>
+  <pre class="code-block"><code>a = [40, 20, 80, 100, 140, 60, 10, 50]
+
+cnt = [0] * 60
+mx = [None] * 60
+total = 0
+best = None
+
+for x in a:
+    need = (-x) % 60
+    if cnt[need]:
+        total += cnt[need]
+        s = x + mx[need]
+        if best is None or s &gt; best:
+            best = s
+    r = x % 60
+    cnt[r] += 1
+    if mx[r] is None or x &gt; mx[r]:
+        mx[r] = x
+
+print(total, best)  # 7 240</code></pre>
+  <p class="method-answer"><span>Ответ</span>7 240.</p>
+</div>
+  <p class="method-source">Задача № 14716 (база Kompege); пример по мотивам задачи № 4416.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">11</span>
+    <div>
+      <p class="eyebrow">когда последовательность закольцована</p>
+      <h3>Кольцо и симметричные пары</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> После последнего элемента идёт первый, или пары стоят на равном расстоянии от концов.</p>
+  <ol class="task-steps"><li>Определите, что считается соседом: по индексу или по кругу.</li><li>Для кольца берите индекс по модулю n.</li><li>Для симметричных пар идите от краёв к центру.</li><li>Для равномерных троек найдите шаг d = n // 3.</li><li>Проверьте, что элементы не повторяются в одной тройке.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Закольцованная последовательность: тройки на расстоянии d = n // 3.</p>
+  <pre class="code-block"><code>a = [1, 2, 4, 4, 9, 16]
+d = len(a) // 3
+
+b = []
+for x, y, z in zip(a, a[d:], a[d * 2:]):
+    if sum(abs(v) % 2 == 0 for v in (x, y, z)) == 1:
+        b.append(x + y + z)
+
+print(len(b), max(b))  # 1 14</code></pre>
+  <p class="method-answer"><span>Ответ</span>1 14.</p>
+</div>
+  <p class="method-source">Задачи № 10004 и № 5439 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">12</span>
+    <div>
+      <p class="eyebrow">когда ответ — не максимум</p>
+      <h3>Количество и среднее арифметическое</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Второе число ответа — сумма всех найденных сумм, среднее арифметическое, минимум или характеристика лучшего окна.</p>
+  <ol class="task-steps"><li>Соберите суммы подходящих окон в список.</li><li>Проверьте, что список не пуст.</li><li>Выберите агрегат: max, min, sum или sum // len.</li><li>Для среднего берите целую часть, если это сказано в условии.</li><li>Выведите два числа в порядке условия.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Тройки, где есть хотя бы одно двузначное число и сумма чётна; нужны количество и целая часть среднего.</p>
+  <pre class="code-block"><code>a = [10, 10, 10, 20]
+
+b = []
+for i in range(len(a) - 2):
+    w = a[i:i + 3]
+    if any(10 &lt;= abs(x) &lt;= 99 for x in w) and sum(w) % 2 == 0:
+        b.append(sum(w))
+
+print(len(b), sum(b) // len(b))  # 2 35</code></pre>
+  <p class="method-answer"><span>Ответ</span>2 35.</p>
+</div>
+  <p class="method-source">Задача № 12471 (база Kompege).</p>
+</article></div>
+  
+<div class="cheatsheet">
+  <p class="mini-label">Шпаргалка: формулировка → метод</p>
+  <div class="cheatsheet-wrap">
+    <table class="cheatsheet-table">
+      <thead><tr><th>В условии</th><th>Что делать</th></tr></thead>
+      <tbody><tr><td>«пара подряд»</td><td>цикл по a[i], a[i+1]</td></tr><tr><td>«тройка», «четвёрка», «пятёрка»</td><td>срез a[i:i+k]</td></tr><tr><td>«два различных элемента»</td><td>пары i &lt; j или частоты остатков</td></tr><tr><td>«ровно два из трёх»</td><td>sum(bool) == 2</td></tr><tr><td>«хотя бы один»</td><td>any(...) или sum(...) &gt;= 1</td></tr><tr><td>«только один»</td><td>исключающее ИЛИ ^</td></tr><tr><td>«максимальный, оканчивающийся на …»</td><td>max(x for x in a if ...)</td></tr><tr><td>«минимальный двузначный»</td><td>min(x for x in a if 10 &lt;= abs(x) &lt;= 99)</td></tr><tr><td>«кратно d»</td><td>x % d == 0</td></tr><tr><td>«оканчивается на 13»</td><td>abs(x) % 100 == 13</td></tr><tr><td>«сумма цифр»</td><td>sum(map(int, str(abs(x))))</td></tr><tr><td>«ровно k цифр»</td><td>len(str(abs(x))) == k</td></tr><tr><td>«полный квадрат»</td><td>isqrt(x) ** 2 == x</td></tr><tr><td>«простое число»</td><td>проверка делителей до isqrt(n)</td></tr><tr><td>«палиндром»</td><td>s == s[::-1]</td></tr><tr><td>«в семеричной оканчивается на 5»</td><td>x % 7 == 5</td></tr><tr><td>«начинается с 2 в base 7»</td><td>делить на 7, пока x &gt;= 7</td></tr><tr><td>«между крайними»</td><td>x &lt; y &lt; z or x &gt; y &gt; z</td></tr><tr><td>«закольцовано»</td><td>a[(i + 1) % n]</td></tr><tr><td>«симметричные пары»</td><td>a[i] и a[n - 1 - i]</td></tr><tr><td>«ответ — среднее»</td><td>sum(b) // len(b)</td></tr><tr><td>«нет подходящих окон»</td><td>проверить b перед max</td></tr></tbody>
+    </table>
+  </div>
+</div>
+  
+<div class="video-block">
+  <p class="mini-label">Видеоразборы по теме</p>
+  <div class="video-list"><a class="video-link" href="https://youtu.be/k6KbLR7vkj4?t=4972" target="_blank" rel="noopener noreferrer"><span class="video-label">Пары: хотя бы одно делится на 3</span><span class="video-meta">№ 1970 · 1:22:52</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/b7QDg3Jyc38?t=4385" target="_blank" rel="noopener noreferrer"><span class="video-label">Пары: делимость суммы и среднее</span><span class="video-meta">№ 1995 · 1:13:05</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/3rNLobV07b0?t=4300" target="_blank" rel="noopener noreferrer"><span class="video-label">Пары с максимумом, кратным 11</span><span class="video-meta">№ 4108 · 1:11:40</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/8aZZaVk8LSs?t=1460" target="_blank" rel="noopener noreferrer"><span class="video-label">Только один элемент в диапазоне</span><span class="video-meta">№ 4542 · 24:20</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/YjHKqD4d6Bc?t=7737" target="_blank" rel="noopener noreferrer"><span class="video-label">Тройки: все чётные или двузначные</span><span class="video-meta">№ 12471 · 2:08:57</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/BMVaYPPqB2k?t=3629" target="_blank" rel="noopener noreferrer"><span class="video-label">Тройки: ровно два условия</span><span class="video-meta">№ 11236 · 1:00:29</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/ZD4A_s3MIM4?t=3060" target="_blank" rel="noopener noreferrer"><span class="video-label">Тройки: хотя бы два четырёхзначных</span><span class="video-meta">№ 17939 · 51:00</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/6Gxr8I8ZsFo?t=5151" target="_blank" rel="noopener noreferrer"><span class="video-label">Локальные минимумы и соседи</span><span class="video-meta">№ 2710 · 1:25:51</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/g4NPPllF5jY?t=7635" target="_blank" rel="noopener noreferrer"><span class="video-label">Пары различных элементов: разность кратна 36</span><span class="video-meta">№ 4414 · 2:07:15</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/1MuP6Nxgz-0?t=744" target="_blank" rel="noopener noreferrer"><span class="video-label">Пары различных элементов: сумма кратна 60</span><span class="video-meta">№ 4416 · 12:24</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/3WV9hLqcC10?t=7930" target="_blank" rel="noopener noreferrer"><span class="video-label">Симметричные пары</span><span class="video-meta">№ 5439 · 2:12:10</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/Gi9VWR2dGJA?t=4343" target="_blank" rel="noopener noreferrer"><span class="video-label">Пары с элементом между ними</span><span class="video-meta">№ 3895 · 1:12:23</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/DbLCvM4NvMc?t=5235" target="_blank" rel="noopener noreferrer"><span class="video-label">Среднее арифметическое и цифра 9</span><span class="video-meta">№ 2491 · 1:27:15</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/4GgTfFbyZoI?t=547" target="_blank" rel="noopener noreferrer"><span class="video-label">Среднее геометрическое и квадраты</span><span class="video-meta">№ 3749 · 9:07</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a></div>
+  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+</div>
+  <p class="method-source-note">По базе Kompege: 984 задачи, 66 решений (63 программных и 3 текстовых) и 232 видеоразбора (144 YouTube, 53 VK, 35 Rutube) по заданию 17. Для методов отобраны решения задач № 16264, 3834, 11917, 11625, 10930, 9946, 11236, 14313, 12746, 11717, 13075, 13994, 14716, 10004, 5439 и 12471; дополнительные примеры и видеоразборы — задачи № 1970, 1995, 4108, 4542, 17939, 2710, 4414, 4416, 3895, 2491 и 3749; примеры переработаны в учебные.</p>
+</section>
+    <section class="task-block" id="mistakes">
+      <h2>Типичные ошибки</h2>
+      <ul class="task-list task-list--mistakes"><li>неверные начальные значения</li><li>ошибка на единицу</li><li>прочитаны не все данные</li><li>переполнение</li></ul>
+    </section>
+    
+<section class="task-block">
+  <h2>Ключевые формулы</h2>
+  <ul class="formula-list"><li><code>окон длины k в последовательности из n чисел: n − k + 1</code></li><li><code>M = max(x for x in a if условие)</code></li><li><code>ответ: количество и максимум (минимум, сумма или среднее) сумм окон</code></li></ul>
+</section>
+    
+    <section class="task-block" id="practice">
+      <h2>Практика</h2>
+      
+<div class="practice-grid">
+  <a class="practice-link" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener noreferrer">
+    <span class="practice-label">ФИПИ</span><span class="practice-title">Открытый банк заданий</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80.%20%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D1%8B%20%D0%B8%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Навигатор · 2026</span><span class="practice-title">Алгоритмы</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/inf_11_2027/%D0%98%D0%9D%D0%A4-11%20%D0%95%D0%93%D0%AD%202027%20%D0%94%D0%95%D0%9C%D0%9E.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Демоверсия</span><span class="practice-title">КИМ 2027</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0.%202026.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Методика</span><span class="practice-title">Разбор ошибок 2026</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+</div>
+<p class="practice-note">Навигатор и методические рекомендации опубликованы в 2026 году: номера заданий в них могут отличаться от нумерации 2027 года. Ориентируйтесь на тему.</p>
+    </section>
+    
+<div class="related-links">
+  <span class="related-label">Смотрите также</span>
+  <a class="related-link" href="16.html">16 · Рекурсия</a><a class="related-link" href="26.html">26 · Массив: сортировка</a>
+</div>
+    <nav class="prev-next" aria-label="Соседние задания">
+      <a class="prev-next-link" href="16.html"><span>← Предыдущее</span><strong>16 · Рекурсия</strong></a>
+      <a class="prev-next-link prev-next-link--next" href="18.html"><span>Следующее →</span><strong>18 · Таблицы: анализ и оптимизация</strong></a>
+    </nav>
+  </div>
+
+  <aside class="task-aside">
+    <div class="aside-card">
+      <div class="aside-head">
+        <span>Карта заданий</span>
+        <span class="map-progress" data-progress-count>0 / 27</span>
+      </div>
+      <div class="task-map task-map--compact" data-task-map><a class="task-cell task-cell--digital task-cell--compact" href="01.html" data-task="1" data-section="digital" data-title="Графы и таблицы" data-caption="&lt;strong&gt;Задание 1&lt;/strong&gt; · Графы и таблицы · Цифровая грамотность · 1 балл" aria-label="Задание 1: Графы и таблицы"><span>1</span></a><a class="task-cell task-cell--theory task-cell--compact" href="02.html" data-task="2" data-section="theory" data-title="Логические функции" data-caption="&lt;strong&gt;Задание 2&lt;/strong&gt; · Логические функции · Теория · 1 балл" aria-label="Задание 2: Логические функции"><span>2</span></a><a class="task-cell task-cell--it task-cell--compact" href="03.html" data-task="3" data-section="it" data-title="Базы данных" data-caption="&lt;strong&gt;Задание 3&lt;/strong&gt; · Базы данных · Информационные технологии · 1 балл" aria-label="Задание 3: Базы данных"><span>3</span></a><a class="task-cell task-cell--theory task-cell--compact" href="04.html" data-task="4" data-section="theory" data-title="Коды и условие Фано" data-caption="&lt;strong&gt;Задание 4&lt;/strong&gt; · Коды и условие Фано · Теория · 1 балл" aria-label="Задание 4: Коды и условие Фано"><span>4</span></a><a class="task-cell task-cell--algo task-cell--compact" href="05.html" data-task="5" data-section="algo" data-title="Алгоритмы исполнителя" data-caption="&lt;strong&gt;Задание 5&lt;/strong&gt; · Алгоритмы исполнителя · Алгоритмы · 1 балл" aria-label="Задание 5: Алгоритмы исполнителя"><span>5</span></a><a class="task-cell task-cell--algo task-cell--compact" href="06.html" data-task="6" data-section="algo" data-title="Исполнители и координаты" data-caption="&lt;strong&gt;Задание 6&lt;/strong&gt; · Исполнители и координаты · Алгоритмы · 1 балл" aria-label="Задание 6: Исполнители и координаты"><span>6</span></a><a class="task-cell task-cell--theory task-cell--compact" href="07.html" data-task="7" data-section="theory" data-title="Графика и звук" data-caption="&lt;strong&gt;Задание 7&lt;/strong&gt; · Графика и звук · Теория · 1 балл" aria-label="Задание 7: Графика и звук"><span>7</span></a><a class="task-cell task-cell--theory task-cell--compact" href="08.html" data-task="8" data-section="theory" data-title="Комбинаторика и коды" data-caption="&lt;strong&gt;Задание 8&lt;/strong&gt; · Комбинаторика и коды · Теория · 1 балл" aria-label="Задание 8: Комбинаторика и коды"><span>8</span></a><a class="task-cell task-cell--it task-cell--compact" href="09.html" data-task="9" data-section="it" data-title="Электронные таблицы" data-caption="&lt;strong&gt;Задание 9&lt;/strong&gt; · Электронные таблицы · Информационные технологии · 1 балл" aria-label="Задание 9: Электронные таблицы"><span>9</span></a><a class="task-cell task-cell--digital task-cell--compact" href="10.html" data-task="10" data-section="digital" data-title="IP-адреса и маски" data-caption="&lt;strong&gt;Задание 10&lt;/strong&gt; · IP-адреса и маски · Цифровая грамотность · 1 балл" aria-label="Задание 10: IP-адреса и маски"><span>10</span></a><a class="task-cell task-cell--theory task-cell--compact" href="11.html" data-task="11" data-section="theory" data-title="Объём сообщения" data-caption="&lt;strong&gt;Задание 11&lt;/strong&gt; · Объём сообщения · Теория · 1 балл" aria-label="Задание 11: Объём сообщения"><span>11</span></a><a class="task-cell task-cell--algo task-cell--compact" href="12.html" data-task="12" data-section="algo" data-title="Исполнитель МТ" data-caption="&lt;strong&gt;Задание 12&lt;/strong&gt; · Исполнитель МТ · Алгоритмы · 1 балл" aria-label="Задание 12: Исполнитель МТ"><span>12</span></a><a class="task-cell task-cell--algo task-cell--compact" href="13.html" data-task="13" data-section="algo" data-title="Ход исполнения алгоритма" data-caption="&lt;strong&gt;Задание 13&lt;/strong&gt; · Ход исполнения алгоритма · Алгоритмы · 1 балл" aria-label="Задание 13: Ход исполнения алгоритма"><span>13</span></a><a class="task-cell task-cell--theory task-cell--compact" href="14.html" data-task="14" data-section="theory" data-title="Системы счисления" data-caption="&lt;strong&gt;Задание 14&lt;/strong&gt; · Системы счисления · Теория · 1 балл" aria-label="Задание 14: Системы счисления"><span>14</span></a><a class="task-cell task-cell--theory task-cell--compact" href="15.html" data-task="15" data-section="theory" data-title="Логика и множества" data-caption="&lt;strong&gt;Задание 15&lt;/strong&gt; · Логика и множества · Теория · 1 балл" aria-label="Задание 15: Логика и множества"><span>15</span></a><a class="task-cell task-cell--algo task-cell--compact" href="16.html" data-task="16" data-section="algo" data-title="Рекурсия" data-caption="&lt;strong&gt;Задание 16&lt;/strong&gt; · Рекурсия · Алгоритмы · 1 балл" aria-label="Задание 16: Рекурсия"><span>16</span></a><a class="task-cell task-cell--algo is-current task-cell--compact" href="17.html" data-task="17" data-section="algo" data-title="Обработка последовательности" data-caption="&lt;strong&gt;Задание 17&lt;/strong&gt; · Обработка последовательности · Алгоритмы · 1 балл" aria-label="Задание 17: Обработка последовательности"><span>17</span></a><a class="task-cell task-cell--it task-cell--compact" href="18.html" data-task="18" data-section="it" data-title="Таблицы: анализ и оптимизация" data-caption="&lt;strong&gt;Задание 18&lt;/strong&gt; · Таблицы: анализ и оптимизация · Информационные технологии · 1 балл" aria-label="Задание 18: Таблицы: анализ и оптимизация"><span>18</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html" data-task="19" data-section="theory" data-title="Теория игр" data-caption="&lt;strong&gt;Задание 19&lt;/strong&gt; · Теория игр · Теория · 1 балл" aria-label="Задание 19: Теория игр"><span>19</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-20" data-task="20" data-section="theory" data-title="Теория игр: две кучи" data-caption="&lt;strong&gt;Задание 20&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 20: Теория игр: две кучи"><span>20</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-21" data-task="21" data-section="theory" data-title="Теория игр: стратегия" data-caption="&lt;strong&gt;Задание 21&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 21: Теория игр: стратегия"><span>21</span></a><a class="task-cell task-cell--theory task-cell--compact" href="22.html" data-task="22" data-section="theory" data-title="Параллельные вычисления" data-caption="&lt;strong&gt;Задание 22&lt;/strong&gt; · Параллельные вычисления · Теория · 1 балл" aria-label="Задание 22: Параллельные вычисления"><span>22</span></a><a class="task-cell task-cell--theory task-cell--compact" href="23.html" data-task="23" data-section="theory" data-title="Графы: пути" data-caption="&lt;strong&gt;Задание 23&lt;/strong&gt; · Графы: пути · Теория · 1 балл" aria-label="Задание 23: Графы: пути"><span>23</span></a><a class="task-cell task-cell--algo task-cell--compact" href="24.html" data-task="24" data-section="algo" data-title="Символьные строки" data-caption="&lt;strong&gt;Задание 24&lt;/strong&gt; · Символьные строки · Алгоритмы · 1 балл" aria-label="Задание 24: Символьные строки"><span>24</span></a><a class="task-cell task-cell--algo task-cell--compact" href="25.html" data-task="25" data-section="algo" data-title="Натуральные числа" data-caption="&lt;strong&gt;Задание 25&lt;/strong&gt; · Натуральные числа · Алгоритмы · 1 балл" aria-label="Задание 25: Натуральные числа"><span>25</span></a><a class="task-cell task-cell--algo task-cell--compact" href="26.html" data-task="26" data-section="algo" data-title="Массив: сортировка" data-caption="&lt;strong&gt;Задание 26&lt;/strong&gt; · Массив: сортировка · Алгоритмы · 2 балла" aria-label="Задание 26: Массив: сортировка"><span>26</span></a><a class="task-cell task-cell--it task-cell--compact" href="27.html" data-task="27" data-section="it" data-title="Анализ данных" data-caption="&lt;strong&gt;Задание 27&lt;/strong&gt; · Анализ данных · Информационные технологии · 2 балла" aria-label="Задание 27: Анализ данных"><span>27</span></a></div>
+      <a class="aside-link" href="index.html">Все задания <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="aside-card aside-card--progress">
+      <p class="aside-label">Прогресс</p>
+      <button class="btn btn-primary progress-toggle" type="button" data-progress-toggle="17" aria-pressed="false">Отметить как изученное</button>
+      <p class="progress-note" data-progress-text>0 из 27 изучено</p>
+      <div class="progress-line" aria-hidden="true"><span data-progress-bar></span></div>
+    </div>
+    <div class="aside-card">
+      <p class="aside-label">Быстрые ссылки</p>
+      <a class="aside-link" href="../documents.html#kim2027">Демоверсия 2027 <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html#method">Навигатор и методика <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html">Все документы <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-mark">ЕГЭ · Информатика · 2027</p>
+      <p class="footer-note">Разбор заданий, ключевые темы и официальные документы. Составлено 3 ноября 2026. Не является официальным ресурсом ФИПИ или Рособрнадзора.</p>
+    </div>
+    <div>
+      <p class="footer-title">Разделы</p>
+      <p class="footer-note"><a href="../index.html">Главная</a> · <a href="../tasks/index.html">Все задания</a> · <a href="../documents.html">Документы</a></p>
+      <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
+    </div>
+    <div>
+      <p class="footer-title">Первоисточники</p>
+      <p class="footer-note"><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ</a> · <a href="https://obrnadzor.gov.ru/gia/gia-11/" target="_blank" rel="noopener noreferrer">Рособрнадзор</a> · <a href="https://regulation.gov.ru/projects/172223/" target="_blank" rel="noopener noreferrer">проект расписания</a></p>
+      <p class="footer-note">Права на документы принадлежат их правообладателям. Копии сохранены для ознакомления и подготовки.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

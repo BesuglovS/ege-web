@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задание 6 ЕГЭ по информатике — Исполнители и координаты</title>
+<meta name="description" content="Выполнить алгоритм исполнителя и найти точки, площадь, периметр или расстояние. Теория, способы решения и типичные ошибки. ЕГЭ-2027, информатика.">
+<meta name="theme-color" content="#F0F1EB">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="На главную">
+    <span class="brand-mark" aria-hidden="true">И</span>
+    <span class="brand-text">ЕГЭ · Информатика<small>подготовка по заданиям</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a href="../index.html">Главная</a>
+    <a href="../tasks/index.html" class="is-active" aria-current="page">Задания</a>
+    <a href="../documents.html">Документы</a>
+  </nav>
+  <div class="topbar-meta"><span>Задание 6 из 27</span><span>Алгоритмы</span></div>
+</header>
+<main id="main">
+
+<nav class="breadcrumb" aria-label="Хлебные крошки"><a href="../index.html">Главная</a><span class="crumb-sep">/</span><a href="index.html">Задания</a><span class="crumb-sep">/</span><span aria-current="page">Задание 6</span></nav>
+
+<section class="task-hero">
+  <div class="task-number" aria-hidden="true">06</div>
+  <div class="task-hero-copy">
+    <p class="eyebrow">Алгоритмы и программирование · 1 балл</p>
+    <h1>Исполнители и координаты</h1>
+    <p class="task-subtitle">Рисование и подсчёт точек</p>
+    <p class="lead">Выполнить алгоритм исполнителя и найти точки, площадь, периметр или расстояние.</p>
+    <div class="task-badges">
+      <span class="badge badge-section badge-section--algo">Алгоритмы</span>
+      <span class="badge badge-answer">целое число</span>
+      
+    </div>
+  </div>
+</section>
+
+
+<nav class="task-toc" aria-label="На странице задания">
+  <span class="task-toc-label">На странице</span>
+  
+  <a href="#theory">Теория</a>
+  <a href="#methods">Способы решения</a>
+  <a href="#mistakes">Ошибки</a>
+  <a href="#practice">Практика</a>
+</nav>
+
+<div class="task-layout">
+  <div class="task-main">
+    
+    
+    <section class="task-block">
+      <h2>Что проверяет</h2>
+      <p class="task-checked">Определение возможных результатов работы простейших алгоритмов управления исполнителями и вычислительных алгоритмов.</p>
+      <p class="task-source">Основание: проект спецификации и кодификатора КИМ 2027. <a href="../documents.html#kim2027">Открыть документы <span aria-hidden="true">↗</span></a></p>
+    </section>
+    
+    
+<section class="task-block task-block--theory" id="theory">
+  <div class="block-head">
+    <p class="eyebrow">Теория</p>
+    <h2>Что нужно знать</h2>
+    <p class="block-lead">Задание 6 проверяет умение выполнять алгоритм исполнителя и отвечать на вопрос о следе: сколько целых точек внутри фигуры, на границе, какова площадь, периметр или расстояние. В проекте КИМ 2027 структура не менялась: 1 первичный балл, раздел «Алгоритмы и программирование». В демоверсии 2027 Черепаха рисует две фигуры, и нужно найти число целых точек в их пересечении.</p>
+  </div>
+  <div class="theory-checklist">
+    <p class="mini-label">Минимум для задания 6</p>
+    <ul class="check-list"><li>какие команды есть у исполнителя и что они меняют</li><li>где исполнитель находится в начале и куда направлен</li><li>как устроена запись «Повтори k [...]»</li><li>как определить координаты после каждой команды</li><li>чем отличаются «Поднять хвост» и «Опустить хвост»</li><li>что значит «внутри», «на границе», «включая границы»</li><li>как считать целые точки в прямоугольнике и треугольнике</li><li>как найти пересечение и объединение фигур</li><li>как формула Пика и НОД помогают считать точки</li><li>когда нужен перебор, а когда достаточно формулы</li><li>в каких единицах требуется ответ</li></ul>
+  </div>
+  <div class="theory-grid">
+<article class="theory-card">
+  <h3>Что происходит в задании 6</h3>
+  <p>Дан алгоритм исполнителя: Черепахи, Чертёжника, Кузнечика, Вертуна, Водолея или похожего персонажа. Нужно выполнить команды и ответить на вопрос о следе, который остался на плоскости или на клетчатом поле.</p>
+  <ul class="theory-list"><li>Исполнитель начинает в начале координат; начальное направление и положение пера или хвоста заданы в условии.</li><li>Команды движения меняют координаты, команды поворота — направление.</li><li>Поднять или опустить хвост (перо) включает и выключает рисование.</li><li>«Повтори k [...]» повторяет тело цикла k раз; вложенные циклы перемножаются.</li><li>Вопрос может быть про точки, площадь, периметр, расстояние или закрашенные клетки.</li><li>Ответ — целое число; единицы измерения в ответ не пишут.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Координаты и направление</h3>
+  <p>Удобно считать, что ось x направлена вправо, ось y — вверх. В задачах про Черепаху начальное направление обычно совпадает с положительным направлением оси y, то есть «на север».</p>
+  <ul class="theory-list"><li>Вперёд n: x увеличивается на n·sin θ, y — на n·cos θ, где θ — угол от направления «на север» по часовой стрелке.</li><li>Назад n делает то же самое с минусом; Назад −n эквивалентно Вперёд n.</li><li>Направо m: θ увеличивается на m; Налево m: θ уменьшается на m.</li><li>После поворота на 90° по часовой стрелке из «севера» получается «восток»: (0, 1) → (1, 0).</li><li>У Чертёжника команда «Сместиться на (a, b)» просто прибавляет a к x и b к y; направление для неё не важно.</li></ul>
+  <div class="formula-inline"><code>x&#x27; = x + n·sin θ</code><code>y&#x27; = y + n·cos θ</code><code>θ&#x27; = θ ± m</code></div>
+</article>
+<article class="theory-card">
+  <h3>Циклы и замкнутые фигуры</h3>
+  <p>Повторение одного и того же набора команд рисует правильную фигуру. Тип фигуры зависит от суммарного угла поворота за одну итерацию.</p>
+  <ul class="theory-list"><li>Суммарный поворот 360° за цикл замыкает фигуру.</li><li>Повтори 4 [Вперёд a Направо 90] — квадрат a×a.</li><li>Повтори 3 [Вперёд a Направо 120] — правильный треугольник.</li><li>Повтори 6 [Вперёд a Направо 60] — правильный шестиугольник.</li><li>Если за цикл исполнитель поворачивается на 180°, он проходит ту же линию в обратном направлении.</li><li>Если суммарный угол не делит 360°, фигура может остаться незамкнутой или образовать звезду.</li></ul>
+  <div class="formula-inline"><code>угол за цикл = k · m</code><code>число сторон = 360 / m, если m делит 360</code></div>
+</article>
+<article class="theory-card">
+  <h3>Что именно считают</h3>
+  <p>От формулировки зависит, включать ли границу и какую величину искать. Прочитайте вопрос до того, как начнёте рисовать.</p>
+  <ul class="theory-list"><li>«Внутри, точки на линии не учитывать» — строгое неравенство: граница не входит.</li><li>«Включая точки на границах» — нестрогое неравенство: граница входит.</li><li>«Точно на границе» — только точки, лежащие на линиях.</li><li>«Площадь» — число квадратных единиц; «периметр» или «длина границы» — сумма длин внешних отрезков.</li><li>«Пересечение» — общая часть фигур; «объединение» — всё, что покрыто хотя бы одной фигурой.</li><li>«Расстояние между началом и концом» — длина отрезка между двумя положениями исполнителя.</li><li>«Сколько клеток закрашено» — количество различных клеток, а не число команд.</li><li>При повторной закраске клетка считается один раз, если не сказано «перекрасить».</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Целые точки: формулы</h3>
+  <p>Для фигур на клетчатой плоскости удобно считать целые точки по формулам, а не перебирать вручную.</p>
+  <ul class="theory-list"><li>Прямоугольник a×b: площадь ab, периметр 2(a+b).</li><li>Строго внутри прямоугольника с целыми углами: (a−1)(b−1) точек.</li><li>С границей: (a+1)(b+1) точек.</li><li>На отрезке с концами в целых точках: НОД(|dx|, |dy|) + 1 точек, включая концы.</li><li>Формула Пика: S = I + B/2 − 1, где I — внутренние точки, B — точки на границе.</li><li>Для объединения: |A∪B| = |A| + |B| − |A∩B|; для площади действует та же формула.</li><li>Пересечение прямоугольников: x от max(левых границ) до min(правых), y — аналогично.</li></ul>
+  <div class="formula-inline"><code>S = I + B/2 − 1</code><code>B = Σ НОД(|dx|, |dy|)</code><code>|A∪B| = |A| + |B| − |A∩B|</code></div>
+</article>
+<article class="theory-card">
+  <h3>Как проверить себя</h3>
+  <p>Ошибки в задании 6 почти всегда арифметические: не тот знак поворота, потерянный сдвиг или неверно учтённая граница.</p>
+  <ul class="theory-list"><li>Нарисуйте фигуру на бумаге в клетку и подпишите координаты ключевых вершин.</li><li>Проверьте, замыкается ли контур: последняя точка должна совпасть с начальной или с началом следующей фигуры.</li><li>Сравните площадь и количество точек: для прямоугольника они должны быть близки.</li><li>Отдельно проверьте, входят ли границы в ответ.</li><li>Если фигур несколько, сначала найдите пересечение, потом применяйте включение–исключение.</li><li>Для сложной фигуры запустите программу и сравните её результат с ручной оценкой.</li></ul>
+  
+</article></div>
+  
+<div class="theory-example">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Разбор примера</p>
+    <h3>Учебный пример: две фигуры и их пересечение</h3>
+    <p>Черепаха рисует прямоугольник 30×24, затем с поднятым хвостом смещается на (10, 2) и рисует прямоугольник 71×75. Сколько целых точек лежит в пересечении, включая границы?</p>
+  </div>
+  
+  <ol class="task-steps"><li>Первый прямоугольник: x от 0 до 30, y от 0 до 24.</li><li>После подъёма хвоста: Вперёд 2, Направо 90, Вперёд 10, Налево 90 — новое начало (10, 2), направление снова на север.</li><li>Второй прямоугольник: x от 10 до 81, y от 2 до 77.</li><li>Пересечение: x от max(0, 10) = 10 до min(30, 81) = 30, y от max(0, 2) = 2 до min(24, 77) = 24.</li><li>Целых значений x: 30 − 10 + 1 = 21, целых значений y: 24 − 2 + 1 = 23.</li><li>Всего 21 · 23 = 483 точки.</li></ol>
+  <p class="example-answer"><span>Ответ</span>483</p>
+</div>
+</section>
+    
+<section class="task-block task-block--methods" id="methods">
+  <div class="block-head">
+    <p class="eyebrow">Способы решения</p>
+    <h2>Выберите метод под формулировку</h2>
+    <p class="block-lead">Методы собраны по решениям задания 6 из базы Kompege. Начните с того, что именно нужно найти в условии.</p>
+  </div>
+  <div class="methods-list">
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">01</span>
+    <div>
+      <p class="eyebrow">базовый способ</p>
+      <h3>Ведём координаты вручную</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Фигура состоит из горизонтальных и вертикальных отрезков, а вопрос — про точки, площадь или периметр.</p>
+  <ol class="task-steps"><li>Запишите начальную точку (0, 0) и начальное направление.</li><li>Для каждой команды вычислите новую точку и подпишите её на рисунке.</li><li>Отмечайте, опущен ли хвост: поднятый хвост означает, что отрезок не рисуется.</li><li>После цикла проверьте, замкнулась ли фигура.</li><li>Посчитайте целые точки по строкам или столбцам, не забывая про границу.</li><li>Для площади разбейте фигуру на прямоугольники и треугольники.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Алгоритм Повтори 2 [Вперёд 8 Направо 90 Вперёд 5 Направо 90] рисует прямоугольник 8×5. Внутри, не считая границы, лежит 7·4 = 28 целых точек; площадь равна 40, периметр — 26.</p>
+  
+  <p class="method-answer"><span>Ответ</span>28 (строго внутри); 40; 26.</p>
+</div>
+  <p class="method-source">Учебный пример по мотивам задач № 4694 и 4717 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">02</span>
+    <div>
+      <p class="eyebrow">если фигура сложная</p>
+      <h3>Универсальная симуляция на Python</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> В алгоритме есть повороты не на 90°, несколько фигур или нужно быстро перебрать много точек.</p>
+  <ol class="task-steps"><li>Заведите переменные x, y и вектор направления (dx, dy).</li><li>Команду Вперёд n реализуйте как x += n*dx, y += n*dy.</li><li>Поворот направо: (dx, dy) = (dy, -dx); налево: (-dy, dx).</li><li>Подъём и опускание пера — логический флаг, который включает добавление отрезка.</li><li>Для подсчёта точек переберите x и y в пределах bounding box.</li><li>Для площади и периметра сохраните вершины и примените формулу площади многоугольника.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Прямоугольник 8×5: после выполнения команд сохраняем вершины, а затем перебираем только внутренние целые точки.</p>
+  <pre class="code-block"><code>x = y = 0
+dx, dy = 0, 1          # направление на север
+pts = []
+
+for _ in range(2):
+    for step in (5, 8):
+        x += step * dx
+        y += step * dy
+        pts.append((x, y))
+        dx, dy = dy, -dx   # направо 90°
+
+# строго внутри прямоугольника 8×5
+inside = [(i, j) for i in range(1, 8) for j in range(1, 5)]
+print(len(inside))  # 28</code></pre>
+  <p class="method-answer"><span>Ответ</span>28</p>
+</div>
+  <p class="method-source">По мотивам решений задач № 12482 и 13853 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">03</span>
+    <div>
+      <p class="eyebrow">когда фигура — многоугольник</p>
+      <h3>Формулы: НОД, Пик и площадь</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Вершины имеют целые координаты, а вопрос про площадь, периметр или количество точек.</p>
+  <ol class="task-steps"><li>Выпишите вершины фигуры по порядку обхода.</li><li>Площадь многоугольника найдите по формуле Гаусса (шнуровки) или разбейте на прямоугольники и треугольники.</li><li>На каждом отрезке число шагов равно НОД(|dx|, |dy|), а число точек — на единицу больше.</li><li>Сложите шаги по всем сторонам: получится B — количество различных точек на границе.</li><li>Внутренние точки найдите по формуле Пика: I = S − B/2 + 1.</li><li>Проверьте, что вершины не посчитаны дважды.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Чертёжник рисует треугольник с вершинами (0, 0), (4, 0) и (0, 3). Площадь S = 4·3/2 = 6. На границе: НОД(4, 0) + НОД(4, 3) + НОД(0, 3) = 4 + 1 + 3 = 8 точек. По формуле Пика внутри 6 − 8/2 + 1 = 3 точки. Всего 3 + 8 = 11.</p>
+  
+  <p class="method-answer"><span>Ответ</span>3 внутри; 8 на границе; 11 всего.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 13848 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">04</span>
+    <div>
+      <p class="eyebrow">две фигуры</p>
+      <h3>Пересечение и объединение фигур</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно найти общую часть, площадь объединения или количество точек в объединении.</p>
+  <ol class="task-steps"><li>Найдите координаты каждой фигуры после всех смещений.</li><li>Для прямоугольников пересечение — это пересечение диапазонов по x и y.</li><li>Если диапазоны не пересекаются, общая часть пуста.</li><li>Для площади объединения примените S = S1 + S2 − S12.</li><li>Для количества целых точек в объединении — ту же формулу с количествами.</li><li>Для периметра объединения уберите внутренние участки границ.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Две фигуры имеют площади 22×33 = 726 и 62×73 = 4526, их пересечение — 22×22 = 484. Площадь объединения: 726 + 4526 − 484 = 4768.</p>
+  
+  <p class="method-answer"><span>Ответ</span>4768</p>
+</div>
+  <p class="method-source">По мотивам задачи № 24263 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">05</span>
+    <div>
+      <p class="eyebrow">когда фигуры повёрнуты</p>
+      <h3>Перебор целых точек по неравенствам</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Границы заданы наклонными прямыми или окружностями, а нужно только количество точек.</p>
+  <ol class="task-steps"><li>Определите диапазон x и y с запасом по рисунку.</li><li>Запишите условия «внутри» для каждой фигуры как неравенства.</li><li>Для пересечения объедините условия через and, для объединения — через or.</li><li>Для границы используйте равенства или нестрогие неравенства.</li><li>Переберите все целые точки двойным циклом.</li><li>Сверьте количество с площадью: оно не может сильно отличаться.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Первый прямоугольник: x от 0 до 27, y от 0 до 21. Второй: x от 10 до 57, y от 9 до 56. Пересечение: x от 10 до 27, y от 9 до 21, то есть 18·13 = 234 точки.</p>
+  <pre class="code-block"><code>inside1 = lambda x, y: 0 &lt;= x &lt;= 27 and 0 &lt;= y &lt;= 21
+inside2 = lambda x, y: 10 &lt;= x &lt;= 57 and 9 &lt;= y &lt;= 56
+
+count = sum(
+    inside1(x, y) and inside2(x, y)
+    for x in range(-10, 100)
+    for y in range(-10, 100)
+)
+print(count)  # 234</code></pre>
+  <p class="method-answer"><span>Ответ</span>234</p>
+</div>
+  <p class="method-source">По мотивам задачи № 16317 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">06</span>
+    <div>
+      <p class="eyebrow">Кузнечик, Вертун, Водолей</p>
+      <h3>Моделируем состояние, а не рисунок</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Исполнитель не рисует фигуру, а закрашивает клетки, перекрашивает их или переливает воду.</p>
+  <ol class="task-steps"><li>Заведите переменные состояния: позицию, направление, объёмы в колбах.</li><li>Для закрашенных клеток используйте множество set — оно хранит каждую клетку один раз.</li><li>Для команды «Перекрасить» применяйте переключение: если клетка есть, удалите; иначе добавьте.</li><li>Для Водолея опишите каждую команду отдельной функцией.</li><li>Выполните цикл нужное число раз и выведите размер множества или объём.</li><li>Проверьте, не начинается ли новая итерация с того же состояния — тогда дальше значения повторяются.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Вертун за 10 итераций закрашивает 12 различных клеток. Код хранит позицию, направление и множество закрашенных клеток.</p>
+  <pre class="code-block"><code>pos = [0, 0]
+d = [0, 1]
+painted = set()
+
+def forward(n):
+    pos[0] += d[0] * n
+    pos[1] += d[1] * n
+
+def right():
+    d[0], d[1] = d[1], -d[0]
+
+for _ in range(10):
+    forward(5); painted.add(tuple(pos))
+    right(); forward(3); painted.add(tuple(pos))
+    right(); forward(2); painted.add(tuple(pos))
+    right()
+
+print(len(painted))  # 12</code></pre>
+  <p class="method-answer"><span>Ответ</span>12</p>
+</div>
+  <p class="method-source">По мотивам задач № 13836, 13838 и 13853 (база Kompege).</p>
+</article></div>
+  
+<div class="cheatsheet">
+  <p class="mini-label">Шпаргалка: формулировка → метод</p>
+  <div class="cheatsheet-wrap">
+    <table class="cheatsheet-table">
+      <thead><tr><th>В условии</th><th>Что делать</th></tr></thead>
+      <tbody><tr><td>«точки внутри, граница не считается»</td><td>строгие неравенства, граница минус</td></tr><tr><td>«включая точки на границе»</td><td>нестрогие неравенства, +1 к диапазону</td></tr><tr><td>«площадь фигуры»</td><td>разбить на прямоугольники и треугольники или формула Пика</td></tr><tr><td>«периметр / длина границы»</td><td>сумма внешних отрезков, у объединения вычесть внутренние</td></tr><tr><td>«пересечение двух фигур»</td><td>max левых и нижних границ, min правых и верхних</td></tr><tr><td>«объединение фигур»</td><td>S1 + S2 − S пересечения</td></tr><tr><td>«сколько точек на отрезке»</td><td>НОД(|dx|, |dy|) + 1</td></tr><tr><td>«расстояние между началом и концом»</td><td>√(dx² + dy²), затем округлить</td></tr><tr><td>«Повтори 4 [Вперёд a Направо 90]»</td><td>квадрат a×a</td></tr><tr><td>«Повтори 6 [Вперёд a Направо 60]»</td><td>правильный шестиугольник</td></tr><tr><td>«Кузнечик, Вертун, Водолей»</td><td>хранить состояние в переменных и множестве</td></tr><tr><td>«Назад n» при отрицательном n</td><td>движение вперёд</td></tr></tbody>
+    </table>
+  </div>
+</div>
+  
+<div class="video-block">
+  <p class="mini-label">Видеоразборы по теме</p>
+  <div class="video-list"><a class="video-link" href="https://vkvideo.ru/video-205865487_456240453" target="_blank" rel="noopener noreferrer"><span class="video-label">Точки в пересечении двух прямоугольников</span><span class="video-meta">№ 16317</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://vkvideo.ru/video-205865487_456240451" target="_blank" rel="noopener noreferrer"><span class="video-label">Длина границы объединения квадратов</span><span class="video-meta">№ 12460</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://rutube.ru/video/41e506848e9658213f7c4e23d270c926/?t=896" target="_blank" rel="noopener noreferrer"><span class="video-label">Пересечение фигур: точки с целыми координатами</span><span class="video-meta">№ 14168 · 14:56</span><span class="video-host" title="RuTube"><span class="video-host-icon"><svg viewBox="0 0 132 132" aria-hidden="true" focusable="false"><rect width="132" height="132" fill="#100943"/><circle cx="132" cy="66" r="66" fill="#ED143B"/><path fill="#fff" d="M81.5361 62.9865H42.5386V47.5547H81.5361C83.814 47.5547 85.3979 47.9518 86.1928 48.6451C86.9877 49.3385 87.4801 50.6245 87.4801 52.5031V58.0441C87.4801 60.0234 86.9877 61.3094 86.1928 62.0028C85.3979 62.6961 83.814 62.9925 81.5361 62.9925V62.9865ZM84.2115 33.0059H26V99H42.5386V77.5294H73.0176L87.4801 99H106L90.0546 77.4287C95.9333 76.5575 98.573 74.756 100.75 71.7869C102.927 68.8179 104.019 64.071 104.019 57.7359V52.7876C104.019 49.0303 103.621 46.0613 102.927 43.7857C102.233 41.51 101.047 39.5307 99.362 37.7528C97.5824 36.0698 95.6011 34.8845 93.2223 34.0904C90.8435 33.3971 87.8716 33 84.2115 33V33.0059Z"/></svg></span><span class="video-host-name">RuTube</span></span></a><a class="video-link" href="https://youtu.be/4IA6Wqq9tLQ" target="_blank" rel="noopener noreferrer"><span class="video-label">Точки внутри фигуры из повторяющихся поворотов</span><span class="video-meta">№ 4694</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/1krkBghuQUI?t=1610" target="_blank" rel="noopener noreferrer"><span class="video-label">Расстояние между начальным и конечным положением</span><span class="video-meta">№ 5059 · 26:50</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/lHVXPfCxPUI?t=3380" target="_blank" rel="noopener noreferrer"><span class="video-label">Подсчёт точек на границе фигуры</span><span class="video-meta">№ 6259 · 56:20</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/EVzWx4iY4Cw?t=920" target="_blank" rel="noopener noreferrer"><span class="video-label">Площадь объединения фигур</span><span class="video-meta">№ 7310 · 15:20</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/9Hpu3E3d3As?t=1167" target="_blank" rel="noopener noreferrer"><span class="video-label">Чертёжник: площадь всех замкнутых фигур</span><span class="video-meta">№ 7671 · 19:27</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/3WV9hLqcC10?t=1975" target="_blank" rel="noopener noreferrer"><span class="video-label">Кузнечик: свёртка алгоритма в линейный</span><span class="video-meta">№ 5428 · 32:55</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a></div>
+  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+</div>
+  <p class="method-source-note">По базе Kompege: 934 задачи, 72 решения (33 программных и 39 текстовых) и 186 видеоразборов (92 YouTube, 60 VK, 34 Rutube) по заданию 6. При подготовке методов использованы решения задач № 4694, 5059, 5428, 6259, 7310, 7671, 12460, 12482, 13836, 13838, 13848, 13853, 16317, 24263 и др.; примеры переработаны в учебные.</p>
+</section>
+    <section class="task-block" id="mistakes">
+      <h2>Типичные ошибки</h2>
+      <ul class="task-list task-list--mistakes"><li>неверное начальное направление</li><li>путаница между Направо и Налево</li><li>потерянный сдвиг с поднятым хвостом</li><li>неверный учёт границы</li><li>повторный подсчёт общих точек</li><li>ошибка в масштабе или единицах</li></ul>
+    </section>
+    
+    
+    <section class="task-block" id="practice">
+      <h2>Практика</h2>
+      
+<div class="practice-grid">
+  <a class="practice-link" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener noreferrer">
+    <span class="practice-label">ФИПИ</span><span class="practice-title">Открытый банк заданий</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80.%20%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D1%8B%20%D0%B8%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Навигатор · 2026</span><span class="practice-title">Алгоритмы</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/inf_11_2027/%D0%98%D0%9D%D0%A4-11%20%D0%95%D0%93%D0%AD%202027%20%D0%94%D0%95%D0%9C%D0%9E.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Демоверсия</span><span class="practice-title">КИМ 2027</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0.%202026.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Методика</span><span class="practice-title">Разбор ошибок 2026</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+</div>
+<p class="practice-note">Навигатор и методические рекомендации опубликованы в 2026 году: номера заданий в них могут отличаться от нумерации 2027 года. Ориентируйтесь на тему.</p>
+    </section>
+    
+<div class="related-links">
+  <span class="related-label">Смотрите также</span>
+  <a class="related-link" href="05.html">05 · Алгоритмы исполнителя</a><a class="related-link" href="12.html">12 · Исполнитель МТ</a><a class="related-link" href="13.html">13 · Ход исполнения алгоритма</a>
+</div>
+    <nav class="prev-next" aria-label="Соседние задания">
+      <a class="prev-next-link" href="05.html"><span>← Предыдущее</span><strong>05 · Алгоритмы исполнителя</strong></a>
+      <a class="prev-next-link prev-next-link--next" href="07.html"><span>Следующее →</span><strong>07 · Графика и звук</strong></a>
+    </nav>
+  </div>
+
+  <aside class="task-aside">
+    <div class="aside-card">
+      <div class="aside-head">
+        <span>Карта заданий</span>
+        <span class="map-progress" data-progress-count>0 / 27</span>
+      </div>
+      <div class="task-map task-map--compact" data-task-map><a class="task-cell task-cell--digital task-cell--compact" href="01.html" data-task="1" data-section="digital" data-title="Графы и таблицы" data-caption="&lt;strong&gt;Задание 1&lt;/strong&gt; · Графы и таблицы · Цифровая грамотность · 1 балл" aria-label="Задание 1: Графы и таблицы"><span>1</span></a><a class="task-cell task-cell--theory task-cell--compact" href="02.html" data-task="2" data-section="theory" data-title="Логические функции" data-caption="&lt;strong&gt;Задание 2&lt;/strong&gt; · Логические функции · Теория · 1 балл" aria-label="Задание 2: Логические функции"><span>2</span></a><a class="task-cell task-cell--it task-cell--compact" href="03.html" data-task="3" data-section="it" data-title="Базы данных" data-caption="&lt;strong&gt;Задание 3&lt;/strong&gt; · Базы данных · Информационные технологии · 1 балл" aria-label="Задание 3: Базы данных"><span>3</span></a><a class="task-cell task-cell--theory task-cell--compact" href="04.html" data-task="4" data-section="theory" data-title="Коды и условие Фано" data-caption="&lt;strong&gt;Задание 4&lt;/strong&gt; · Коды и условие Фано · Теория · 1 балл" aria-label="Задание 4: Коды и условие Фано"><span>4</span></a><a class="task-cell task-cell--algo task-cell--compact" href="05.html" data-task="5" data-section="algo" data-title="Алгоритмы исполнителя" data-caption="&lt;strong&gt;Задание 5&lt;/strong&gt; · Алгоритмы исполнителя · Алгоритмы · 1 балл" aria-label="Задание 5: Алгоритмы исполнителя"><span>5</span></a><a class="task-cell task-cell--algo is-current task-cell--compact" href="06.html" data-task="6" data-section="algo" data-title="Исполнители и координаты" data-caption="&lt;strong&gt;Задание 6&lt;/strong&gt; · Исполнители и координаты · Алгоритмы · 1 балл" aria-label="Задание 6: Исполнители и координаты"><span>6</span></a><a class="task-cell task-cell--theory task-cell--compact" href="07.html" data-task="7" data-section="theory" data-title="Графика и звук" data-caption="&lt;strong&gt;Задание 7&lt;/strong&gt; · Графика и звук · Теория · 1 балл" aria-label="Задание 7: Графика и звук"><span>7</span></a><a class="task-cell task-cell--theory task-cell--compact" href="08.html" data-task="8" data-section="theory" data-title="Комбинаторика и коды" data-caption="&lt;strong&gt;Задание 8&lt;/strong&gt; · Комбинаторика и коды · Теория · 1 балл" aria-label="Задание 8: Комбинаторика и коды"><span>8</span></a><a class="task-cell task-cell--it task-cell--compact" href="09.html" data-task="9" data-section="it" data-title="Электронные таблицы" data-caption="&lt;strong&gt;Задание 9&lt;/strong&gt; · Электронные таблицы · Информационные технологии · 1 балл" aria-label="Задание 9: Электронные таблицы"><span>9</span></a><a class="task-cell task-cell--digital task-cell--compact" href="10.html" data-task="10" data-section="digital" data-title="IP-адреса и маски" data-caption="&lt;strong&gt;Задание 10&lt;/strong&gt; · IP-адреса и маски · Цифровая грамотность · 1 балл" aria-label="Задание 10: IP-адреса и маски"><span>10</span></a><a class="task-cell task-cell--theory task-cell--compact" href="11.html" data-task="11" data-section="theory" data-title="Объём сообщения" data-caption="&lt;strong&gt;Задание 11&lt;/strong&gt; · Объём сообщения · Теория · 1 балл" aria-label="Задание 11: Объём сообщения"><span>11</span></a><a class="task-cell task-cell--algo task-cell--compact" href="12.html" data-task="12" data-section="algo" data-title="Исполнитель МТ" data-caption="&lt;strong&gt;Задание 12&lt;/strong&gt; · Исполнитель МТ · Алгоритмы · 1 балл" aria-label="Задание 12: Исполнитель МТ"><span>12</span></a><a class="task-cell task-cell--algo task-cell--compact" href="13.html" data-task="13" data-section="algo" data-title="Ход исполнения алгоритма" data-caption="&lt;strong&gt;Задание 13&lt;/strong&gt; · Ход исполнения алгоритма · Алгоритмы · 1 балл" aria-label="Задание 13: Ход исполнения алгоритма"><span>13</span></a><a class="task-cell task-cell--theory task-cell--compact" href="14.html" data-task="14" data-section="theory" data-title="Системы счисления" data-caption="&lt;strong&gt;Задание 14&lt;/strong&gt; · Системы счисления · Теория · 1 балл" aria-label="Задание 14: Системы счисления"><span>14</span></a><a class="task-cell task-cell--theory task-cell--compact" href="15.html" data-task="15" data-section="theory" data-title="Логика и множества" data-caption="&lt;strong&gt;Задание 15&lt;/strong&gt; · Логика и множества · Теория · 1 балл" aria-label="Задание 15: Логика и множества"><span>15</span></a><a class="task-cell task-cell--algo task-cell--compact" href="16.html" data-task="16" data-section="algo" data-title="Рекурсия" data-caption="&lt;strong&gt;Задание 16&lt;/strong&gt; · Рекурсия · Алгоритмы · 1 балл" aria-label="Задание 16: Рекурсия"><span>16</span></a><a class="task-cell task-cell--algo task-cell--compact" href="17.html" data-task="17" data-section="algo" data-title="Обработка последовательности" data-caption="&lt;strong&gt;Задание 17&lt;/strong&gt; · Обработка последовательности · Алгоритмы · 1 балл" aria-label="Задание 17: Обработка последовательности"><span>17</span></a><a class="task-cell task-cell--it task-cell--compact" href="18.html" data-task="18" data-section="it" data-title="Таблицы: анализ и оптимизация" data-caption="&lt;strong&gt;Задание 18&lt;/strong&gt; · Таблицы: анализ и оптимизация · Информационные технологии · 1 балл" aria-label="Задание 18: Таблицы: анализ и оптимизация"><span>18</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html" data-task="19" data-section="theory" data-title="Теория игр" data-caption="&lt;strong&gt;Задание 19&lt;/strong&gt; · Теория игр · Теория · 1 балл" aria-label="Задание 19: Теория игр"><span>19</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-20" data-task="20" data-section="theory" data-title="Теория игр: две кучи" data-caption="&lt;strong&gt;Задание 20&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 20: Теория игр: две кучи"><span>20</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-21" data-task="21" data-section="theory" data-title="Теория игр: стратегия" data-caption="&lt;strong&gt;Задание 21&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 21: Теория игр: стратегия"><span>21</span></a><a class="task-cell task-cell--theory task-cell--compact" href="22.html" data-task="22" data-section="theory" data-title="Параллельные вычисления" data-caption="&lt;strong&gt;Задание 22&lt;/strong&gt; · Параллельные вычисления · Теория · 1 балл" aria-label="Задание 22: Параллельные вычисления"><span>22</span></a><a class="task-cell task-cell--theory task-cell--compact" href="23.html" data-task="23" data-section="theory" data-title="Графы: пути" data-caption="&lt;strong&gt;Задание 23&lt;/strong&gt; · Графы: пути · Теория · 1 балл" aria-label="Задание 23: Графы: пути"><span>23</span></a><a class="task-cell task-cell--algo task-cell--compact" href="24.html" data-task="24" data-section="algo" data-title="Символьные строки" data-caption="&lt;strong&gt;Задание 24&lt;/strong&gt; · Символьные строки · Алгоритмы · 1 балл" aria-label="Задание 24: Символьные строки"><span>24</span></a><a class="task-cell task-cell--algo task-cell--compact" href="25.html" data-task="25" data-section="algo" data-title="Натуральные числа" data-caption="&lt;strong&gt;Задание 25&lt;/strong&gt; · Натуральные числа · Алгоритмы · 1 балл" aria-label="Задание 25: Натуральные числа"><span>25</span></a><a class="task-cell task-cell--algo task-cell--compact" href="26.html" data-task="26" data-section="algo" data-title="Массив: сортировка" data-caption="&lt;strong&gt;Задание 26&lt;/strong&gt; · Массив: сортировка · Алгоритмы · 2 балла" aria-label="Задание 26: Массив: сортировка"><span>26</span></a><a class="task-cell task-cell--it task-cell--compact" href="27.html" data-task="27" data-section="it" data-title="Анализ данных" data-caption="&lt;strong&gt;Задание 27&lt;/strong&gt; · Анализ данных · Информационные технологии · 2 балла" aria-label="Задание 27: Анализ данных"><span>27</span></a></div>
+      <a class="aside-link" href="index.html">Все задания <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="aside-card aside-card--progress">
+      <p class="aside-label">Прогресс</p>
+      <button class="btn btn-primary progress-toggle" type="button" data-progress-toggle="6" aria-pressed="false">Отметить как изученное</button>
+      <p class="progress-note" data-progress-text>0 из 27 изучено</p>
+      <div class="progress-line" aria-hidden="true"><span data-progress-bar></span></div>
+    </div>
+    <div class="aside-card">
+      <p class="aside-label">Быстрые ссылки</p>
+      <a class="aside-link" href="../documents.html#kim2027">Демоверсия 2027 <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html#method">Навигатор и методика <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html">Все документы <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-mark">ЕГЭ · Информатика · 2027</p>
+      <p class="footer-note">Разбор заданий, ключевые темы и официальные документы. Составлено 3 ноября 2026. Не является официальным ресурсом ФИПИ или Рособрнадзора.</p>
+    </div>
+    <div>
+      <p class="footer-title">Разделы</p>
+      <p class="footer-note"><a href="../index.html">Главная</a> · <a href="../tasks/index.html">Все задания</a> · <a href="../documents.html">Документы</a></p>
+      <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
+    </div>
+    <div>
+      <p class="footer-title">Первоисточники</p>
+      <p class="footer-note"><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ</a> · <a href="https://obrnadzor.gov.ru/gia/gia-11/" target="_blank" rel="noopener noreferrer">Рособрнадзор</a> · <a href="https://regulation.gov.ru/projects/172223/" target="_blank" rel="noopener noreferrer">проект расписания</a></p>
+      <p class="footer-note">Права на документы принадлежат их правообладателям. Копии сохранены для ознакомления и подготовки.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

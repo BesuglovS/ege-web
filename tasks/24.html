@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задание 24 ЕГЭ по информатике — Символьные строки</title>
+<meta name="description" content="Обработать строку или файл: посчитать символы, найти подстроку, заменить, разбить. Теория, способы решения и типичные ошибки. ЕГЭ-2027, информатика.">
+<meta name="theme-color" content="#F0F1EB">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="На главную">
+    <span class="brand-mark" aria-hidden="true">И</span>
+    <span class="brand-text">ЕГЭ · Информатика<small>подготовка по заданиям</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a href="../index.html">Главная</a>
+    <a href="../tasks/index.html" class="is-active" aria-current="page">Задания</a>
+    <a href="../documents.html">Документы</a>
+  </nav>
+  <div class="topbar-meta"><span>Задание 24 из 27</span><span>Алгоритмы</span></div>
+</header>
+<main id="main">
+
+<nav class="breadcrumb" aria-label="Хлебные крошки"><a href="../index.html">Главная</a><span class="crumb-sep">/</span><a href="index.html">Задания</a><span class="crumb-sep">/</span><span aria-current="page">Задание 24</span></nav>
+
+<section class="task-hero">
+  <div class="task-number" aria-hidden="true">24</div>
+  <div class="task-hero-copy">
+    <p class="eyebrow">Алгоритмы и программирование · 1 балл</p>
+    <h1>Символьные строки</h1>
+    <p class="task-subtitle">Обработка текста</p>
+    <p class="lead">Обработать строку или файл: посчитать символы, найти подстроку, заменить, разбить.</p>
+    <div class="task-badges">
+      <span class="badge badge-section badge-section--algo">Алгоритмы</span>
+      <span class="badge badge-answer">целое число</span>
+      
+    </div>
+  </div>
+</section>
+
+
+<nav class="task-toc" aria-label="На странице задания">
+  <span class="task-toc-label">На странице</span>
+  
+  <a href="#theory">Теория</a>
+  <a href="#methods">Способы решения</a>
+  <a href="#mistakes">Ошибки</a>
+  <a href="#practice">Практика</a>
+</nav>
+
+<div class="task-layout">
+  <div class="task-main">
+    
+    
+    <section class="task-block">
+      <h2>Что проверяет</h2>
+      <p class="task-checked">Обработка символьных данных: встроенные функции, подсчёт, разбиение, поиск и замена подстрок.</p>
+      <p class="task-source">Основание: проект спецификации и кодификатора КИМ 2027. <a href="../documents.html#kim2027">Открыть документы <span aria-hidden="true">↗</span></a></p>
+    </section>
+    
+    
+<section class="task-block task-block--theory" id="theory">
+  <div class="block-head">
+    <p class="eyebrow">Теория</p>
+    <h2>Что нужно знать</h2>
+    <p class="block-lead">Задание 24 — это программирование, а не ручной счёт. Почти всегда нужно прочитать одну длинную строку из файла и найти в ней подстроку с ограничением: без запрещённых букв, с заданным числом вхождений, с равным количеством двух символов или с определённой структурой. Ответ — одно число, но получить его без ошибок можно только аккуратной программой.</p>
+  </div>
+  <div class="theory-checklist">
+    <p class="mini-label">Минимум для задания 24</p>
+    <ul class="check-list"><li>прочитать строку из файла и убрать перевод строки</li><li>понимать индексацию с нуля и срезы</li><li>применять len, count, find, replace, split и join</li><li>писать цикл по символам и по индексам</li><li>поддерживать счётчики и левую границу окна</li><li>отличать подстроку от подпоследовательности</li><li>проверять палиндром и группы символов</li><li>узнавать задачи на префиксные суммы</li><li>оценивать сложность при 10^6 символов</li><li>проверять границы среза и пустые строки</li></ul>
+  </div>
+  <div class="theory-grid">
+<article class="theory-card">
+  <h3>Файл и строка</h3>
+  <p>В задании 24 данные лежат в текстовом файле. Чаще всего это одна очень длинная строка — до 10^6 символов. Читать её через input() нельзя: нужен файл. Для одной строки хватает readline(), для нескольких — read().splitlines().</p>
+  <ul class="theory-list"><li>s = open(&#x27;24.txt&#x27;).readline() читает первую строку вместе с переводом строки.</li><li>s = s.strip() убирает пробельные символы по краям; если важны пробелы в начале, используйте rstrip().</li><li>Для нескольких строк: lines = open(&#x27;24.txt&#x27;).read().splitlines().</li><li>Файл лучше открывать в блоке with, но на экзамене достаточно одной строки open(...).readline().</li><li>Размер 10^6 символов означает, что алгоритм должен быть линейным или близким к линейному.</li></ul>
+  <div class="formula-inline"><code>s = open(&#x27;24.txt&#x27;).readline().strip()</code><code>lines = open(&#x27;24.txt&#x27;).read().splitlines()</code><code>n = len(s)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Индексация и срезы</h3>
+  <p>Строка в Python — последовательность символов с нумерацией от нуля. Срез s[i:j] берёт символы с i до j, не включая j. Это главный источник ошибок: длина среза равна j − i, а последний индекс — j − 1.</p>
+  <ul class="theory-list"><li>s[0] — первый символ, s[-1] — последний.</li><li>s[i:j] — с i по j-1; s[:k] — первые k; s[i:] — до конца.</li><li>len(s[i:j]) = max(0, j - i).</li><li>s[::-1] — перевёрнутая строка; s[i:j:k] — с шагом k.</li><li>Для окна длины L, начинающегося в i: s[i:i+L]; последний старт — len(s)-L.</li></ul>
+  <div class="formula-inline"><code>s[i:j] = s[i], …, s[j-1]</code><code>len(s[i:j]) = j - i</code><code>окно длины L: i от 0 до len(s)-L</code></div>
+</article>
+<article class="theory-card">
+  <h3>Встроенные операции</h3>
+  <p>Большую часть задания можно решить без ручных циклов, если правильно выбрать строковую операцию. Важно помнить, что count считает непересекающиеся вхождения, find возвращает -1 при отсутствии, а replace заменяет все вхождения.</p>
+  <ul class="theory-list"><li>len(s), s.count(x), s.find(x), s.rfind(x).</li><li>s.replace(a, b) — все вхождения; s.replace(a, b, k) — первые k.</li><li>s.split(sep) — список частей; s.split() — по любым пробелам.</li><li>sep.join(parts) — склеить список обратно.</li><li>x in s, s.startswith(x), s.endswith(x) — проверки.</li><li>count и replace не перекрывают вхождения: в &#x27;AAA&#x27; строка &#x27;AA&#x27; встречается один раз.</li></ul>
+  <div class="formula-inline"><code>s.count(x) — число непересекающихся вхождений</code><code>s.find(x) → индекс или -1</code><code>s.replace(x, y) → новая строка</code></div>
+</article>
+<article class="theory-card">
+  <h3>Подстрока и подпоследовательность</h3>
+  <p>Подстрока — это непрерывный кусок строки. Подпоследовательность — набор символов в порядке следования, но не обязательно подряд. В задании 24 чаще нужна подстрока; если в условии сказано «подпоследовательность», нельзя использовать срез s[i:j] и скользящее окно без учёта разрывов.</p>
+  <ul class="theory-list"><li>«идущих подряд» — подстрока, окно или срез.</li><li>«подпоследовательность» — можно пропускать символы, обычно нужен другой алгоритм.</li><li>«количество подстрок» — важно, считать ли вхождения с перекрытиями.</li><li>«длина подстроки» — ответ в символах, а не в количестве вхождений.</li><li>Проверьте по примерам из условия, что именно считается подстрокой.</li></ul>
+  <div class="formula-inline"><code>подстрока: s[i:j]</code><code>подпоследовательность: индексы i₁ &lt; i₂ &lt; …</code></div>
+</article>
+<article class="theory-card">
+  <h3>Скользящее окно</h3>
+  <p>Скользящее окно — основной приём для задач «максимальная длина при ограничении на количество символов». Правая граница добавляет символ, левая убирает, пока окно не станет допустимым. Каждый символ входит в окно и выходит из него не более одного раза, поэтому алгоритм линейный.</p>
+  <ul class="theory-list"><li>left = 0; для right от 0 до len(s)-1 добавляйте s[right].</li><li>Пока условие нарушено, вычитайте s[left] и увеличивайте left.</li><li>После восстановления условия обновляйте ответ: right - left + 1.</li><li>«Не более K» — цикл while count &gt; K.</li><li>«Ровно K» — обновляйте ответ только при count == K, а окно держите не больше K.</li><li>«Не менее K» — обычно проще считать через префиксные суммы или хранить первое вхождение.</li></ul>
+  <div class="formula-inline"><code>длина окна = right - left + 1</code><code>амортизированно O(n): right и left двигаются только вперёд</code></div>
+</article>
+<article class="theory-card">
+  <h3>Префиксные суммы</h3>
+  <p>Если нужно сравнивать количества двух символов, удобно превратить строку в последовательность +1 и −1. Тогда равное количество означает одинаковую префиксную сумму. Самый длинный отрезок с равными количествами — это расстояние между первым и последним вхождением одного и того же значения префикса.</p>
+  <ul class="theory-list"><li>P[0] = 0; P[i+1] = P[i] + вес(s[i]).</li><li>Вес: +1 для одного символа, −1 для второго, 0 для остальных.</li><li>Храните первое вхождение каждого значения P в словаре.</li><li>Для отрезка i+1…j нужно P[i] == P[j]; длина = j - i.</li><li>Для «ровно K» ищите P[j] - P[i] == K, то есть P[i] == P[j] - K.</li><li>Для двух условий сразу используйте кортеж из двух префиксных сумм.</li></ul>
+  <div class="formula-inline"><code>P[j] - P[i] = количество A − количество B на отрезке</code><code>равные количества: P[i] = P[j]</code><code>ровно K: P[i] = P[j] - K</code></div>
+</article>
+<article class="theory-card">
+  <h3>Группы и повторения</h3>
+  <p>Иногда строка состоит из повторяющихся групп или блоков одинаковых символов. Тогда удобно сжать её в список пар (символ, количество) или идти по строке с состоянием — каким должен быть следующий символ.</p>
+  <ul class="theory-list"><li>Подряд идущие одинаковые символы собирайте в группы: &#x27;AAABB&#x27; → [(&#x27;A&#x27;, 3), (&#x27;B&#x27;, 2)].</li><li>Для группы WXYZ проверяйте, что следующий символ продолжает цикл: W→X→Y→Z→W.</li><li>Для RLE длина кодировки = сумма цифр в количествах + число групп.</li><li>Если группа может быть неполной в начале и конце, разрешите начать с любого символа шаблона.</li><li>Для «ровно N полных групп» делите длину цепочки на длину группы.</li></ul>
+  <div class="formula-inline"><code>RLE: &#x27;AAAB&#x27; → &#x27;3A1B&#x27; или &#x27;3AB&#x27;</code><code>длина RLE = число групп + количество цифр в записях количеств</code><code>позиция в шаблоне = i mod len(pattern)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Палиндромы</h3>
+  <p>Палиндром читается одинаково в обе стороны. Проверка — s == s[::-1]. Для подсчёта палиндромов фиксированной длины переберите все окна; для самого длинного — расширяйте центр; для задачи о заменах — считайте нечётные частоты.</p>
+  <ul class="theory-list"><li>Проверка: s == s[::-1].</li><li>Палиндром чётной длины имеет центр между символами, нечётной — в символе.</li><li>Любой палиндром длины больше 3 содержит палиндром длины 2 или 3.</li><li>Для подсчёта окон длины L: for i in range(len(s)-L+1).</li><li>Чтобы собрать палиндром перестановками, нечётных частот должно быть не больше одной.</li><li>Минимальное число замен для палиндрома: количество нечётных частот // 2.</li></ul>
+  <div class="formula-inline"><code>s == s[::-1]</code><code>число окон длины L = len(s) - L + 1</code><code>замены = odd // 2</code></div>
+</article>
+<article class="theory-card">
+  <h3>Числа и слова в строке</h3>
+  <p>Если строка содержит буквы и цифры, её удобно разбить на «слова» или «числа», заменив лишние символы пробелами. Затем split() отбрасывает пустые части, а int() или len() дают нужную величину.</p>
+  <ul class="theory-list"><li>Цифры: замените все нецифровые символы пробелами и вызовите split().</li><li>Слова: замените цифры пробелами; словом считается непрерывный блок букв.</li><li>Для максимального числа сравнивайте int(x), а не строки: &#x27;9&#x27; &gt; &#x27;10&#x27; лексикографически.</li><li>Ведущие нули в IP-адресе недопустимы, хотя int(&#x27;012&#x27;) = 12.</li><li>Для IP делите по точкам и проверяйте 4 части, каждую в диапазоне 0…255.</li><li>Маску проверяйте посимвольно: &#x27;?&#x27; означает любую цифру.</li></ul>
+  <div class="formula-inline"><code>replace для замены классов символов</code><code>max(map(int, parts))</code><code>0 ≤ part ≤ 255, 4 части, без ведущих нулей</code></div>
+</article>
+<article class="theory-card">
+  <h3>Сложность и проверка</h3>
+  <p>При длине 10^6 квадратичный алгоритм может работать минуты. Считайте количество операций: один проход — хорошо, вложенный цикл по всем парам — плохо. Перед сдачей проверьте программу на короткой строке, где ответ можно посчитать вручную.</p>
+  <ul class="theory-list"><li>O(n) — один проход, окно, префиксные суммы; O(n²) — перебор всех пар границ.</li><li>Не вызывайте s.count() или s.find() внутри цикла по всем i без необходимости.</li><li>Проверьте пустую строку, строку из одного символа и случай без подходящих подстрок.</li><li>Проверьте границы среза: range(len(s)-L+1), а не range(len(s)-L).</li><li>Убедитесь, что ответ — целое число, как требует бланк.</li><li>Для отладки выведите длину строки и первые/последние символы.</li></ul>
+  <div class="formula-inline"><code>n = 10^6: O(n) — норма, O(n²) — слишком долго</code><code>ответ — одно целое число</code></div>
+</article></div>
+  
+<div class="theory-example">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Разбор примера</p>
+    <h3>Учебный пример: равное количество A и B</h3>
+    <p>Дана строка ABACBBACAA. Найдите максимальную длину подстроки, в которой букв A и B поровну. Покажем решение через префиксные суммы.</p>
+  </div>
+  <div class="theory-example-grid theory-example-grid--single"><div class="table-wrap"><table class="example-table">
+  <caption>Префиксные суммы для строки ABACBBACAA</caption>
+  <thead><tr><th>i</th><th>Символ</th><th>P[i]</th></tr></thead>
+  <tbody>
+    <tr><th>0</th><td>—</td><td>0</td></tr>
+    <tr><th>1</th><td>A</td><td>1</td></tr>
+    <tr><th>2</th><td>B</td><td>0</td></tr>
+    <tr><th>3</th><td>A</td><td>1</td></tr>
+    <tr><th>4</th><td>C</td><td>1</td></tr>
+    <tr><th>5</th><td>B</td><td>0</td></tr>
+    <tr><th>6</th><td>B</td><td>−1</td></tr>
+    <tr><th>7</th><td>A</td><td>0</td></tr>
+    <tr><th>8</th><td>C</td><td>0</td></tr>
+    <tr><th>9</th><td>A</td><td>1</td></tr>
+    <tr><th>10</th><td>A</td><td>2</td></tr>
+  </tbody>
+</table></div></div>
+  <ol class="task-steps"><li>Присвоим A вес +1, B вес −1, остальным символам 0.</li><li>Посчитаем префиксные суммы P[0…10].</li><li>Одинаковые значения P означают, что на отрезке между ними количество A и B совпало.</li><li>P = 1 впервые встречается после символа 1, последний раз — после символа 9.</li><li>Длина отрезка 9 − 1 = 8; это подстрока BACBBACA.</li><li>Проверка: в ней три A и три B.</li></ol>
+  <p class="example-answer"><span>Ответ</span>8</p>
+</div>
+</section>
+    
+<section class="task-block task-block--methods" id="methods">
+  <div class="block-head">
+    <p class="eyebrow">Способы решения</p>
+    <h2>Выберите метод под формулировку</h2>
+    <p class="block-lead">Методы собраны по решениям задания 24 из базы Kompege. Начните с того, что именно нужно найти в условии.</p>
+  </div>
+  <div class="methods-list">
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">01</span>
+    <div>
+      <p class="eyebrow">нет ни одной буквы из набора</p>
+      <h3>Замена и split: запрещённые символы</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно найти максимальный отрезок, в котором нет заданных символов, или разбить строку на допустимые блоки.</p>
+  <ol class="task-steps"><li>Прочитайте строку и уберите перевод строки.</li><li>Замените каждый запрещённый символ на пробел.</li><li>Разбейте строку по пробелам через split().</li><li>Возьмите max(len(part)) или min(len(part)) по непустым частям.</li></ol>
+  <ul class="task-list"><li>Заменять можно в цикле по набору запрещённых символов.</li><li>split() без аргумента делит по любым пробелам и убирает пустые части.</li><li>Если запрещена подстрока, а не символ, замените её на пробел целиком.</li><li>Для количества подходящих блоков используйте len(parts).</li></ul>
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Строка ABCXAB, запрещены буквы A и B. Найдите длину самого длинного блока без запрещённых букв.</p>
+  <pre class="code-block"><code>s = open(&#x27;24.txt&#x27;).readline().strip()
+for ch in &#x27;AB&#x27;:
+    s = s.replace(ch, &#x27; &#x27;)
+print(max(len(part) for part in s.split()))</code></pre>
+  <p class="method-answer"><span>Ответ</span>После замены получится &#x27;  CX  &#x27;, split() даст [&#x27;CX&#x27;], ответ 2.</p>
+</div>
+  <p class="method-source">По решениям № 11241, 16060–16062.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">02</span>
+    <div>
+      <p class="eyebrow">ограничение на число символов</p>
+      <h3>Скользящее окно: не более и ровно K</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно максимизировать длину подстроки при условии «не более K», «ровно K» или «не менее K» вхождений.</p>
+  <ol class="task-steps"><li>Заведите left = 0 и счётчик нужных символов.</li><li>Для right от 0 до len(s)-1 добавляйте s[right] в счётчик.</li><li>Пока счётчик больше K, вычитайте s[left] и увеличивайте left.</li><li>Обновляйте ответ длиной right - left + 1.</li></ol>
+  <ul class="task-list"><li>Для «не более K» окно всегда допустимо после цикла while.</li><li>Для «ровно K» обновляйте ответ только при count == K.</li><li>Для нескольких символов храните словарь счётчиков.</li><li>Для вхождений подстроки считайте непересекающиеся вхождения или используйте find с шагом.</li></ul>
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Строка ABBCAABBC. Найдите максимальную длину подстроки, в которой не более двух букв B.</p>
+  <pre class="code-block"><code>s = open(&#x27;24.txt&#x27;).readline().strip()
+left = count = best = 0
+for right in range(len(s)):
+    if s[right] == &#x27;B&#x27;:
+        count += 1
+    while count &gt; 2:
+        if s[left] == &#x27;B&#x27;:
+            count -= 1
+        left += 1
+    best = max(best, right - left + 1)
+print(best)</code></pre>
+  <p class="method-answer"><span>Ответ</span>Для ABBCAABBC подходят отрезки ABBCAA и CAABBC длины 6; ответ 6.</p>
+</div>
+  <p class="method-source">По решениям № 12771, 11918, 10105, 13715.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">03</span>
+    <div>
+      <p class="eyebrow">баланс, равное число A и B</p>
+      <h3>Префиксные суммы: равные количества и разность</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно найти самый длинный отрезок с равным количеством двух символов или с заданной разностью счётчиков.</p>
+  <ol class="task-steps"><li>Присвойте одному символу +1, второму −1, остальным 0.</li><li>Считайте текущую сумму P и сохраняйте первое вхождение каждого значения в словарь.</li><li>Если значение уже встречалось, длина отрезка = текущий индекс − сохранённый индекс.</li><li>Для «ровно K» ищите значение P - K.</li><li>Для двух условий используйте кортеж из двух сумм.</li></ol>
+  <ul class="task-list"><li>Словарь first начинайте с {0: 0} — пустой префикс.</li><li>Сохраняйте именно первое вхождение, иначе отрезок будет короче.</li><li>Индексы в словаре — это количество символов до текущей позиции.</li><li>Для одной буквы и «ровно K» можно хранить префиксные количества.</li></ul>
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Строка ABACBBACAA. Найдите максимальную длину подстроки с равным количеством A и B.</p>
+  <pre class="code-block"><code>s = open(&#x27;24.txt&#x27;).readline().strip()
+first = {0: 0}
+balance = best = 0
+for i, ch in enumerate(s, start=1):
+    if ch == &#x27;A&#x27;:
+        balance += 1
+    elif ch == &#x27;B&#x27;:
+        balance -= 1
+    if balance in first:
+        best = max(best, i - first[balance])
+    else:
+        first[balance] = i
+print(best)</code></pre>
+  <p class="method-answer"><span>Ответ</span>Для ABACBBACAA ответ 8: подстрока BACBBACA, в ней по три A и B.</p>
+</div>
+  <p class="method-source">По решениям № 10131, 14242.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">04</span>
+    <div>
+      <p class="eyebrow">одинаковые подряд, группы WXYZ</p>
+      <h3>Группы, повторы и RLE</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Строка состоит из повторяющихся групп, нужно найти цепочку вида WXYZ…, максимальное число одинаковых подряд или посчитать сжатие.</p>
+  <ol class="task-steps"><li>Сожмите строку в группы (символ, количество).</li><li>Проверяйте соседние группы на нужный шаблон.</li><li>Для периодического шаблона используйте состояние: какой символ должен идти следующим.</li><li>Для RLE считайте длину кодировки и сравнивайте с исходной.</li></ol>
+  <ul class="task-list"><li>itertools.groupby упрощает сбор групп.</li><li>Для WXYZ допустим переход W→X→Y→Z→W.</li><li>В начале и конце группа может быть неполной — это разрешают отдельно.</li><li>При RLE количество из одной цифры занимает один символ; из 10 и более — два и больше.</li></ul>
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Строка AAAABBBCCDAA. Найдите длину RLE-кодировки и экономию в битах, если каждый символ занимает 8 бит.</p>
+  <pre class="code-block"><code>s = open(&#x27;24.txt&#x27;).readline().strip()
+parts = []
+i = 0
+while i &lt; len(s):
+    j = i
+    while j &lt; len(s) and s[j] == s[i]:
+        j += 1
+    count = j - i
+    parts.append((str(count) if count &gt; 1 else &#x27;&#x27;) + s[i])
+    i = j
+encoded = &#x27;&#x27;.join(parts)
+print(len(encoded), (len(s) - len(encoded)) * 8)</code></pre>
+  <p class="method-answer"><span>Ответ</span>AAAABBBCCDAA → 4A3B2CD2A: было 12 символов, стало 9; экономия (12 − 9) × 8 = 24 бита.</p>
+</div>
+  <p class="method-source">По решениям № 13028, 14514, 16349, 16590.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">05</span>
+    <div>
+      <p class="eyebrow">читается одинаково, замены букв</p>
+      <h3>Палиндромы</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно посчитать палиндромы заданной длины, найти самый длинный палиндром или минимальное число замен.</p>
+  <ol class="task-steps"><li>Проверяйте палиндром сравнением s == s[::-1].</li><li>Для фиксированной длины переберите все окна.</li><li>Для самой длинной цепочки расширяйте центр в обе стороны.</li><li>Для замен считайте количество символов с нечётной частотой.</li></ol>
+  <ul class="task-list"><li>Окон длины L ровно len(s) - L + 1.</li><li>Палиндром длины больше 3 содержит палиндром длины 2 или 3.</li><li>Для перестановок в палиндром допустим не более одного нечётного счётчика.</li><li>Минимальное число замен = odd // 2.</li></ul>
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Строка ABACABA. Найдите длину самого длинного палиндрома и количество палиндромов длины 3.</p>
+  <pre class="code-block"><code>s = open(&#x27;24.txt&#x27;).readline().strip()
+best = 0
+for center in range(len(s)):
+    for left, right in ((center, center), (center, center + 1)):
+        while left &gt;= 0 and right &lt; len(s) and s[left] == s[right]:
+            best = max(best, right - left + 1)
+            left -= 1
+            right += 1
+count3 = sum(s[i:i+3] == s[i:i+3][::-1] for i in range(len(s) - 2))
+print(best, count3)</code></pre>
+  <p class="method-answer"><span>Ответ</span>Для ABACABA самый длинный палиндром — вся строка, длина 7; палиндромов длины 3 три: ABA, ACA и ABA.</p>
+</div>
+  <p class="method-source">По решениям № 836, 1761, 6060, 3099.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">06</span>
+    <div>
+      <p class="eyebrow">цифры, буквы, маски</p>
+      <h3>Числа, слова и IP-адреса</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно найти максимальное или минимальное число, длину слова, количество слов или проверить IP-адрес.</p>
+  <ol class="task-steps"><li>Для чисел замените все нецифровые символы пробелами и разбейте строку.</li><li>Преобразуйте части в int и выберите max/min с нужным условием.</li><li>Для слов замените цифры пробелами и ищите максимальную длину блока букв.</li><li>Для IP делите по точкам и проверяйте 4 части и диапазон 0…255.</li></ol>
+  <ul class="task-list"><li>Сравнивайте числа как int, иначе &#x27;9&#x27; окажется больше &#x27;10&#x27;.</li><li>Ведущие нули в IP недопустимы, хотя int(&#x27;012&#x27;) = 12.</li><li>Пустые части после split() отбрасываются.</li><li>Для маски &#x27;?&#x27; проверяйте посимвольно.</li></ul>
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Строка abc12x345y7. Найдите максимальное число и длину самого длинного слова.</p>
+  <pre class="code-block"><code>s = open(&#x27;24.txt&#x27;).readline().strip()
+digits = &#x27;&#x27;.join(ch if ch.isdigit() else &#x27; &#x27; for ch in s)
+numbers = [int(x) for x in digits.split()]
+letters = &#x27;&#x27;.join(ch if ch.isalpha() else &#x27; &#x27; for ch in s)
+words = letters.split()
+print(max(numbers), max(len(w) for w in words))</code></pre>
+  <p class="method-answer"><span>Ответ</span>Числа 12, 345 и 7; максимум 345. Слова abc, x, y; самое длинное — abc, длина 3.</p>
+</div>
+  <p class="method-source">По решениям № 318–324, 21319, 3399.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">07</span>
+    <div>
+      <p class="eyebrow">без повторов, без палиндромов</p>
+      <h3>Два указателя и множество: уникальные символы</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно найти максимальный отрезок без повторяющихся символов или без запрещённых коротких шаблонов.</p>
+  <ol class="task-steps"><li>Держите left и множество символов текущего окна.</li><li>Добавляйте s[right]; пока символ уже есть, удаляйте s[left] и двигайте left.</li><li>После восстановления уникальности обновляйте длину.</li><li>Для запрета палиндромов длины 2 и 3 проверяйте s[right] с s[right-1] и s[right-2].</li></ol>
+  <ul class="task-list"><li>Множество хранит только символы текущего окна.</li><li>Для «каждые два соседних различны» достаточно проверять s[right] != s[right-1].</li><li>Для запрета палиндромов длины больше 1 достаточно запретить длины 2 и 3.</li><li>Сдвигайте left на нужную позицию, а не на единицу, если так проще.</li></ul>
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Строка ABCACBB. Найдите максимальную длину подстроки без повторяющихся букв.</p>
+  <pre class="code-block"><code>s = open(&#x27;24.txt&#x27;).readline().strip()
+left = best = 0
+window = set()
+for right, ch in enumerate(s):
+    while ch in window:
+        window.remove(s[left])
+        left += 1
+    window.add(ch)
+    best = max(best, right - left + 1)
+print(best)</code></pre>
+  <p class="method-answer"><span>Ответ</span>Для ABCACBB максимальная длина без повторов — 3: ABC, BCA или ACB.</p>
+</div>
+  <p class="method-source">По решениям № 13606, 16012, 21.</p>
+</article></div>
+  
+<div class="cheatsheet">
+  <p class="mini-label">Шпаргалка: формулировка → метод</p>
+  <div class="cheatsheet-wrap">
+    <table class="cheatsheet-table">
+      <thead><tr><th>В условии</th><th>Что делать</th></tr></thead>
+      <tbody><tr><td>«максимальная подстрока без букв из набора»</td><td>заменить запрещённые буквы пробелами и взять max(len(part)) после split()</td></tr><tr><td>«не более K символов из набора»</td><td>скользящее окно со счётчиком и while count &gt; K</td></tr><tr><td>«ровно K вхождений»</td><td>скользящее окно с обновлением при count == K или префиксные суммы</td></tr><tr><td>«равное количество A и B»</td><td>префиксные суммы +1/−1 и первое вхождение каждого значения</td></tr><tr><td>«две независимые балансовые величины»</td><td>кортеж из двух префиксных сумм как ключ словаря</td></tr><tr><td>«подстрока из повторяющихся групп»</td><td>состояние или позиция i mod len(pattern)</td></tr><tr><td>«максимум одинаковых подряд»</td><td>группы подряд идущих символов (RLE)</td></tr><tr><td>«палиндромы фиксированной длины»</td><td>перебор окон и проверка s[i:i+L] == s[i:i+L][::-1]</td></tr><tr><td>«минимальные замены до палиндрома»</td><td>количество нечётных частот // 2</td></tr><tr><td>«максимальное число или слово»</td><td>заменить лишние символы пробелами, split() и max</td></tr><tr><td>«IP-адрес»</td><td>split по точкам, 4 части, 0…255, без ведущих нулей</td></tr><tr><td>«нет повторяющихся букв»</td><td>множество и два указателя</td></tr><tr><td>«нет палиндромов длины 2 и 3»</td><td>проверять s[right] с s[right-1] и s[right-2]</td></tr></tbody>
+    </table>
+  </div>
+</div>
+  
+<div class="video-block">
+  <p class="mini-label">Видеоразборы по теме</p>
+  <div class="video-list"><a class="video-link" href="https://vkvideo.ru/video-205865487_456240342" target="_blank" rel="noopener noreferrer"><span class="video-label">Скользящее окно: ровно 100 букв T</span><span class="video-meta">№ 10105</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://vkvideo.ru/video-205865487_456240362" target="_blank" rel="noopener noreferrer"><span class="video-label">Ровно 50 сочетаний AB</span><span class="video-meta">№ 13715</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://rutube.ru/video/bbfcf16ea3e3494b58773c099ccb249e/?t=3854" target="_blank" rel="noopener noreferrer"><span class="video-label">IP-адреса в задании 24</span><span class="video-meta">№ 21319 · 1:04:14</span><span class="video-host" title="RuTube"><span class="video-host-icon"><svg viewBox="0 0 132 132" aria-hidden="true" focusable="false"><rect width="132" height="132" fill="#100943"/><circle cx="132" cy="66" r="66" fill="#ED143B"/><path fill="#fff" d="M81.5361 62.9865H42.5386V47.5547H81.5361C83.814 47.5547 85.3979 47.9518 86.1928 48.6451C86.9877 49.3385 87.4801 50.6245 87.4801 52.5031V58.0441C87.4801 60.0234 86.9877 61.3094 86.1928 62.0028C85.3979 62.6961 83.814 62.9925 81.5361 62.9925V62.9865ZM84.2115 33.0059H26V99H42.5386V77.5294H73.0176L87.4801 99H106L90.0546 77.4287C95.9333 76.5575 98.573 74.756 100.75 71.7869C102.927 68.8179 104.019 64.071 104.019 57.7359V52.7876C104.019 49.0303 103.621 46.0613 102.927 43.7857C102.233 41.51 101.047 39.5307 99.362 37.7528C97.5824 36.0698 95.6011 34.8845 93.2223 34.0904C90.8435 33.3971 87.8716 33 84.2115 33V33.0059Z"/></svg></span><span class="video-host-name">RuTube</span></span></a><a class="video-link" href="https://rutube.ru/video/db1a35984b4710e63ce27121d761c61e/?t=3455" target="_blank" rel="noopener noreferrer"><span class="video-label">Сжатие RLE</span><span class="video-meta">№ 14514 · 57:35</span><span class="video-host" title="RuTube"><span class="video-host-icon"><svg viewBox="0 0 132 132" aria-hidden="true" focusable="false"><rect width="132" height="132" fill="#100943"/><circle cx="132" cy="66" r="66" fill="#ED143B"/><path fill="#fff" d="M81.5361 62.9865H42.5386V47.5547H81.5361C83.814 47.5547 85.3979 47.9518 86.1928 48.6451C86.9877 49.3385 87.4801 50.6245 87.4801 52.5031V58.0441C87.4801 60.0234 86.9877 61.3094 86.1928 62.0028C85.3979 62.6961 83.814 62.9925 81.5361 62.9925V62.9865ZM84.2115 33.0059H26V99H42.5386V77.5294H73.0176L87.4801 99H106L90.0546 77.4287C95.9333 76.5575 98.573 74.756 100.75 71.7869C102.927 68.8179 104.019 64.071 104.019 57.7359V52.7876C104.019 49.0303 103.621 46.0613 102.927 43.7857C102.233 41.51 101.047 39.5307 99.362 37.7528C97.5824 36.0698 95.6011 34.8845 93.2223 34.0904C90.8435 33.3971 87.8716 33 84.2115 33V33.0059Z"/></svg></span><span class="video-host-name">RuTube</span></span></a><a class="video-link" href="https://youtu.be/BMVaYPPqB2k?t=5723" target="_blank" rel="noopener noreferrer"><span class="video-label">Максимум без запрещённых букв</span><span class="video-meta">№ 11241 · 1:35:23</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/gLATLSQLqVg?t=6805" target="_blank" rel="noopener noreferrer"><span class="video-label">Ровно по одному X и Y</span><span class="video-meta">№ 13085 · 1:53:25</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/IksXqcFFznw?t=5217" target="_blank" rel="noopener noreferrer"><span class="video-label">Группы VWXYZ</span><span class="video-meta">№ 12931 · 1:26:57</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/_djolNyXdY0?t=10320" target="_blank" rel="noopener noreferrer"><span class="video-label">Повторяющиеся фрагменты XYZ</span><span class="video-meta">№ 1352 · 2:52:00</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/xgq0aZLVmmU?t=9755" target="_blank" rel="noopener noreferrer"><span class="video-label">Палиндромы длиной 9</span><span class="video-meta">№ 6060 · 2:42:35</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/Kp8DSfXoeVc?t=9140" target="_blank" rel="noopener noreferrer"><span class="video-label">Максимальная цепочка-палиндром</span><span class="video-meta">№ 1761 · 2:32:20</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/PHpxhruxhsc" target="_blank" rel="noopener noreferrer"><span class="video-label">Максимальное нечётное число</span><span class="video-meta">№ 318</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/gTgHaHHb4mE?t=7856" target="_blank" rel="noopener noreferrer"><span class="video-label">Максимум одинаковых подряд</span><span class="video-meta">№ 105 · 2:10:56</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a></div>
+  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+</div>
+  <p class="method-source-note">По базе Kompege: 1 177 задач по заданию 24, 109 решений (98 программных и 11 текстовых) и 297 видеоразборов (178 YouTube, 85 VK, 34 Rutube). Для методов отобраны решения задач № 10131, 11241, 11918, 12771, 13028, 13606, 14242, 14514, 16012, 21319 и 3099; примеры переработаны в учебные.</p>
+</section>
+    <section class="task-block" id="mistakes">
+      <h2>Типичные ошибки</h2>
+      <ul class="task-list task-list--mistakes"><li>пробелы и переводы строк</li><li>регистр</li><li>индексация</li><li>счётчик не сбрасывается</li></ul>
+    </section>
+    
+    
+    <section class="task-block" id="practice">
+      <h2>Практика</h2>
+      
+<div class="practice-grid">
+  <a class="practice-link" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener noreferrer">
+    <span class="practice-label">ФИПИ</span><span class="practice-title">Открытый банк заданий</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80.%20%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D1%8B%20%D0%B8%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Навигатор · 2026</span><span class="practice-title">Алгоритмы</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/inf_11_2027/%D0%98%D0%9D%D0%A4-11%20%D0%95%D0%93%D0%AD%202027%20%D0%94%D0%95%D0%9C%D0%9E.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Демоверсия</span><span class="practice-title">КИМ 2027</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0.%202026.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Методика</span><span class="practice-title">Разбор ошибок 2026</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+</div>
+<p class="practice-note">Навигатор и методические рекомендации опубликованы в 2026 году: номера заданий в них могут отличаться от нумерации 2027 года. Ориентируйтесь на тему.</p>
+    </section>
+    
+<div class="related-links">
+  <span class="related-label">Смотрите также</span>
+  <a class="related-link" href="25.html">25 · Натуральные числа</a><a class="related-link" href="26.html">26 · Массив: сортировка</a>
+</div>
+    <nav class="prev-next" aria-label="Соседние задания">
+      <a class="prev-next-link" href="23.html"><span>← Предыдущее</span><strong>23 · Графы: пути</strong></a>
+      <a class="prev-next-link prev-next-link--next" href="25.html"><span>Следующее →</span><strong>25 · Натуральные числа</strong></a>
+    </nav>
+  </div>
+
+  <aside class="task-aside">
+    <div class="aside-card">
+      <div class="aside-head">
+        <span>Карта заданий</span>
+        <span class="map-progress" data-progress-count>0 / 27</span>
+      </div>
+      <div class="task-map task-map--compact" data-task-map><a class="task-cell task-cell--digital task-cell--compact" href="01.html" data-task="1" data-section="digital" data-title="Графы и таблицы" data-caption="&lt;strong&gt;Задание 1&lt;/strong&gt; · Графы и таблицы · Цифровая грамотность · 1 балл" aria-label="Задание 1: Графы и таблицы"><span>1</span></a><a class="task-cell task-cell--theory task-cell--compact" href="02.html" data-task="2" data-section="theory" data-title="Логические функции" data-caption="&lt;strong&gt;Задание 2&lt;/strong&gt; · Логические функции · Теория · 1 балл" aria-label="Задание 2: Логические функции"><span>2</span></a><a class="task-cell task-cell--it task-cell--compact" href="03.html" data-task="3" data-section="it" data-title="Базы данных" data-caption="&lt;strong&gt;Задание 3&lt;/strong&gt; · Базы данных · Информационные технологии · 1 балл" aria-label="Задание 3: Базы данных"><span>3</span></a><a class="task-cell task-cell--theory task-cell--compact" href="04.html" data-task="4" data-section="theory" data-title="Коды и условие Фано" data-caption="&lt;strong&gt;Задание 4&lt;/strong&gt; · Коды и условие Фано · Теория · 1 балл" aria-label="Задание 4: Коды и условие Фано"><span>4</span></a><a class="task-cell task-cell--algo task-cell--compact" href="05.html" data-task="5" data-section="algo" data-title="Алгоритмы исполнителя" data-caption="&lt;strong&gt;Задание 5&lt;/strong&gt; · Алгоритмы исполнителя · Алгоритмы · 1 балл" aria-label="Задание 5: Алгоритмы исполнителя"><span>5</span></a><a class="task-cell task-cell--algo task-cell--compact" href="06.html" data-task="6" data-section="algo" data-title="Исполнители и координаты" data-caption="&lt;strong&gt;Задание 6&lt;/strong&gt; · Исполнители и координаты · Алгоритмы · 1 балл" aria-label="Задание 6: Исполнители и координаты"><span>6</span></a><a class="task-cell task-cell--theory task-cell--compact" href="07.html" data-task="7" data-section="theory" data-title="Графика и звук" data-caption="&lt;strong&gt;Задание 7&lt;/strong&gt; · Графика и звук · Теория · 1 балл" aria-label="Задание 7: Графика и звук"><span>7</span></a><a class="task-cell task-cell--theory task-cell--compact" href="08.html" data-task="8" data-section="theory" data-title="Комбинаторика и коды" data-caption="&lt;strong&gt;Задание 8&lt;/strong&gt; · Комбинаторика и коды · Теория · 1 балл" aria-label="Задание 8: Комбинаторика и коды"><span>8</span></a><a class="task-cell task-cell--it task-cell--compact" href="09.html" data-task="9" data-section="it" data-title="Электронные таблицы" data-caption="&lt;strong&gt;Задание 9&lt;/strong&gt; · Электронные таблицы · Информационные технологии · 1 балл" aria-label="Задание 9: Электронные таблицы"><span>9</span></a><a class="task-cell task-cell--digital task-cell--compact" href="10.html" data-task="10" data-section="digital" data-title="IP-адреса и маски" data-caption="&lt;strong&gt;Задание 10&lt;/strong&gt; · IP-адреса и маски · Цифровая грамотность · 1 балл" aria-label="Задание 10: IP-адреса и маски"><span>10</span></a><a class="task-cell task-cell--theory task-cell--compact" href="11.html" data-task="11" data-section="theory" data-title="Объём сообщения" data-caption="&lt;strong&gt;Задание 11&lt;/strong&gt; · Объём сообщения · Теория · 1 балл" aria-label="Задание 11: Объём сообщения"><span>11</span></a><a class="task-cell task-cell--algo task-cell--compact" href="12.html" data-task="12" data-section="algo" data-title="Исполнитель МТ" data-caption="&lt;strong&gt;Задание 12&lt;/strong&gt; · Исполнитель МТ · Алгоритмы · 1 балл" aria-label="Задание 12: Исполнитель МТ"><span>12</span></a><a class="task-cell task-cell--algo task-cell--compact" href="13.html" data-task="13" data-section="algo" data-title="Ход исполнения алгоритма" data-caption="&lt;strong&gt;Задание 13&lt;/strong&gt; · Ход исполнения алгоритма · Алгоритмы · 1 балл" aria-label="Задание 13: Ход исполнения алгоритма"><span>13</span></a><a class="task-cell task-cell--theory task-cell--compact" href="14.html" data-task="14" data-section="theory" data-title="Системы счисления" data-caption="&lt;strong&gt;Задание 14&lt;/strong&gt; · Системы счисления · Теория · 1 балл" aria-label="Задание 14: Системы счисления"><span>14</span></a><a class="task-cell task-cell--theory task-cell--compact" href="15.html" data-task="15" data-section="theory" data-title="Логика и множества" data-caption="&lt;strong&gt;Задание 15&lt;/strong&gt; · Логика и множества · Теория · 1 балл" aria-label="Задание 15: Логика и множества"><span>15</span></a><a class="task-cell task-cell--algo task-cell--compact" href="16.html" data-task="16" data-section="algo" data-title="Рекурсия" data-caption="&lt;strong&gt;Задание 16&lt;/strong&gt; · Рекурсия · Алгоритмы · 1 балл" aria-label="Задание 16: Рекурсия"><span>16</span></a><a class="task-cell task-cell--algo task-cell--compact" href="17.html" data-task="17" data-section="algo" data-title="Обработка последовательности" data-caption="&lt;strong&gt;Задание 17&lt;/strong&gt; · Обработка последовательности · Алгоритмы · 1 балл" aria-label="Задание 17: Обработка последовательности"><span>17</span></a><a class="task-cell task-cell--it task-cell--compact" href="18.html" data-task="18" data-section="it" data-title="Таблицы: анализ и оптимизация" data-caption="&lt;strong&gt;Задание 18&lt;/strong&gt; · Таблицы: анализ и оптимизация · Информационные технологии · 1 балл" aria-label="Задание 18: Таблицы: анализ и оптимизация"><span>18</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html" data-task="19" data-section="theory" data-title="Теория игр" data-caption="&lt;strong&gt;Задание 19&lt;/strong&gt; · Теория игр · Теория · 1 балл" aria-label="Задание 19: Теория игр"><span>19</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-20" data-task="20" data-section="theory" data-title="Теория игр: две кучи" data-caption="&lt;strong&gt;Задание 20&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 20: Теория игр: две кучи"><span>20</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-21" data-task="21" data-section="theory" data-title="Теория игр: стратегия" data-caption="&lt;strong&gt;Задание 21&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 21: Теория игр: стратегия"><span>21</span></a><a class="task-cell task-cell--theory task-cell--compact" href="22.html" data-task="22" data-section="theory" data-title="Параллельные вычисления" data-caption="&lt;strong&gt;Задание 22&lt;/strong&gt; · Параллельные вычисления · Теория · 1 балл" aria-label="Задание 22: Параллельные вычисления"><span>22</span></a><a class="task-cell task-cell--theory task-cell--compact" href="23.html" data-task="23" data-section="theory" data-title="Графы: пути" data-caption="&lt;strong&gt;Задание 23&lt;/strong&gt; · Графы: пути · Теория · 1 балл" aria-label="Задание 23: Графы: пути"><span>23</span></a><a class="task-cell task-cell--algo is-current task-cell--compact" href="24.html" data-task="24" data-section="algo" data-title="Символьные строки" data-caption="&lt;strong&gt;Задание 24&lt;/strong&gt; · Символьные строки · Алгоритмы · 1 балл" aria-label="Задание 24: Символьные строки"><span>24</span></a><a class="task-cell task-cell--algo task-cell--compact" href="25.html" data-task="25" data-section="algo" data-title="Натуральные числа" data-caption="&lt;strong&gt;Задание 25&lt;/strong&gt; · Натуральные числа · Алгоритмы · 1 балл" aria-label="Задание 25: Натуральные числа"><span>25</span></a><a class="task-cell task-cell--algo task-cell--compact" href="26.html" data-task="26" data-section="algo" data-title="Массив: сортировка" data-caption="&lt;strong&gt;Задание 26&lt;/strong&gt; · Массив: сортировка · Алгоритмы · 2 балла" aria-label="Задание 26: Массив: сортировка"><span>26</span></a><a class="task-cell task-cell--it task-cell--compact" href="27.html" data-task="27" data-section="it" data-title="Анализ данных" data-caption="&lt;strong&gt;Задание 27&lt;/strong&gt; · Анализ данных · Информационные технологии · 2 балла" aria-label="Задание 27: Анализ данных"><span>27</span></a></div>
+      <a class="aside-link" href="index.html">Все задания <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="aside-card aside-card--progress">
+      <p class="aside-label">Прогресс</p>
+      <button class="btn btn-primary progress-toggle" type="button" data-progress-toggle="24" aria-pressed="false">Отметить как изученное</button>
+      <p class="progress-note" data-progress-text>0 из 27 изучено</p>
+      <div class="progress-line" aria-hidden="true"><span data-progress-bar></span></div>
+    </div>
+    <div class="aside-card">
+      <p class="aside-label">Быстрые ссылки</p>
+      <a class="aside-link" href="../documents.html#kim2027">Демоверсия 2027 <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html#method">Навигатор и методика <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html">Все документы <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-mark">ЕГЭ · Информатика · 2027</p>
+      <p class="footer-note">Разбор заданий, ключевые темы и официальные документы. Составлено 3 ноября 2026. Не является официальным ресурсом ФИПИ или Рособрнадзора.</p>
+    </div>
+    <div>
+      <p class="footer-title">Разделы</p>
+      <p class="footer-note"><a href="../index.html">Главная</a> · <a href="../tasks/index.html">Все задания</a> · <a href="../documents.html">Документы</a></p>
+      <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
+    </div>
+    <div>
+      <p class="footer-title">Первоисточники</p>
+      <p class="footer-note"><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ</a> · <a href="https://obrnadzor.gov.ru/gia/gia-11/" target="_blank" rel="noopener noreferrer">Рособрнадзор</a> · <a href="https://regulation.gov.ru/projects/172223/" target="_blank" rel="noopener noreferrer">проект расписания</a></p>
+      <p class="footer-note">Права на документы принадлежат их правообладателям. Копии сохранены для ознакомления и подготовки.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

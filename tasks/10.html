@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задание 10 ЕГЭ по информатике — IP-адреса и маски</title>
+<meta name="description" content="Найти адрес сети, широковещательный адрес, маску или количество хостов по IP и маске. Теория, способы решения и типичные ошибки. ЕГЭ-2027, информатика.">
+<meta name="theme-color" content="#F0F1EB">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="На главную">
+    <span class="brand-mark" aria-hidden="true">И</span>
+    <span class="brand-text">ЕГЭ · Информатика<small>подготовка по заданиям</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a href="../index.html">Главная</a>
+    <a href="../tasks/index.html" class="is-active" aria-current="page">Задания</a>
+    <a href="../documents.html">Документы</a>
+  </nav>
+  <div class="topbar-meta"><span>Задание 10 из 27</span><span>Цифровая грамотность</span></div>
+</header>
+<main id="main">
+
+<nav class="breadcrumb" aria-label="Хлебные крошки"><a href="../index.html">Главная</a><span class="crumb-sep">/</span><a href="index.html">Задания</a><span class="crumb-sep">/</span><span aria-current="page">Задание 10</span></nav>
+
+<section class="task-hero">
+  <div class="task-number" aria-hidden="true">10</div>
+  <div class="task-hero-copy">
+    <p class="eyebrow">Цифровая грамотность · 1 балл</p>
+    <h1>IP-адреса и маски</h1>
+    <p class="task-subtitle">Подсети</p>
+    <p class="lead">Найти адрес сети, широковещательный адрес, маску или количество хостов по IP и маске.</p>
+    <div class="task-badges">
+      <span class="badge badge-section badge-section--digital">Цифровая грамотность</span>
+      <span class="badge badge-answer">число или IP-адрес</span>
+      <span class="badge badge-project">новая тема 2027</span>
+    </div>
+  </div>
+</section>
+
+
+<nav class="task-toc" aria-label="На странице задания">
+  <span class="task-toc-label">На странице</span>
+  
+  <a href="#theory">Теория</a>
+  <a href="#methods">Способы решения</a>
+  <a href="#mistakes">Ошибки</a>
+  <a href="#practice">Практика</a>
+</nav>
+
+<div class="task-layout">
+  <div class="task-main">
+    
+<div class="callout callout--change">
+  <span class="callout-label">2027</span>
+  <p>В 2027 тема задания изменена: теперь маски подсетей. В 2026 задание проверяло информационный поиск в текстовом процессоре.</p>
+</div>
+    
+    <section class="task-block">
+      <h2>Что проверяет</h2>
+      <p class="task-checked">Сетевые протоколы, адресация в Интернете, разделение IP-сети на подсети масками.</p>
+      <p class="task-source">Основание: проект спецификации и кодификатора КИМ 2027. <a href="../documents.html#kim2027">Открыть документы <span aria-hidden="true">↗</span></a></p>
+    </section>
+    
+    
+<section class="task-block task-block--theory" id="theory">
+  <div class="block-head">
+    <p class="eyebrow">Теория</p>
+    <h2>Что нужно знать</h2>
+    <p class="block-lead">В 2027 году задание 10 проверяет адресацию IPv4 и маски подсетей. В демоверсии дан адрес узла 192.168.159.86 и маска 255.255.252.0: нужно найти адрес сети и записать сумму его октетов. В банке задач формулировки шире — адрес сети, широковещательный адрес, наибольший или наименьший адрес для компьютера, количество хостов, маска по известному адресу сети, подсчёт адресов с условием на биты и неизвестный октет A. Почти всё сводится к двоичной записи четырёх октетов, поэтому теория здесь компактная: адрес, маска, побитовое И и границы блока.</p>
+  </div>
+  <div class="theory-checklist">
+    <p class="mini-label">Минимум для задания 10</p>
+    <ul class="check-list"><li>что такое IPv4 и почему в адресе ровно 32 бита</li><li>как переводить октеты в двоичный вид и обратно</li><li>что такое маска и префикс /n</li><li>какие значения октетов маски допустимы</li><li>как работает побитовое И</li><li>как найти адрес сети по IP и маске</li><li>как найти широковещательный адрес</li><li>сколько в сети адресов и сколько хостов</li><li>как восстановить маску по IP и адресу сети</li><li>как считать адреса с условием на единицы, нули и подстроки</li><li>как перебирать неизвестный октет A</li><li>что именно складывать в ответе «сумма октетов»</li></ul>
+  </div>
+  <div class="theory-grid">
+<article class="theory-card">
+  <h3>Как устроено задание 10</h3>
+  <p>В 2027 году задание 10 относится к разделу «Цифровая грамотность» и оценивается в 1 первичный балл. В демоверсии требуется найти адрес сети по IP узла и маске и вернуть сумму четырёх октетов этого адреса. В открытом банке встречаются и обратные задачи: по IP и адресу сети восстановить маску, найти широковещательный адрес, посчитать количество хостов или отобрать адреса по битовому условию. Во всех случаях нужно аккуратно работать с 32-битной записью.</p>
+  <ul class="theory-list"><li>Ответ — число, IP-адрес по октетам или значение одного байта маски.</li><li>Адрес сети и широковещательный адрес зарезервированы: компьютерам их не назначают.</li><li>Формулировка «для всех IP-адресов сети» означает, что проверять нужно каждый адрес блока.</li><li>Формулировка «для узлов» обычно исключает адрес сети и широковещательный адрес.</li><li>Решать можно вручную по битам или программой через модуль ipaddress.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>IPv4: 32 бита и четыре октета</h3>
+  <p>IP-адрес IPv4 — это 32 бита, записанные четырьмя октетами через точку. Каждый октет занимает 8 бит и принимает значение от 0 до 255. В двоичной записи октет всегда содержит ровно восемь разрядов, поэтому ведущие нули не отбрасывают: 86 — это 01010110, а не 1010110.</p>
+  <ul class="theory-list"><li>192.168.159.86 = 11000000.10101000.10011111.01010110.</li><li>Веса разрядов октета: 128, 64, 32, 16, 8, 4, 2, 1.</li><li>255 = 11111111, 0 = 00000000, 252 = 11111100.</li><li>Перевод в десятичную запись: сложите веса единичных разрядов.</li><li>В ответе октеты записываются десятичными числами через точку.</li></ul>
+  <div class="formula-inline"><code>128 64 32 16 8 4 2 1</code><code>255 = 11111111</code></div>
+</article>
+<article class="theory-card">
+  <h3>Маска и префикс /n</h3>
+  <p>Маска сети — 32-битное число, в котором сначала идут n единиц, а затем 32 − n нулей. Её записывают четырьмя октетами или коротко /n. Число n называется префиксом и равно количеству единиц в маске. Маска не может быть произвольной: запись 255.255.200.0 невозможна, потому что после нулей в третьем октете снова идёт единица.</p>
+  <ul class="theory-list"><li>/24 = 255.255.255.0: 24 единицы и 8 нулей.</li><li>/22 = 255.255.252.0: 22 единицы и 10 нулей.</li><li>/26 = 255.255.255.192: 26 единиц и 6 нулей.</li><li>Допустимые октеты маски: 0, 128, 192, 224, 240, 248, 252, 254, 255.</li><li>Последний октет маски равен 256 − размер блока.</li></ul>
+  <div class="formula-inline"><code>/n: n единиц, затем 32 − n нулей</code><code>block = 256 − mask_octet</code></div>
+</article>
+<article class="theory-card">
+  <h3>Адрес сети: побитовое И</h3>
+  <p>Адрес сети получается в результате поразрядной конъюнкции IP-адреса узла и маски. Там, где в маске стоят единицы, биты IP сохраняются; там, где стоят нули, биты обнуляются. Поэтому в адресе сети все биты хоста равны нулю, и он является первым адресом блока.</p>
+  <ul class="theory-list"><li>192 &amp; 255 = 192, 168 &amp; 255 = 168, 159 &amp; 252 = 156, 86 &amp; 0 = 0.</li><li>192.168.159.86 при маске 255.255.252.0 даёт сеть 192.168.156.0.</li><li>Меняется только тот октет, в котором маска не 0 и не 255.</li><li>Адрес сети всегда кратен размеру блока в «своём» октете.</li><li>Проверка: побитовое И адреса сети и маски должно дать тот же адрес.</li></ul>
+  <div class="formula-inline"><code>адрес сети = IP &amp; маска</code><code>network_octet = ip_octet &amp; mask_octet</code></div>
+</article>
+<article class="theory-card">
+  <h3>Быстрый счёт по блоку</h3>
+  <p>Вручную не нужно переводить все 32 бита. Найдите октет, где маска принимает промежуточное значение, и посчитайте размер блока: block = 256 − значение этого октета маски. Затем округлите значение IP в этом октете вниз до кратного block. Остальные октеты просто копируются или обнуляются.</p>
+  <ul class="theory-list"><li>Маска 255.255.252.0: block = 256 − 252 = 4.</li><li>159 → 156, потому что 159 = 39 · 4 + 3.</li><li>Маска 255.255.248.0: block = 8, поэтому 228 → 224.</li><li>Маска 255.255.255.192: block = 64, поэтому 230 → 192.</li><li>Если октет маски равен 255, значение IP не меняется; если 0 — становится нулём.</li></ul>
+  <div class="formula-inline"><code>network_octet = (ip_octet // block) * block</code><code>block = 256 − mask_octet</code></div>
+</article>
+<article class="theory-card">
+  <h3>Широковещательный адрес и адреса узлов</h3>
+  <p>Широковещательный (broadcast) адрес — последний адрес блока: в нём все биты хоста заменены единицами. Адрес сети и широковещательный адрес зарезервированы, поэтому их не назначают компьютерам. Наименьший адрес узла — network + 1, наибольший — broadcast − 1.</p>
+  <ul class="theory-list"><li>Сеть 192.168.156.0/22: broadcast 192.168.159.255.</li><li>Первый адрес узла — 192.168.156.1, последний — 192.168.159.254.</li><li>«Наибольший адрес, который можно назначить» — это broadcast − 1.</li><li>«Наименьший адрес узла» — это network + 1.</li><li>В ответе «сумма октетов» складывают ровно четыре числа.</li></ul>
+  <div class="formula-inline"><code>broadcast = network + 2^(32−n) − 1</code><code>first host = network + 1</code><code>last host = broadcast − 1</code></div>
+</article>
+<article class="theory-card">
+  <h3>Количество адресов и хостов</h3>
+  <p>В сети 2^(32−n) адресов. Если два служебных адреса не используются, количество хостов равно 2^(32−n) − 2. Внимательно читайте формулировку: «количество IP-адресов в сети» может включать адрес сети и broadcast, а «количество компьютеров, которым можно назначить адрес» — нет.</p>
+  <ul class="theory-list"><li>/22: 2^10 = 1024 адреса и 1022 хоста.</li><li>/24: 256 адресов и 254 хоста.</li><li>/26: 64 адреса и 62 хоста.</li><li>/30: 4 адреса и 2 хоста.</li><li>Хостов с нечётными номерами ровно половина: (2^(32−n) − 2) / 2.</li><li>Для /31 и /32 стандартная формула «минус два» даёт 0 или отрицательное число; в школьных задачах такие маски почти не встречаются.</li></ul>
+  <div class="formula-inline"><code>addresses = 2^(32−n)</code><code>hosts = 2^(32−n) − 2</code><code>odd hosts = hosts / 2</code></div>
+</article>
+<article class="theory-card">
+  <h3>Обратная задача: маска по IP и адресу сети</h3>
+  <p>Если известны IP узла и адрес сети, маску можно восстановить неоднозначно. Сравните двоичные записи. Маска может закрывать только те биты, где IP и адрес сети совпадают. Минимальный префикс определяется последней единицей адреса сети, максимальный — первым различающимся битом IP и адреса сети.</p>
+  <ul class="theory-list"><li>IP 168.224.22.193 и сеть 168.224.16.0: возможны префиксы /20 и /21, наименьший — /20.</li><li>Маска /20 — это 255.255.240.0.</li><li>IP 130.140.241.137 и сеть 130.140.240.0: возможны /20…/23, наибольший — /23.</li><li>Маска /23 — это 255.255.254.0.</li><li>Число различных подходящих масок равно max − min + 1.</li><li>Если просят один байт маски, берут соответствующий октет найденной маски.</li></ul>
+  <div class="formula-inline"><code>n_min — позиция последней единицы адреса сети</code><code>n_max — позиция перед первым различием IP и адреса сети</code><code>подходящие n: n_min … n_max</code></div>
+</article>
+<article class="theory-card">
+  <h3>Неизвестный октет A и условия на все адреса</h3>
+  <p>В задачах с буквой A один октет IP или маски неизвестен. Если условие должно выполняться для всех адресов сети, проще всего перебрать A от 0 до 255, построить сеть и проверить каждый адрес. Такой перебор короткий и надёжный; вручную анализируют биты только для экономии времени.</p>
+  <ul class="theory-list"><li>Для IP 154.127.A.230 и маски 255.255.255.192 максимальное A равно 192.</li><li>Для IP 16.32.A.48 и маски 255.255.240.0 минимальное A равно 112.</li><li>При проверке только узлов пропускайте адрес сети и широковещательный адрес.</li><li>Условие «для всех» — это all(...), условие «существует» — any(...).</li><li>Если A стоит в октете маски, проверяйте, что маска остаётся допустимой.</li></ul>
+  <div class="formula-inline"><code>for A in range(256):</code><code>all(condition(ip) for ip in network)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Подсчёт адресов по битовому условию</h3>
+  <p>В задачах «сколько в сети таких IP-адресов» перебирают все адреса сети и проверяют двоичную запись. Для количества единиц достаточно count(&#x27;1&#x27;). Для количества нулей и для поиска подстрок используйте 32-битную запись f&#x27;{int(ip):032b}&#x27;: иначе ведущие нули будут потеряны и ответ изменится.</p>
+  <ul class="theory-list"><li>Сеть 192.168.32.128/26: чётное количество единиц у 32 адресов.</li><li>Сеть 165.44.96.0/21: три подряд идущие единицы у 1121 адреса.</li><li>Сеть 136.36.240.16/29: подстрока 101 не встречается у 4 адресов.</li><li>Сеть 136.108.34.160/28: подстрока 1001 не встречается у 11 адресов.</li><li>«IP-адресов в сети» включает адрес сети и broadcast; «узлов» — исключает.</li><li>Для проверки одного октета переводите его отдельно: f&#x27;{octet:08b}&#x27;.</li></ul>
+  <div class="formula-inline"><code>f&#x27;{int(ip):032b}&#x27;</code><code>binary.count(&#x27;1&#x27;)</code><code>&#x27;111&#x27; in binary</code><code>&#x27;101&#x27; not in binary</code></div>
+</article>
+<article class="theory-card">
+  <h3>Формат ответа и проверка</h3>
+  <p>В задании 10 ответ короткий, но ошибка в формате стоит балла. Проверьте, что именно просят: адрес сети или broadcast, сумму октетов или сам адрес, количество адресов или количество хостов, префикс или десятичную маску.</p>
+  <ul class="theory-list"><li>Сумма октетов: 192 + 168 + 156 + 0 = 516.</li><li>Адрес в ответе — четыре десятичных числа через точку.</li><li>Если ответ вводят по октетам в клетки, каждое число от 0 до 255.</li><li>Префикс /22 и маска 255.255.252.0 — разные формы записи одного числа.</li><li>Проверьте ответ вторым способом: вручную и через ipaddress.</li></ul>
+  <div class="formula-inline"><code>ip_network(&#x27;192.168.159.86/255.255.252.0&#x27;, strict=False)</code></div>
+</article></div>
+  
+<div class="theory-example">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Разбор примера</p>
+    <h3>Учебный пример: адрес сети, broadcast и сумма октетов</h3>
+    <p>Разберём демоверсию 2027 целиком: найдём адрес сети, широковещательный адрес и количество хостов, а затем сумму октетов адреса сети.</p>
+  </div>
+  <div class="theory-example-grid theory-example-grid--single"><div class="table-wrap"><table class="example-table">
+  <caption>Демоверсия 2027: узел 192.168.159.86, маска 255.255.252.0</caption>
+  <thead><tr><th>Октет</th><th>IP узла</th><th>IP в двоичном виде</th><th>Маска</th><th>Адрес сети</th><th>Broadcast</th></tr></thead>
+  <tbody>
+    <tr><th>1</th><td>192</td><td>11000000</td><td>255</td><td>192</td><td>192</td></tr>
+    <tr><th>2</th><td>168</td><td>10101000</td><td>255</td><td>168</td><td>168</td></tr>
+    <tr><th>3</th><td>159</td><td>10011111</td><td>252</td><td>156</td><td>159</td></tr>
+    <tr><th>4</th><td>86</td><td>01010110</td><td>0</td><td>0</td><td>255</td></tr>
+  </tbody>
+</table></div></div>
+  <ol class="task-steps"><li>Маска 255.255.252.0 — это /22: 22 бита адреса сети и 10 битов хоста.</li><li>Побитовое И: 192 &amp; 255 = 192, 168 &amp; 255 = 168.</li><li>В третьем октете 252 = 11111100, поэтому 159 &amp; 252 = 10011100 = 156.</li><li>В четвёртом октете маска 0, поэтому все биты обнуляются: 86 &amp; 0 = 0.</li><li>Адрес сети 192.168.156.0. Broadcast: заменяем 10 битов хоста единицами — 192.168.159.255.</li><li>Хостов 2^10 − 2 = 1022. Сумма октетов адреса сети: 192 + 168 + 156 + 0 = 516.</li></ol>
+  <p class="example-answer"><span>Ответ</span>516 (адрес сети 192.168.156.0, broadcast 192.168.159.255, 1022 хоста).</p>
+</div>
+</section>
+    
+<section class="task-block task-block--methods" id="methods">
+  <div class="block-head">
+    <p class="eyebrow">Способы решения</p>
+    <h2>Выберите метод под формулировку</h2>
+    <p class="block-lead">Методы собраны по решениям задания 10 из базы Kompege. Начните с того, что именно нужно найти в условии.</p>
+  </div>
+  <div class="methods-list">
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">01</span>
+    <div>
+      <p class="eyebrow">когда даны IP и маска</p>
+      <h3>Адрес сети через побитовое И</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно найти адрес сети, а затем сумму его октетов или другую величину.</p>
+  <ol class="task-steps"><li>Переведите октеты IP и маски в двоичный вид по 8 бит.</li><li>Выполните И для каждого разряда: 1 &amp; 1 = 1, иначе 0.</li><li>Соберите четыре октета адреса сети.</li><li>Проверьте, что в адресе сети все биты хоста равны нулю.</li><li>Если просят сумму, сложите четыре десятичных октета.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Демоверсия 2027: 192.168.159.86 и 255.255.252.0. В третьем октете 159 &amp; 252 = 156, остальные октеты не меняются или обнуляются. Адрес сети 192.168.156.0, сумма 192 + 168 + 156 + 0 = 516.</p>
+  <pre class="code-block"><code>from ipaddress import ip_network
+
+net = ip_network(&#x27;192.168.159.86/255.255.252.0&#x27;, strict=False)
+print(net.network_address)
+print(sum(map(int, str(net.network_address).split(&#x27;.&#x27;))))</code></pre>
+  <p class="method-answer"><span>Ответ</span>516.</p>
+</div>
+  <p class="method-source">Демоверсия ЕГЭ 2027, задание 10 (база Kompege, задача № 31507).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">02</span>
+    <div>
+      <p class="eyebrow">когда маска записана четырьмя октетами</p>
+      <h3>Быстрый счёт по блоку октета</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно считать вручную и не переводить все 32 бита.</p>
+  <ol class="task-steps"><li>Найдите октет, где маска не 0 и не 255.</li><li>Посчитайте block = 256 − значение этого октета маски.</li><li>Округлите IP в этом октете вниз до кратного block.</li><li>Остальные октеты: где маска 255 — как в IP, где 0 — нули.</li><li>Проверьте результат побитовым И.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Маска 255.255.248.0, IP 64.237.228.143. block = 256 − 248 = 8; 228 = 28 · 8 + 4, поэтому третий октет сети равен 224. Адрес сети 64.237.224.0, сумма октетов 64 + 237 + 224 + 0 = 525.</p>
+  <pre class="code-block"><code>ip_octet = 228
+mask_octet = 248
+block = 256 - mask_octet
+network_octet = ip_octet // block * block
+print(network_octet)</code></pre>
+  <p class="method-answer"><span>Ответ</span>525.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 31221 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">03</span>
+    <div>
+      <p class="eyebrow">когда спрашивают broadcast или крайние адреса</p>
+      <h3>Широковещательный адрес и адреса узлов</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно найти широковещательный адрес, наибольший или наименьший адрес для компьютера.</p>
+  <ol class="task-steps"><li>Сначала найдите адрес сети.</li><li>Broadcast — адрес сети, в котором все биты хоста заменены на единицы.</li><li>Первый адрес узла = network + 1.</li><li>Последний адрес узла = broadcast − 1.</li><li>Не назначайте компьютерам адрес сети и broadcast.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>IP 146.180.173.153, маска 255.192.0.0 (/10). Адрес сети 146.128.0.0, broadcast 146.191.255.255, наибольший адрес узла 146.191.255.254. Сумма его октетов: 146 + 191 + 255 + 254 = 846.</p>
+  <pre class="code-block"><code>from ipaddress import ip_network
+
+net = ip_network(&#x27;146.180.173.153/255.192.0.0&#x27;, strict=False)
+print(net.network_address, net.broadcast_address)
+print(net.broadcast_address - 1)</code></pre>
+  <p class="method-answer"><span>Ответ</span>846.</p>
+</div>
+  <p class="method-source">По мотивам задач № 31185, 31331 и 31446 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">04</span>
+    <div>
+      <p class="eyebrow">когда спрашивают «сколько»</p>
+      <h3>Количество адресов и хостов</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно узнать, сколько всего адресов в сети или сколько из них можно назначить компьютерам.</p>
+  <ol class="task-steps"><li>Определите префикс /n.</li><li>Посчитайте адреса: 2^(32−n).</li><li>Если нужны только узлы, вычтите адрес сети и broadcast: 2^(32−n) − 2.</li><li>Для нечётных номеров хостов возьмите половину: (2^(32−n) − 2) / 2.</li><li>Проверьте, не спрашивают ли про адреса, а не про хосты.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>IP 49.26.38.163, маска 255.255.255.224 (/27). Адресов 2^5 = 32, хостов 30, из них с нечётными номерами 15.</p>
+  <pre class="code-block"><code>from ipaddress import ip_network
+
+net = ip_network(&#x27;49.26.38.163/255.255.255.224&#x27;, strict=False)
+print(net.num_addresses)
+print(net.num_addresses - 2)
+print(len([ip for ip in net.hosts() if int(ip) % 2 == 1]))</code></pre>
+  <p class="method-answer"><span>Ответ</span>32 адреса, 30 хостов, 15 нечётных.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 10110 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">05</span>
+    <div>
+      <p class="eyebrow">когда маска неизвестна</p>
+      <h3>Маска по IP и адресу сети</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Даны IP узла и адрес сети; нужно найти маску, префикс, байт маски или количество возможных масок.</p>
+  <ol class="task-steps"><li>Запишите IP и адрес сети по октетам в двоичном виде.</li><li>Найдите последнюю единицу адреса сети — это минимальный префикс.</li><li>Найдите первый бит, где IP и адрес сети различаются; маска не может заходить за него — это максимальный префикс.</li><li>Все префиксы между ними возможны.</li><li>Переведите выбранный префикс в маску или нужный октет.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>IP 168.224.22.193 и сеть 168.224.16.0. Последняя единица сети — 16 в третьем октете, поэтому минимум /20. Первое различие — бит 4 в третьем октете, поэтому максимум /21. Возможны /20 и /21; наименьшая маска 255.255.240.0. В задаче № 11765 для пары 130.140.241.137 и 130.140.240.0 возможны /20…/23, наибольшая маска 255.255.254.0.</p>
+  <pre class="code-block"><code>from ipaddress import ip_address, ip_network
+
+ip = ip_address(&#x27;168.224.22.193&#x27;)
+net = ip_address(&#x27;168.224.16.0&#x27;)
+for n in range(33):
+    network = ip_network(f&#x27;{ip}/{n}&#x27;, strict=False)
+    if network.network_address == net:
+        print(n, network.netmask)</code></pre>
+  <p class="method-answer"><span>Ответ</span>Наименьший префикс /20, маска 255.255.240.0.</p>
+</div>
+  <p class="method-source">По мотивам задач № 11764, 11765, 11768 и 11785 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">06</span>
+    <div>
+      <p class="eyebrow">когда у двух IP одна маска</p>
+      <h3>Два узла в разных подсетях</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно найти наименьшее или наибольшее количество единиц в маске, при котором два узла попадают в разные подсети.</p>
+  <ol class="task-steps"><li>Запишите оба IP в двоичном виде.</li><li>Найдите первый различающийся бит.</li><li>Если узлы должны быть в разных подсетях, маска обязана закрыть этот бит.</li><li>Если в одной подсети — маска должна закончиться до него.</li><li>Проверьте, что оба адреса не являются адресом сети или broadcast.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>IP 145.207.153.178 и 145.207.153.165. Они различаются в четвёртом октете: 178 = 10110010, 165 = 10100101, первый разный бит — 16. Значит, маска должна включать как минимум 24 + 4 = 28 единиц. Ответ 28.</p>
+  <pre class="code-block"><code>from ipaddress import ip_network
+
+a, b = &#x27;145.207.153.178&#x27;, &#x27;145.207.153.165&#x27;
+for n in range(33):
+    na = ip_network(f&#x27;{a}/{n}&#x27;, strict=False).network_address
+    nb = ip_network(f&#x27;{b}/{n}&#x27;, strict=False).network_address
+    if na != nb:
+        print(n)
+        break</code></pre>
+  <p class="method-answer"><span>Ответ</span>28.</p>
+</div>
+  <p class="method-source">По мотивам задач № 11175 и № 14650 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">07</span>
+    <div>
+      <p class="eyebrow">когда в условии есть буква A</p>
+      <h3>Неизвестный октет A</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> IP или маска содержит неизвестное число A, а условие должно выполняться для всех адресов сети.</p>
+  <ol class="task-steps"><li>Выпишите, в каком октете стоит A и какой диапазон допустим: 0…255.</li><li>Переберите A.</li><li>Для каждого A постройте сеть.</li><li>Проверьте условие для каждого адреса или только для узлов.</li><li>Выберите минимальное или максимальное подходящее A.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>IP 154.127.A.230, маска 255.255.255.192. Условие: у всех адресов сети единиц в левых двух байтах больше, чем в правых. Перебор даёт максимальное A = 192. В задаче № 31246 для IP 16.32.A.48 и маски 255.255.240.0 минимальное A = 112.</p>
+  <pre class="code-block"><code>from ipaddress import ip_address, ip_network
+
+for A in range(256):
+    ip = ip_address(f&#x27;154.127.{A}.230&#x27;)
+    net = ip_network(f&#x27;{ip}/255.255.255.192&#x27;, strict=False)
+    if ip in (net.network_address, net.broadcast_address):
+        continue
+    if all(f&#x27;{int(x):032b}&#x27;[:16].count(&#x27;1&#x27;) &gt; f&#x27;{int(x):032b}&#x27;[16:].count(&#x27;1&#x27;) for x in net):
+        print(A)</code></pre>
+  <p class="method-answer"><span>Ответ</span>192.</p>
+</div>
+  <p class="method-source">По мотивам задач № 11621, 11835, 14649 и 31246 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">08</span>
+    <div>
+      <p class="eyebrow">когда спрашивают «сколько адресов»</p>
+      <h3>Подсчёт адресов с условием на биты</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно посчитать адреса с чётным числом единиц, кратным числом нулей, подстрокой 111, отсутствием 101 и т. п.</p>
+  <ol class="task-steps"><li>Постройте сеть по IP и маске.</li><li>Определите, входят ли в подсчёт адрес сети и broadcast.</li><li>Для каждого адреса получите 32-битную строку.</li><li>Проверьте условие и увеличьте счётчик.</li><li>Сверьте ответ с ручной оценкой по свободным битам.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Сеть 192.168.32.128/26. Адресов 64, чётное количество единиц у 32 адресов. В задаче № 11772 в сети 165.44.96.0/21 три подряд идущие единицы встречаются у 1121 адреса.</p>
+  <pre class="code-block"><code>from ipaddress import ip_network
+
+net = ip_network(&#x27;192.168.32.128/255.255.255.192&#x27;, strict=False)
+count = 0
+for ip in net:
+    binary = f&#x27;{int(ip):032b}&#x27;
+    if binary.count(&#x27;1&#x27;) % 2 == 0:
+        count += 1
+print(count)</code></pre>
+  <p class="method-answer"><span>Ответ</span>32.</p>
+</div>
+  <p class="method-source">По мотивам задач № 11772, 12922, 14948 и 18061 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">09</span>
+    <div>
+      <p class="eyebrow">перед записью ответа</p>
+      <h3>Проверка и типичные ловушки</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Ответ уже получен, но нужно быстро найти обидную ошибку.</p>
+  
+  <ul class="task-list"><li>Маска допустима? 255.255.200.0 — нет: после нулей не может идти единица.</li><li>Сеть или broadcast? В задачах спрашивают разные адреса одного блока.</li><li>Хосты или все адреса? Для хостов вычитают 2.</li><li>Для количества нулей используйте 32-битную запись: f&#x27;{int(ip):032b}&#x27;.</li><li>net.hosts() не включает адрес сети и broadcast, а цикл for ip in net включает.</li><li>ip_network(...) по умолчанию требует строгую сеть; используйте strict=False или второй аргумент 0.</li><li>f&#x27;{ip:b}&#x27; отбрасывает ведущие нули — для подсчёта нулей это ошибка.</li><li>A в маске и A в IP проверяются по-разному.</li><li>Сумма октетов — это четыре числа, включая нули.</li><li>Проверьте ответ обратным счётом: сеть + broadcast + хосты.</li></ul>
+  
+  
+</article></div>
+  
+<div class="cheatsheet">
+  <p class="mini-label">Шпаргалка: формулировка → метод</p>
+  <div class="cheatsheet-wrap">
+    <table class="cheatsheet-table">
+      <thead><tr><th>В условии</th><th>Что делать</th></tr></thead>
+      <tbody><tr><td>«найдите адрес сети»</td><td>IP &amp; маска или счёт по блоку</td></tr><tr><td>«сумма октетов адреса сети»</td><td>найти сеть и сложить четыре октета</td></tr><tr><td>«широковещательный адрес»</td><td>все биты хоста заменить на единицы</td></tr><tr><td>«наибольший адрес для компьютера»</td><td>broadcast − 1</td></tr><tr><td>«наименьший адрес узла»</td><td>network + 1</td></tr><tr><td>«количество хостов»</td><td>2^(32−n) − 2</td></tr><tr><td>«количество IP-адресов в сети»</td><td>2^(32−n)</td></tr><tr><td>«маска по IP и адресу сети»</td><td>префиксы от n_min до n_max</td></tr><tr><td>«наименьшее/наибольшее число единиц в маске»</td><td>минимальный/максимальный префикс</td></tr><tr><td>«чему равен байт маски»</td><td>соответствующий октет найденной маски</td></tr><tr><td>«сколько различных масок»</td><td>n_max − n_min + 1</td></tr><tr><td>«два узла в разных подсетях»</td><td>первый различающийся бит; префикс не меньше его позиции</td></tr><tr><td>«неизвестный октет A»</td><td>перебрать A, построить сеть, проверить все адреса</td></tr><tr><td>«чётное/нечётное число единиц или нулей»</td><td>32-битная строка и count(&#x27;1&#x27;) / count(&#x27;0&#x27;)</td></tr><tr><td>«подряд идущие единицы или нули»</td><td>поиск подстроки в 32-битной строке</td></tr><tr><td>«сколько адресов с условием»</td><td>цикл по сети и счётчик</td></tr><tr><td>«узел и маска»</td><td>ip_network(..., strict=False)</td></tr><tr><td>«сеть и broadcast»</td><td>network_address и broadcast_address</td></tr></tbody>
+    </table>
+  </div>
+</div>
+  
+<div class="video-block">
+  <p class="mini-label">Видеоразборы по теме</p>
+  <div class="video-list"><a class="video-link" href="https://vkvideo.ru/video-205865487_456240585?t=2035" target="_blank" rel="noopener noreferrer"><span class="video-label">Широковещательный адрес</span><span class="video-meta">№ 31359 · 33:55</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://rutube.ru/video/5eaf7716fd8623d7391b8fae116592aa/?t=1347" target="_blank" rel="noopener noreferrer"><span class="video-label">Демоверсия 2027: адрес сети</span><span class="video-meta">№ 31507 · 22:27</span><span class="video-host" title="RuTube"><span class="video-host-icon"><svg viewBox="0 0 132 132" aria-hidden="true" focusable="false"><rect width="132" height="132" fill="#100943"/><circle cx="132" cy="66" r="66" fill="#ED143B"/><path fill="#fff" d="M81.5361 62.9865H42.5386V47.5547H81.5361C83.814 47.5547 85.3979 47.9518 86.1928 48.6451C86.9877 49.3385 87.4801 50.6245 87.4801 52.5031V58.0441C87.4801 60.0234 86.9877 61.3094 86.1928 62.0028C85.3979 62.6961 83.814 62.9925 81.5361 62.9925V62.9865ZM84.2115 33.0059H26V99H42.5386V77.5294H73.0176L87.4801 99H106L90.0546 77.4287C95.9333 76.5575 98.573 74.756 100.75 71.7869C102.927 68.8179 104.019 64.071 104.019 57.7359V52.7876C104.019 49.0303 103.621 46.0613 102.927 43.7857C102.233 41.51 101.047 39.5307 99.362 37.7528C97.5824 36.0698 95.6011 34.8845 93.2223 34.0904C90.8435 33.3971 87.8716 33 84.2115 33V33.0059Z"/></svg></span><span class="video-host-name">RuTube</span></span></a><a class="video-link" href="https://rutube.ru/video/c9d893fd48bcf18e5c314a79dfc1b567/?t=3430" target="_blank" rel="noopener noreferrer"><span class="video-label">Сумма октетов широковещательного адреса</span><span class="video-meta">№ 31221 · 57:10</span><span class="video-host" title="RuTube"><span class="video-host-icon"><svg viewBox="0 0 132 132" aria-hidden="true" focusable="false"><rect width="132" height="132" fill="#100943"/><circle cx="132" cy="66" r="66" fill="#ED143B"/><path fill="#fff" d="M81.5361 62.9865H42.5386V47.5547H81.5361C83.814 47.5547 85.3979 47.9518 86.1928 48.6451C86.9877 49.3385 87.4801 50.6245 87.4801 52.5031V58.0441C87.4801 60.0234 86.9877 61.3094 86.1928 62.0028C85.3979 62.6961 83.814 62.9925 81.5361 62.9925V62.9865ZM84.2115 33.0059H26V99H42.5386V77.5294H73.0176L87.4801 99H106L90.0546 77.4287C95.9333 76.5575 98.573 74.756 100.75 71.7869C102.927 68.8179 104.019 64.071 104.019 57.7359V52.7876C104.019 49.0303 103.621 46.0613 102.927 43.7857C102.233 41.51 101.047 39.5307 99.362 37.7528C97.5824 36.0698 95.6011 34.8845 93.2223 34.0904C90.8435 33.3971 87.8716 33 84.2115 33V33.0059Z"/></svg></span><span class="video-host-name">RuTube</span></span></a><a class="video-link" href="https://youtu.be/w7du6qYh4TQ?t=5228" target="_blank" rel="noopener noreferrer"><span class="video-label">Маска, сеть и широковещательный адрес</span><span class="video-meta">№ 16260 · 1:27:08</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/BMVaYPPqB2k?t=2627" target="_blank" rel="noopener noreferrer"><span class="video-label">IP-адрес, маска и количество единиц</span><span class="video-meta">№ 11232 · 43:47</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/axWqm_Ge8ec?t=3155" target="_blank" rel="noopener noreferrer"><span class="video-label">Адрес сети и границы блока</span><span class="video-meta">№ 11835 · 52:35</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/A8HJbTajxVE?t=2117" target="_blank" rel="noopener noreferrer"><span class="video-label">Маска по адресу сети</span><span class="video-meta">№ 13885 · 35:17</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/gwiyk1xIuws?t=1938" target="_blank" rel="noopener noreferrer"><span class="video-label">Неизвестный октет A</span><span class="video-meta">№ 14649 · 32:18</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/qi9UB58p3AE?t=7145" target="_blank" rel="noopener noreferrer"><span class="video-label">Два узла в разных подсетях</span><span class="video-meta">№ 14650 · 1:59:05</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/HHxeThN-EwE?t=4318" target="_blank" rel="noopener noreferrer"><span class="video-label">Подсчёт адресов по условию</span><span class="video-meta">№ 14948 · 1:11:58</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a></div>
+  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+</div>
+  <p class="method-source-note">По базе Kompege: в нумерации до 2027 года тема масок хранилась под № 13 — 1 009 задач, 115 решений и 160 видеоразборов; новые задачи с широковещательными адресами уже отмечены № 10. Для методов отобраны решения задач № 10110, 11232, 11621, 11764, 11765, 11835, 12922, 13885, 14649, 14650, 14948, 16260, 18061, 31185, 31221, 31246, 31331, 31359, 31379, 31446 и 31507; примеры переработаны в учебные.</p>
+</section>
+    <section class="task-block" id="mistakes">
+      <h2>Типичные ошибки</h2>
+      <ul class="task-list task-list--mistakes"><li>путаются адрес сети и broadcast</li><li>неверное число бит маски</li><li>ошибка в двоичном переводе</li><li>забыто вычитание двух адресов</li><li>количество адресов путают с количеством хостов</li><li>при подсчёте нулей теряются ведущие нули октета</li><li>маска восстанавливается только одним значением, хотя возможны несколько</li><li>адрес сети и broadcast включаются в число назначаемых адресов</li></ul>
+    </section>
+    
+<section class="task-block">
+  <h2>Ключевые формулы</h2>
+  <ul class="formula-list"><li><code>адрес сети = IP &amp; маска</code></li><li><code>broadcast = network + 2^(32−n) − 1</code></li><li><code>адресов = 2^(32−n), хостов = 2^(32−n) − 2</code></li><li><code>маска: n единиц, затем 32 − n нулей</code></li></ul>
+</section>
+    
+    <section class="task-block" id="practice">
+      <h2>Практика</h2>
+      
+<div class="practice-grid">
+  <a class="practice-link" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener noreferrer">
+    <span class="practice-label">ФИПИ</span><span class="practice-title">Открытый банк заданий</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80.%20%D0%A6%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%B3%D1%80%D0%B0%D0%BC%D0%BE%D1%82%D0%BD%D0%BE%D1%81%D1%82%D1%8C.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Навигатор · 2026</span><span class="practice-title">Цифровая грамотность</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/inf_11_2027/%D0%98%D0%9D%D0%A4-11%20%D0%95%D0%93%D0%AD%202027%20%D0%94%D0%95%D0%9C%D0%9E.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Демоверсия</span><span class="practice-title">КИМ 2027</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0.%202026.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Методика</span><span class="practice-title">Разбор ошибок 2026</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+</div>
+<p class="practice-note">Навигатор и методические рекомендации опубликованы в 2026 году: номера заданий в них могут отличаться от нумерации 2027 года. Ориентируйтесь на тему.</p>
+    </section>
+    
+<div class="related-links">
+  <span class="related-label">Смотрите также</span>
+  <a class="related-link" href="01.html">01 · Графы и таблицы</a><a class="related-link" href="23.html">23 · Графы: пути</a>
+</div>
+    <nav class="prev-next" aria-label="Соседние задания">
+      <a class="prev-next-link" href="09.html"><span>← Предыдущее</span><strong>09 · Электронные таблицы</strong></a>
+      <a class="prev-next-link prev-next-link--next" href="11.html"><span>Следующее →</span><strong>11 · Объём сообщения</strong></a>
+    </nav>
+  </div>
+
+  <aside class="task-aside">
+    <div class="aside-card">
+      <div class="aside-head">
+        <span>Карта заданий</span>
+        <span class="map-progress" data-progress-count>0 / 27</span>
+      </div>
+      <div class="task-map task-map--compact" data-task-map><a class="task-cell task-cell--digital task-cell--compact" href="01.html" data-task="1" data-section="digital" data-title="Графы и таблицы" data-caption="&lt;strong&gt;Задание 1&lt;/strong&gt; · Графы и таблицы · Цифровая грамотность · 1 балл" aria-label="Задание 1: Графы и таблицы"><span>1</span></a><a class="task-cell task-cell--theory task-cell--compact" href="02.html" data-task="2" data-section="theory" data-title="Логические функции" data-caption="&lt;strong&gt;Задание 2&lt;/strong&gt; · Логические функции · Теория · 1 балл" aria-label="Задание 2: Логические функции"><span>2</span></a><a class="task-cell task-cell--it task-cell--compact" href="03.html" data-task="3" data-section="it" data-title="Базы данных" data-caption="&lt;strong&gt;Задание 3&lt;/strong&gt; · Базы данных · Информационные технологии · 1 балл" aria-label="Задание 3: Базы данных"><span>3</span></a><a class="task-cell task-cell--theory task-cell--compact" href="04.html" data-task="4" data-section="theory" data-title="Коды и условие Фано" data-caption="&lt;strong&gt;Задание 4&lt;/strong&gt; · Коды и условие Фано · Теория · 1 балл" aria-label="Задание 4: Коды и условие Фано"><span>4</span></a><a class="task-cell task-cell--algo task-cell--compact" href="05.html" data-task="5" data-section="algo" data-title="Алгоритмы исполнителя" data-caption="&lt;strong&gt;Задание 5&lt;/strong&gt; · Алгоритмы исполнителя · Алгоритмы · 1 балл" aria-label="Задание 5: Алгоритмы исполнителя"><span>5</span></a><a class="task-cell task-cell--algo task-cell--compact" href="06.html" data-task="6" data-section="algo" data-title="Исполнители и координаты" data-caption="&lt;strong&gt;Задание 6&lt;/strong&gt; · Исполнители и координаты · Алгоритмы · 1 балл" aria-label="Задание 6: Исполнители и координаты"><span>6</span></a><a class="task-cell task-cell--theory task-cell--compact" href="07.html" data-task="7" data-section="theory" data-title="Графика и звук" data-caption="&lt;strong&gt;Задание 7&lt;/strong&gt; · Графика и звук · Теория · 1 балл" aria-label="Задание 7: Графика и звук"><span>7</span></a><a class="task-cell task-cell--theory task-cell--compact" href="08.html" data-task="8" data-section="theory" data-title="Комбинаторика и коды" data-caption="&lt;strong&gt;Задание 8&lt;/strong&gt; · Комбинаторика и коды · Теория · 1 балл" aria-label="Задание 8: Комбинаторика и коды"><span>8</span></a><a class="task-cell task-cell--it task-cell--compact" href="09.html" data-task="9" data-section="it" data-title="Электронные таблицы" data-caption="&lt;strong&gt;Задание 9&lt;/strong&gt; · Электронные таблицы · Информационные технологии · 1 балл" aria-label="Задание 9: Электронные таблицы"><span>9</span></a><a class="task-cell task-cell--digital is-current task-cell--compact" href="10.html" data-task="10" data-section="digital" data-title="IP-адреса и маски" data-caption="&lt;strong&gt;Задание 10&lt;/strong&gt; · IP-адреса и маски · Цифровая грамотность · 1 балл" aria-label="Задание 10: IP-адреса и маски"><span>10</span></a><a class="task-cell task-cell--theory task-cell--compact" href="11.html" data-task="11" data-section="theory" data-title="Объём сообщения" data-caption="&lt;strong&gt;Задание 11&lt;/strong&gt; · Объём сообщения · Теория · 1 балл" aria-label="Задание 11: Объём сообщения"><span>11</span></a><a class="task-cell task-cell--algo task-cell--compact" href="12.html" data-task="12" data-section="algo" data-title="Исполнитель МТ" data-caption="&lt;strong&gt;Задание 12&lt;/strong&gt; · Исполнитель МТ · Алгоритмы · 1 балл" aria-label="Задание 12: Исполнитель МТ"><span>12</span></a><a class="task-cell task-cell--algo task-cell--compact" href="13.html" data-task="13" data-section="algo" data-title="Ход исполнения алгоритма" data-caption="&lt;strong&gt;Задание 13&lt;/strong&gt; · Ход исполнения алгоритма · Алгоритмы · 1 балл" aria-label="Задание 13: Ход исполнения алгоритма"><span>13</span></a><a class="task-cell task-cell--theory task-cell--compact" href="14.html" data-task="14" data-section="theory" data-title="Системы счисления" data-caption="&lt;strong&gt;Задание 14&lt;/strong&gt; · Системы счисления · Теория · 1 балл" aria-label="Задание 14: Системы счисления"><span>14</span></a><a class="task-cell task-cell--theory task-cell--compact" href="15.html" data-task="15" data-section="theory" data-title="Логика и множества" data-caption="&lt;strong&gt;Задание 15&lt;/strong&gt; · Логика и множества · Теория · 1 балл" aria-label="Задание 15: Логика и множества"><span>15</span></a><a class="task-cell task-cell--algo task-cell--compact" href="16.html" data-task="16" data-section="algo" data-title="Рекурсия" data-caption="&lt;strong&gt;Задание 16&lt;/strong&gt; · Рекурсия · Алгоритмы · 1 балл" aria-label="Задание 16: Рекурсия"><span>16</span></a><a class="task-cell task-cell--algo task-cell--compact" href="17.html" data-task="17" data-section="algo" data-title="Обработка последовательности" data-caption="&lt;strong&gt;Задание 17&lt;/strong&gt; · Обработка последовательности · Алгоритмы · 1 балл" aria-label="Задание 17: Обработка последовательности"><span>17</span></a><a class="task-cell task-cell--it task-cell--compact" href="18.html" data-task="18" data-section="it" data-title="Таблицы: анализ и оптимизация" data-caption="&lt;strong&gt;Задание 18&lt;/strong&gt; · Таблицы: анализ и оптимизация · Информационные технологии · 1 балл" aria-label="Задание 18: Таблицы: анализ и оптимизация"><span>18</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html" data-task="19" data-section="theory" data-title="Теория игр" data-caption="&lt;strong&gt;Задание 19&lt;/strong&gt; · Теория игр · Теория · 1 балл" aria-label="Задание 19: Теория игр"><span>19</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-20" data-task="20" data-section="theory" data-title="Теория игр: две кучи" data-caption="&lt;strong&gt;Задание 20&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 20: Теория игр: две кучи"><span>20</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-21" data-task="21" data-section="theory" data-title="Теория игр: стратегия" data-caption="&lt;strong&gt;Задание 21&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 21: Теория игр: стратегия"><span>21</span></a><a class="task-cell task-cell--theory task-cell--compact" href="22.html" data-task="22" data-section="theory" data-title="Параллельные вычисления" data-caption="&lt;strong&gt;Задание 22&lt;/strong&gt; · Параллельные вычисления · Теория · 1 балл" aria-label="Задание 22: Параллельные вычисления"><span>22</span></a><a class="task-cell task-cell--theory task-cell--compact" href="23.html" data-task="23" data-section="theory" data-title="Графы: пути" data-caption="&lt;strong&gt;Задание 23&lt;/strong&gt; · Графы: пути · Теория · 1 балл" aria-label="Задание 23: Графы: пути"><span>23</span></a><a class="task-cell task-cell--algo task-cell--compact" href="24.html" data-task="24" data-section="algo" data-title="Символьные строки" data-caption="&lt;strong&gt;Задание 24&lt;/strong&gt; · Символьные строки · Алгоритмы · 1 балл" aria-label="Задание 24: Символьные строки"><span>24</span></a><a class="task-cell task-cell--algo task-cell--compact" href="25.html" data-task="25" data-section="algo" data-title="Натуральные числа" data-caption="&lt;strong&gt;Задание 25&lt;/strong&gt; · Натуральные числа · Алгоритмы · 1 балл" aria-label="Задание 25: Натуральные числа"><span>25</span></a><a class="task-cell task-cell--algo task-cell--compact" href="26.html" data-task="26" data-section="algo" data-title="Массив: сортировка" data-caption="&lt;strong&gt;Задание 26&lt;/strong&gt; · Массив: сортировка · Алгоритмы · 2 балла" aria-label="Задание 26: Массив: сортировка"><span>26</span></a><a class="task-cell task-cell--it task-cell--compact" href="27.html" data-task="27" data-section="it" data-title="Анализ данных" data-caption="&lt;strong&gt;Задание 27&lt;/strong&gt; · Анализ данных · Информационные технологии · 2 балла" aria-label="Задание 27: Анализ данных"><span>27</span></a></div>
+      <a class="aside-link" href="index.html">Все задания <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="aside-card aside-card--progress">
+      <p class="aside-label">Прогресс</p>
+      <button class="btn btn-primary progress-toggle" type="button" data-progress-toggle="10" aria-pressed="false">Отметить как изученное</button>
+      <p class="progress-note" data-progress-text>0 из 27 изучено</p>
+      <div class="progress-line" aria-hidden="true"><span data-progress-bar></span></div>
+    </div>
+    <div class="aside-card">
+      <p class="aside-label">Быстрые ссылки</p>
+      <a class="aside-link" href="../documents.html#kim2027">Демоверсия 2027 <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html#method">Навигатор и методика <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html">Все документы <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-mark">ЕГЭ · Информатика · 2027</p>
+      <p class="footer-note">Разбор заданий, ключевые темы и официальные документы. Составлено 3 ноября 2026. Не является официальным ресурсом ФИПИ или Рособрнадзора.</p>
+    </div>
+    <div>
+      <p class="footer-title">Разделы</p>
+      <p class="footer-note"><a href="../index.html">Главная</a> · <a href="../tasks/index.html">Все задания</a> · <a href="../documents.html">Документы</a></p>
+      <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
+    </div>
+    <div>
+      <p class="footer-title">Первоисточники</p>
+      <p class="footer-note"><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ</a> · <a href="https://obrnadzor.gov.ru/gia/gia-11/" target="_blank" rel="noopener noreferrer">Рособрнадзор</a> · <a href="https://regulation.gov.ru/projects/172223/" target="_blank" rel="noopener noreferrer">проект расписания</a></p>
+      <p class="footer-note">Права на документы принадлежат их правообладателям. Копии сохранены для ознакомления и подготовки.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

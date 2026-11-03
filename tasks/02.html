@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задание 2 ЕГЭ по информатике — Логические функции</title>
+<meta name="description" content="Восстановить порядок переменных по фрагменту таблицы истинности логической функции. Теория, способы решения и типичные ошибки. ЕГЭ-2027, информатика.">
+<meta name="theme-color" content="#F0F1EB">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="На главную">
+    <span class="brand-mark" aria-hidden="true">И</span>
+    <span class="brand-text">ЕГЭ · Информатика<small>подготовка по заданиям</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a href="../index.html">Главная</a>
+    <a href="../tasks/index.html" class="is-active" aria-current="page">Задания</a>
+    <a href="../documents.html">Документы</a>
+  </nav>
+  <div class="topbar-meta"><span>Задание 2 из 27</span><span>Теория</span></div>
+</header>
+<main id="main">
+
+<nav class="breadcrumb" aria-label="Хлебные крошки"><a href="../index.html">Главная</a><span class="crumb-sep">/</span><a href="index.html">Задания</a><span class="crumb-sep">/</span><span aria-current="page">Задание 2</span></nav>
+
+<section class="task-hero">
+  <div class="task-number" aria-hidden="true">02</div>
+  <div class="task-hero-copy">
+    <p class="eyebrow">Теоретические основы информатики · 1 балл</p>
+    <h1>Логические функции</h1>
+    <p class="task-subtitle">Таблицы истинности</p>
+    <p class="lead">Восстановить порядок переменных по фрагменту таблицы истинности логической функции.</p>
+    <div class="task-badges">
+      <span class="badge badge-section badge-section--theory">Теория</span>
+      <span class="badge badge-answer">последовательность букв</span>
+      
+    </div>
+  </div>
+</section>
+
+
+<nav class="task-toc" aria-label="На странице задания">
+  <span class="task-toc-label">На странице</span>
+  
+  <a href="#theory">Теория</a>
+  <a href="#methods">Способы решения</a>
+  <a href="#mistakes">Ошибки</a>
+  <a href="#practice">Практика</a>
+</nav>
+
+<div class="task-layout">
+  <div class="task-main">
+    
+    
+    <section class="task-block">
+      <h2>Что проверяет</h2>
+      <p class="task-checked">Алгебра логики: логические операции, таблицы истинности, выражения и тождества.</p>
+      <p class="task-source">Основание: проект спецификации и кодификатора КИМ 2027. <a href="../documents.html#kim2027">Открыть документы <span aria-hidden="true">↗</span></a></p>
+    </section>
+    
+    
+<section class="task-block task-block--theory" id="theory">
+  <div class="block-head">
+    <p class="eyebrow">Теория</p>
+    <h2>Что нужно знать</h2>
+    <p class="block-lead">Задание 2 проверяет умение работать с логической функцией: прочитать выражение, построить таблицу истинности и восстановить, какой переменной соответствует каждый столбец. В 2027 году формат прежний: 1 первичный балл, раздел «Теоретические основы информатики».</p>
+  </div>
+  <div class="theory-checklist">
+    <p class="mini-label">Минимум для задания 2</p>
+    <ul class="check-list"><li>пять логических операций: ¬, ∧, ∨, →, ≡</li><li>приоритет операций и роль скобок</li><li>таблицу истинности для 2–5 переменных</li><li>импликацию и эквивалентность через дизъюнкцию и конъюнкцию</li><li>законы де Моргана и двойное отрицание</li><li>что означают неповторяющиеся строки</li><li>как читать фрагмент с пустыми ячейками</li><li>формат ответа: буквы подряд, без разделителей</li></ul>
+  </div>
+  <div class="theory-grid">
+<article class="theory-card">
+  <h3>Пять логических операций</h3>
+  <p>В задании 2 используются пять операций. Для каждой достаточно помнить единственный случай, когда результат отличается от очевидного.</p>
+  <ul class="theory-list"><li>¬A (не A) — истинно тогда и только тогда, когда A ложно.</li><li>A ∧ B (и) — истинно только при A = 1 и B = 1.</li><li>A ∨ B (или) — ложно только при A = 0 и B = 0.</li><li>A → B (импликация) — ложно только при A = 1 и B = 0.</li><li>A ≡ B (эквивалентность) — истинно, когда значения A и B совпадают.</li></ul>
+  <div class="formula-inline"><code>A → B = ¬A ∨ B</code><code>A ≡ B = (A ∧ B) ∨ (¬A ∧ ¬B)</code><code>A ≡ B = ¬(A ∧ ¬B) ∧ ¬(¬A ∧ B)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Приоритет операций</h3>
+  <p>Если скобок нет, операции выполняются в таком порядке. Импликация и эквивалентность — самые слабые, поэтому в записи без скобок их выполняют последними.</p>
+  <ul class="theory-list"><li>1. Отрицание ¬.</li><li>2. Конъюнкция ∧.</li><li>3. Дизъюнкция ∨.</li><li>4. Импликация →.</li><li>5. Эквивалентность ≡.</li><li>Импликация правоассоциативна: A → B → C читается как A → (B → C).</li><li>Если запись неоднозначна, расставьте скобки сами — так сделано в разборе задачи № 11680.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Таблица истинности и её фрагмент</h3>
+  <p>Для n переменных полная таблица содержит 2^n строк: у четырёх переменных — 16, у пяти — 32. В условии дают только фрагмент, причём строки в нём не повторяются.</p>
+  <ul class="theory-list"><li>Каждая строка — отдельный набор значений переменных.</li><li>Порядок строк в условии не обязан быть двоичным; иногда его задают словами «по возрастанию».</li><li>Столбцы переменных переставлены и не подписаны — именно их и нужно восстановить.</li><li>Пустая ячейка означает, что значение может быть любым; такие ячейки перебирают.</li><li>«Неповторяющиеся строки» — подсказка: двух одинаковых наборов в таблице быть не может.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Равносильные преобразования</h3>
+  <p>Упрощение выражения часто делает очевидным, при каких наборах F = 1 или F = 0. Эти формулы стоит держать в голове.</p>
+  <ul class="theory-list"><li>Импликацию заменяют дизъюнкцией: A → B = ¬A ∨ B.</li><li>Эквивалентность раскрывают через совпадение значений или через две импликации.</li><li>Законы де Моргана: ¬(A ∧ B) = ¬A ∨ ¬B и ¬(A ∨ B) = ¬A ∧ ¬B.</li><li>Двойное отрицание: ¬¬A = A.</li><li>Поглощение: A ∧ (A ∨ B) = A и A ∨ (A ∧ B) = A.</li></ul>
+  <div class="formula-inline"><code>¬(A ∧ B) = ¬A ∨ ¬B</code><code>¬(A ∨ B) = ¬A ∧ ¬B</code><code>A → B = ¬A ∨ B</code></div>
+</article>
+<article class="theory-card">
+  <h3>Опорные признаки во фрагменте</h3>
+  <p>Прежде чем перебирать, поищите во фрагменте закономерности: они часто дают ответ без вычислений.</p>
+  <ul class="theory-list"><li>Столбец целиком из единиц: переменная равна 1 во всех допустимых строках.</li><li>Столбец целиком из нулей: переменная равна 0 во всех допустимых строках.</li><li>Сравнивайте не только расположение, но и количество единиц: если у переменной в допустимых наборах две единицы, столбец с тремя единицами — не она.</li><li>Если F одинаков во всех строках, выгодно выписать все наборы, где функция принимает это значение.</li><li>Если картина 0/1 у двух столбцов совпала, различие ищут по строкам с пустыми ячейками.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Формат ответа</h3>
+  <p>Ответ зависит от формулировки, и проверяется он автоматически, поэтому важна каждая буква.</p>
+  <ul class="theory-list"><li>«Какому столбцу соответствует каждая переменная» — строка букв слева направо, например wxzy.</li><li>«Значения a, b, c, d» — цифры подряд в порядке букв, например 00101 (задача № 6837).</li><li>«Сколько существует вариантов расстановки» — одно число (задачи № 12643, 13974, 14497).</li><li>«При каких значениях выражение ложно» — строка из нулей и единиц в порядке переменных (задача № 20919).</li><li>Пробелы, запятые и другие разделители в ответе недопустимы.</li></ul>
+  
+</article></div>
+  
+<div class="theory-example">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Разбор примера</p>
+    <h3>Учебный пример: цепочка импликаций</h3>
+    <p>Дана функция F = (a → b) ∧ (b → ¬c) ∧ (¬c → d) и фрагмент таблицы, в котором все строки имеют F = 1. Восстановим столбцы.</p>
+  </div>
+  <div class="theory-example-grid theory-example-grid--single"><div class="table-wrap"><table class="example-table">
+  <caption>Фрагмент из условия: неизвестны и столбцы, и часть ячеек</caption>
+  <thead><tr><th>?</th><th>?</th><th>?</th><th>?</th><th>F</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>·</td><td>·</td><td>·</td><td>1</td></tr>
+    <tr><td>1</td><td>·</td><td>1</td><td>·</td><td>1</td></tr>
+    <tr><td>1</td><td>·</td><td>1</td><td>1</td><td>1</td></tr>
+  </tbody>
+</table>
+<table class="example-table">
+  <caption>Все наборы, при которых F = 1; порядок столбцов a, b, c, d</caption>
+  <thead><tr><th>a</th><th>b</th><th>c</th><th>d</th><th>F</th></tr></thead>
+  <tbody>
+    <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+    <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+    <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+  </tbody>
+</table></div></div>
+  <ol class="task-steps"><li>F — конъюнкция трёх импликаций, поэтому F = 1 только тогда, когда истинны все три.</li><li>Из b → ¬c следует, что b и c не равны 1 одновременно; из ¬c → d следует, что c = 1 или d = 1. Перебор 16 наборов даёт пять строк второй таблицы.</li><li>В третьей строке фрагмента три единицы: (1, ·, 1, 1). Среди наборов с F = 1 только 1101 содержит три единицы, поэтому единицы стоят в столбцах переменных a, b и d, а второй столбец — c.</li><li>Первый столбец равен 1 во всех строках. Переменная a равна 1 только в одном наборе, b — в двух, d — в четырёх, поэтому три различные строки с единицей в первом столбце может дать только d.</li><li>Осталось разделить третий и четвёртый столбцы между a и b. Если третий столбец — a, то вторая строка (1, 0, 1, ·) совпадёт с третьей, а строки не повторяются. Значит, третий столбец — b, четвёртый — a.</li></ol>
+  <p class="example-answer"><span>Ответ</span>dcba</p>
+</div>
+</section>
+    
+<section class="task-block task-block--methods" id="methods">
+  <div class="block-head">
+    <p class="eyebrow">Способы решения</p>
+    <h2>Выберите метод под формулировку</h2>
+    <p class="block-lead">Методы собраны по решениям задания 2 из базы Kompege. Начните с того, что именно нужно найти в условии.</p>
+  </div>
+  <div class="methods-list">
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">01</span>
+    <div>
+      <p class="eyebrow">когда во всех строках одно и то же F</p>
+      <h3>Разбор от значения F</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Фрагмент содержит только строки с F = 1 или только с F = 0, а выражение разбирается по частям: конъюнкции, дизъюнкции, импликации.</p>
+  <ol class="task-steps"><li>Подставьте значение F в выражение и выпишите, что из этого следует для каждой части.</li><li>Для конъюнкции истинны должны быть все части, для дизъюнкции — хотя бы одна.</li><li>Найдите переменные, чьё значение в подходящих наборах постоянно.</li><li>Сопоставьте эти переменные со столбцами фрагмента по картине 0 и 1.</li><li>Оставшиеся столбцы разберите по строкам, где больше всего заполненных ячеек.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 9905 F = (x → y) ∧ (y → z) ∧ (z → w). Конъюнкция импликаций истинна только при x ≤ y ≤ z ≤ w, то есть на наборах 0000, 0001, 0011, 0111 и 1111. Первая и последняя строки не подходят под фрагмент, остаются 0001, 0011 и 0111: в них w всегда 1, а x всегда 0. Значит, первый столбец — w, второй — x. Строка (1, 0, 1, 0) соответствует набору 0011, поэтому третий столбец — z, четвёртый — y.</p>
+  
+  <p class="method-answer"><span>Ответ</span>wxzy.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 9905 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">02</span>
+    <div>
+      <p class="eyebrow">когда наборы уже выписаны</p>
+      <h3>Сопоставление по картине нулей и единиц</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Есть список наборов, где F = 1 или F = 0, и нужно быстро разложить их по столбцам фрагмента.</p>
+  <ol class="task-steps"><li>Посчитайте, в скольких допустимых наборах каждая переменная равна 1.</li><li>Посчитайте то же для каждого столбца фрагмента, не учитывая пустые ячейки.</li><li>Начните с редких картин: столбец с тремя единицами не может быть переменной с одной единицей.</li><li>Если картина совпала у двух переменных, уточните соответствие по конкретным строкам.</li><li>После расстановки проверьте каждую строку фрагмента.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 14297 F = ¬i ∧ (f → o) ∧ n истинна на трёх наборах: 0100, 0101 и 0111 в порядке i, n, f, o. Значит, n равна 1 три раза, o — два раза, f — один раз, i — ни разу. Во фрагменте третий столбец содержит три единицы, второй — две, первый — одну, а четвёртый не содержит единиц вовсе: получаем f, o, n, i.</p>
+  
+  <p class="method-answer"><span>Ответ</span>foni.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 14297 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">03</span>
+    <div>
+      <p class="eyebrow">когда переменных три или четыре</p>
+      <h3>Полная таблица истинности</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно увидеть все строки функции целиком: так проще отсеять наборы, которых во фрагменте быть не может.</p>
+  <ol class="task-steps"><li>Выпишите все наборы для n переменных: 8 строк для трёх, 16 для четырёх.</li><li>Оставьте только строки с тем значением F, которое стоит во фрагменте.</li><li>Уберите строки, не подходящие под заполненные ячейки фрагмента.</li><li>Сопоставьте оставшиеся наборы со строками и определите столбцы.</li><li>Проверьте, что строки фрагмента не повторяются.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 11220 F = (x → y) ∧ z ∧ ¬w. Из F = 1 сразу следует z = 1 и w = 0, поэтому подходят только наборы 0010, 0110 и 1110 в порядке x, y, z, w. В третьей строке фрагмента три единицы: (0, 1, 1, 1). Среди наборов только 1110 содержит три единицы, а единственный нуль в нём — это w, значит, первый столбец — w. Первая строка (0, 1, ·, 1) не может совпасть с третьей, поэтому она равна 0110: третий столбец — x, четвёртый — y. Вторая строка даёт 0010 и подтверждает, что второй столбец — z.</p>
+  
+  <p class="method-answer"><span>Ответ</span>wzxy.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 11220 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">04</span>
+    <div>
+      <p class="eyebrow">универсальный способ</p>
+      <h3>Перебор на Python</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Сложное выражение, 4–5 переменных и много пустых ячеек: вручную разбор получается долгим.</p>
+  <ol class="task-steps"><li>Запишите функцию на Python: not, and, or; A → B как a &lt;= b, A ≡ B как a == b.</li><li>Соберите строки фрагмента кортежами, заменив пустые ячейки переменными a1, a2, …</li><li>Переберите значения неизвестных через product([0, 1], repeat=k).</li><li>Пропустите варианты с повторяющимися строками: len(table) != len(set(table)).</li><li>Переберите перестановки имён через permutations и выведите те, при которых значения функции совпадают с F.</li><li>Если пустых ячеек нет, product не нужен: сразу перебирайте permutations по строкам (задача № 11680).</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Шаблон для учебного примера: шесть неизвестных ячеек, четыре переменные.</p>
+  <pre class="code-block"><code>from itertools import product, permutations
+
+def f(a, b, c, d):
+    return (a &lt;= b) and (b &lt;= (not c)) and ((not c) &lt;= d)
+
+for a1, a2, a3, a4, a5, a6 in product([0, 1], repeat=6):
+    table = [(1, a1, a2, a3), (1, a4, 1, a5), (1, a6, 1, 1)]
+    if len(table) != len(set(table)):
+        continue
+    for p in permutations(&quot;abcd&quot;):
+        if all(f(**dict(zip(p, row))) for row in table):
+            print(*p, sep=&quot;&quot;)</code></pre>
+  <p class="method-answer"><span>Ответ</span>dcba</p>
+</div>
+  <p class="method-source">Шаблон по мотивам решений задач № 11220, 11606, 16249 и 27964.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">05</span>
+    <div>
+      <p class="eyebrow">когда формула громоздкая</p>
+      <h3>Упрощение и разбор по частям</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Выражение содержит импликации, эквивалентности и отрицания целых скобок — после преобразования видно, когда F = 0.</p>
+  <ol class="task-steps"><li>Избавьтесь от импликаций: A → B = ¬A ∨ B.</li><li>Раскройте эквивалентность или замените её на совпадение значений.</li><li>Внесите отрицание внутрь по законам де Моргана.</li><li>Сократите повторяющиеся части по закону поглощения.</li><li>Прочитайте, при каких значениях F = 0 или F = 1, и сопоставьте результат с фрагментом.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 20919 нужно найти набор, при котором (K ∨ M) → (M ∨ ¬L ∨ N) ложно. Импликация ложна только при истинной левой и ложной правой части: K ∨ M = 1, а M = 0, L = 1, N = 0. Отсюда K = 1.</p>
+  
+  <p class="method-answer"><span>Ответ</span>1100.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 20919 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">06</span>
+    <div>
+      <p class="eyebrow">когда ответ — не строка букв</p>
+      <h3>Нестандартные формулировки</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Спрашивают количество вариантов, значения неизвестных или добавляют условие на столбцы и строки.</p>
+  
+  <ul class="task-list"><li>«Сколько существует вариантов расстановки»: переберите permutations и посчитайте подходящие — задачи № 12643 (ответ 3), № 13974 (ответ 2) и № 14497 (ответ 8).</li><li>«Значения a, b, c, d»: перебирайте неизвестные и сверяйте с F; ответ — цифры подряд, например 00101 в задаче № 6837.</li><li>«Значения строк возрастают»: сравнивайте строки как двоичные числа — задача № 10915 (ответ zywx).</li><li>«Значение столбца w больше значения столбца y»: сравните столбцы как двоичные числа — задача № 11680 (ответ yzxw).</li><li>Даны две функции F1 и F2: столбцы общие для обеих, проверять нужно обе — задача № 14497.</li><li>Если переменных пять, в ответе тоже пять букв: не потеряйте ни одну.</li></ul>
+  
+  <p class="method-source">По мотивам задач № 6837, 10915, 11680, 12643, 13974 и 14497.</p>
+</article></div>
+  
+<div class="cheatsheet">
+  <p class="mini-label">Шпаргалка: формулировка → метод</p>
+  <div class="cheatsheet-wrap">
+    <table class="cheatsheet-table">
+      <thead><tr><th>В условии</th><th>Что делать</th></tr></thead>
+      <tbody><tr><td>«какому столбцу соответствует переменная»</td><td>сопоставить картину 0/1 или перебрать permutations</td></tr><tr><td>все строки с F = 1</td><td>выписать наборы, где функция истинна, и вложить их во фрагмент</td></tr><tr><td>есть пустые ячейки</td><td>перебор неизвестных через product</td></tr><tr><td>«сколько вариантов расстановки»</td><td>посчитать подходящие перестановки</td></tr><tr><td>«значения a, b, c, d»</td><td>перебор неизвестных, ответ цифрами подряд</td></tr><tr><td>«значения строк возрастают»</td><td>сравнивать строки как двоичные числа</td></tr><tr><td>переменных больше четырёх</td><td>полная таблица на 32 строки, перебор обязателен</td></tr><tr><td>ответ — буквы</td><td>без пробелов и запятых, слева направо</td></tr></tbody>
+    </table>
+  </div>
+</div>
+  
+<div class="video-block">
+  <p class="mini-label">Видеоразборы по теме</p>
+  <div class="video-list"><a class="video-link" href="https://youtu.be/w7du6qYh4TQ?t=967" target="_blank" rel="noopener noreferrer"><span class="video-label">Цепочка импликаций</span><span class="video-meta">№ 16249 · 16:07</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/71wAfu4H224?t=275" target="_blank" rel="noopener noreferrer"><span class="video-label">Перебор с пропусками</span><span class="video-meta">№ 11606 · 4:35</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/BMVaYPPqB2k?t=108" target="_blank" rel="noopener noreferrer"><span class="video-label">Разбор фрагмента с F = 1</span><span class="video-meta">№ 11220 · 1:48</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a></div>
+  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+</div>
+  <p class="method-source-note">По базе Kompege: 1 069 задач, 36 решений (29 программных и 7 текстовых) и 208 видеоразборов по заданию 2. При подготовке методов использованы решения задач № 6837, 9905, 10915, 11220, 11606, 11680, 12643, 13974, 14297, 14497, 16249 и 20919; примеры переработаны в учебные.</p>
+</section>
+    <section class="task-block" id="mistakes">
+      <h2>Типичные ошибки</h2>
+      <ul class="task-list task-list--mistakes"><li>путается приоритет операций</li><li>неверно понимается импликация</li><li>забывается отрицание</li><li>проверены не все строки</li></ul>
+    </section>
+    
+<section class="task-block">
+  <h2>Ключевые формулы</h2>
+  <ul class="formula-list"><li><code>A → B = ¬A ∨ B</code></li><li><code>A ≡ B = (A ∧ B) ∨ (¬A ∧ ¬B)</code></li></ul>
+</section>
+    
+    <section class="task-block" id="practice">
+      <h2>Практика</h2>
+      
+<div class="practice-grid">
+  <a class="practice-link" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener noreferrer">
+    <span class="practice-label">ФИПИ</span><span class="practice-title">Открытый банк заданий</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80.%20%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B8.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Навигатор · 2026</span><span class="practice-title">Теория</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/inf_11_2027/%D0%98%D0%9D%D0%A4-11%20%D0%95%D0%93%D0%AD%202027%20%D0%94%D0%95%D0%9C%D0%9E.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Демоверсия</span><span class="practice-title">КИМ 2027</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0.%202026.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Методика</span><span class="practice-title">Разбор ошибок 2026</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+</div>
+<p class="practice-note">Навигатор и методические рекомендации опубликованы в 2026 году: номера заданий в них могут отличаться от нумерации 2027 года. Ориентируйтесь на тему.</p>
+    </section>
+    
+<div class="related-links">
+  <span class="related-label">Смотрите также</span>
+  <a class="related-link" href="15.html">15 · Логика и множества</a>
+</div>
+    <nav class="prev-next" aria-label="Соседние задания">
+      <a class="prev-next-link" href="01.html"><span>← Предыдущее</span><strong>01 · Графы и таблицы</strong></a>
+      <a class="prev-next-link prev-next-link--next" href="03.html"><span>Следующее →</span><strong>03 · Базы данных</strong></a>
+    </nav>
+  </div>
+
+  <aside class="task-aside">
+    <div class="aside-card">
+      <div class="aside-head">
+        <span>Карта заданий</span>
+        <span class="map-progress" data-progress-count>0 / 27</span>
+      </div>
+      <div class="task-map task-map--compact" data-task-map><a class="task-cell task-cell--digital task-cell--compact" href="01.html" data-task="1" data-section="digital" data-title="Графы и таблицы" data-caption="&lt;strong&gt;Задание 1&lt;/strong&gt; · Графы и таблицы · Цифровая грамотность · 1 балл" aria-label="Задание 1: Графы и таблицы"><span>1</span></a><a class="task-cell task-cell--theory is-current task-cell--compact" href="02.html" data-task="2" data-section="theory" data-title="Логические функции" data-caption="&lt;strong&gt;Задание 2&lt;/strong&gt; · Логические функции · Теория · 1 балл" aria-label="Задание 2: Логические функции"><span>2</span></a><a class="task-cell task-cell--it task-cell--compact" href="03.html" data-task="3" data-section="it" data-title="Базы данных" data-caption="&lt;strong&gt;Задание 3&lt;/strong&gt; · Базы данных · Информационные технологии · 1 балл" aria-label="Задание 3: Базы данных"><span>3</span></a><a class="task-cell task-cell--theory task-cell--compact" href="04.html" data-task="4" data-section="theory" data-title="Коды и условие Фано" data-caption="&lt;strong&gt;Задание 4&lt;/strong&gt; · Коды и условие Фано · Теория · 1 балл" aria-label="Задание 4: Коды и условие Фано"><span>4</span></a><a class="task-cell task-cell--algo task-cell--compact" href="05.html" data-task="5" data-section="algo" data-title="Алгоритмы исполнителя" data-caption="&lt;strong&gt;Задание 5&lt;/strong&gt; · Алгоритмы исполнителя · Алгоритмы · 1 балл" aria-label="Задание 5: Алгоритмы исполнителя"><span>5</span></a><a class="task-cell task-cell--algo task-cell--compact" href="06.html" data-task="6" data-section="algo" data-title="Исполнители и координаты" data-caption="&lt;strong&gt;Задание 6&lt;/strong&gt; · Исполнители и координаты · Алгоритмы · 1 балл" aria-label="Задание 6: Исполнители и координаты"><span>6</span></a><a class="task-cell task-cell--theory task-cell--compact" href="07.html" data-task="7" data-section="theory" data-title="Графика и звук" data-caption="&lt;strong&gt;Задание 7&lt;/strong&gt; · Графика и звук · Теория · 1 балл" aria-label="Задание 7: Графика и звук"><span>7</span></a><a class="task-cell task-cell--theory task-cell--compact" href="08.html" data-task="8" data-section="theory" data-title="Комбинаторика и коды" data-caption="&lt;strong&gt;Задание 8&lt;/strong&gt; · Комбинаторика и коды · Теория · 1 балл" aria-label="Задание 8: Комбинаторика и коды"><span>8</span></a><a class="task-cell task-cell--it task-cell--compact" href="09.html" data-task="9" data-section="it" data-title="Электронные таблицы" data-caption="&lt;strong&gt;Задание 9&lt;/strong&gt; · Электронные таблицы · Информационные технологии · 1 балл" aria-label="Задание 9: Электронные таблицы"><span>9</span></a><a class="task-cell task-cell--digital task-cell--compact" href="10.html" data-task="10" data-section="digital" data-title="IP-адреса и маски" data-caption="&lt;strong&gt;Задание 10&lt;/strong&gt; · IP-адреса и маски · Цифровая грамотность · 1 балл" aria-label="Задание 10: IP-адреса и маски"><span>10</span></a><a class="task-cell task-cell--theory task-cell--compact" href="11.html" data-task="11" data-section="theory" data-title="Объём сообщения" data-caption="&lt;strong&gt;Задание 11&lt;/strong&gt; · Объём сообщения · Теория · 1 балл" aria-label="Задание 11: Объём сообщения"><span>11</span></a><a class="task-cell task-cell--algo task-cell--compact" href="12.html" data-task="12" data-section="algo" data-title="Исполнитель МТ" data-caption="&lt;strong&gt;Задание 12&lt;/strong&gt; · Исполнитель МТ · Алгоритмы · 1 балл" aria-label="Задание 12: Исполнитель МТ"><span>12</span></a><a class="task-cell task-cell--algo task-cell--compact" href="13.html" data-task="13" data-section="algo" data-title="Ход исполнения алгоритма" data-caption="&lt;strong&gt;Задание 13&lt;/strong&gt; · Ход исполнения алгоритма · Алгоритмы · 1 балл" aria-label="Задание 13: Ход исполнения алгоритма"><span>13</span></a><a class="task-cell task-cell--theory task-cell--compact" href="14.html" data-task="14" data-section="theory" data-title="Системы счисления" data-caption="&lt;strong&gt;Задание 14&lt;/strong&gt; · Системы счисления · Теория · 1 балл" aria-label="Задание 14: Системы счисления"><span>14</span></a><a class="task-cell task-cell--theory task-cell--compact" href="15.html" data-task="15" data-section="theory" data-title="Логика и множества" data-caption="&lt;strong&gt;Задание 15&lt;/strong&gt; · Логика и множества · Теория · 1 балл" aria-label="Задание 15: Логика и множества"><span>15</span></a><a class="task-cell task-cell--algo task-cell--compact" href="16.html" data-task="16" data-section="algo" data-title="Рекурсия" data-caption="&lt;strong&gt;Задание 16&lt;/strong&gt; · Рекурсия · Алгоритмы · 1 балл" aria-label="Задание 16: Рекурсия"><span>16</span></a><a class="task-cell task-cell--algo task-cell--compact" href="17.html" data-task="17" data-section="algo" data-title="Обработка последовательности" data-caption="&lt;strong&gt;Задание 17&lt;/strong&gt; · Обработка последовательности · Алгоритмы · 1 балл" aria-label="Задание 17: Обработка последовательности"><span>17</span></a><a class="task-cell task-cell--it task-cell--compact" href="18.html" data-task="18" data-section="it" data-title="Таблицы: анализ и оптимизация" data-caption="&lt;strong&gt;Задание 18&lt;/strong&gt; · Таблицы: анализ и оптимизация · Информационные технологии · 1 балл" aria-label="Задание 18: Таблицы: анализ и оптимизация"><span>18</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html" data-task="19" data-section="theory" data-title="Теория игр" data-caption="&lt;strong&gt;Задание 19&lt;/strong&gt; · Теория игр · Теория · 1 балл" aria-label="Задание 19: Теория игр"><span>19</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-20" data-task="20" data-section="theory" data-title="Теория игр: две кучи" data-caption="&lt;strong&gt;Задание 20&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 20: Теория игр: две кучи"><span>20</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-21" data-task="21" data-section="theory" data-title="Теория игр: стратегия" data-caption="&lt;strong&gt;Задание 21&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 21: Теория игр: стратегия"><span>21</span></a><a class="task-cell task-cell--theory task-cell--compact" href="22.html" data-task="22" data-section="theory" data-title="Параллельные вычисления" data-caption="&lt;strong&gt;Задание 22&lt;/strong&gt; · Параллельные вычисления · Теория · 1 балл" aria-label="Задание 22: Параллельные вычисления"><span>22</span></a><a class="task-cell task-cell--theory task-cell--compact" href="23.html" data-task="23" data-section="theory" data-title="Графы: пути" data-caption="&lt;strong&gt;Задание 23&lt;/strong&gt; · Графы: пути · Теория · 1 балл" aria-label="Задание 23: Графы: пути"><span>23</span></a><a class="task-cell task-cell--algo task-cell--compact" href="24.html" data-task="24" data-section="algo" data-title="Символьные строки" data-caption="&lt;strong&gt;Задание 24&lt;/strong&gt; · Символьные строки · Алгоритмы · 1 балл" aria-label="Задание 24: Символьные строки"><span>24</span></a><a class="task-cell task-cell--algo task-cell--compact" href="25.html" data-task="25" data-section="algo" data-title="Натуральные числа" data-caption="&lt;strong&gt;Задание 25&lt;/strong&gt; · Натуральные числа · Алгоритмы · 1 балл" aria-label="Задание 25: Натуральные числа"><span>25</span></a><a class="task-cell task-cell--algo task-cell--compact" href="26.html" data-task="26" data-section="algo" data-title="Массив: сортировка" data-caption="&lt;strong&gt;Задание 26&lt;/strong&gt; · Массив: сортировка · Алгоритмы · 2 балла" aria-label="Задание 26: Массив: сортировка"><span>26</span></a><a class="task-cell task-cell--it task-cell--compact" href="27.html" data-task="27" data-section="it" data-title="Анализ данных" data-caption="&lt;strong&gt;Задание 27&lt;/strong&gt; · Анализ данных · Информационные технологии · 2 балла" aria-label="Задание 27: Анализ данных"><span>27</span></a></div>
+      <a class="aside-link" href="index.html">Все задания <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="aside-card aside-card--progress">
+      <p class="aside-label">Прогресс</p>
+      <button class="btn btn-primary progress-toggle" type="button" data-progress-toggle="2" aria-pressed="false">Отметить как изученное</button>
+      <p class="progress-note" data-progress-text>0 из 27 изучено</p>
+      <div class="progress-line" aria-hidden="true"><span data-progress-bar></span></div>
+    </div>
+    <div class="aside-card">
+      <p class="aside-label">Быстрые ссылки</p>
+      <a class="aside-link" href="../documents.html#kim2027">Демоверсия 2027 <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html#method">Навигатор и методика <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html">Все документы <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-mark">ЕГЭ · Информатика · 2027</p>
+      <p class="footer-note">Разбор заданий, ключевые темы и официальные документы. Составлено 3 ноября 2026. Не является официальным ресурсом ФИПИ или Рособрнадзора.</p>
+    </div>
+    <div>
+      <p class="footer-title">Разделы</p>
+      <p class="footer-note"><a href="../index.html">Главная</a> · <a href="../tasks/index.html">Все задания</a> · <a href="../documents.html">Документы</a></p>
+      <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
+    </div>
+    <div>
+      <p class="footer-title">Первоисточники</p>
+      <p class="footer-note"><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ</a> · <a href="https://obrnadzor.gov.ru/gia/gia-11/" target="_blank" rel="noopener noreferrer">Рособрнадзор</a> · <a href="https://regulation.gov.ru/projects/172223/" target="_blank" rel="noopener noreferrer">проект расписания</a></p>
+      <p class="footer-note">Права на документы принадлежат их правообладателям. Копии сохранены для ознакомления и подготовки.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

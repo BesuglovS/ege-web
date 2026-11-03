@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задания 19–21 ЕГЭ по информатике — Теория игр</title>
+<meta name="description" content="Три вопроса одной игры: выигрышная позиция, стратегия и минимальное число ходов. Теория, способы решения и типичные ошибки. ЕГЭ-2027, информатика.">
+<meta name="theme-color" content="#F0F1EB">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="На главную">
+    <span class="brand-mark" aria-hidden="true">И</span>
+    <span class="brand-text">ЕГЭ · Информатика<small>подготовка по заданиям</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a href="../index.html">Главная</a>
+    <a href="../tasks/index.html" class="is-active" aria-current="page">Задания</a>
+    <a href="../documents.html">Документы</a>
+  </nav>
+  <div class="topbar-meta"><span>Задания 19–21 из 27</span><span>Теория</span></div>
+</header>
+<main id="main">
+
+<nav class="breadcrumb" aria-label="Хлебные крошки"><a href="../index.html">Главная</a><span class="crumb-sep">/</span><a href="index.html">Задания</a><span class="crumb-sep">/</span><span aria-current="page">Задания 19–21</span></nav>
+
+<section class="task-hero">
+  <div class="task-number task-number--range" aria-hidden="true">19–21</div>
+  <div class="task-hero-copy">
+    <p class="eyebrow">Теоретические основы информатики · 3 задания · 3 балла</p>
+    <h1>Теория игр</h1>
+    <p class="task-subtitle">Задания 19–21 · одна и две кучи</p>
+    <p class="lead">Три вопроса одной игры: выигрышная позиция, стратегия и минимальное число ходов.</p>
+    <div class="task-badges">
+      <span class="badge badge-section badge-section--theory">Теория</span>
+      <span class="badge badge-answer">19 — число; 20 — два числа; 21 — число</span>
+      <span class="badge badge-project">19 · 20 · 21</span>
+    </div>
+  </div>
+</section>
+
+
+<nav class="task-toc" aria-label="На странице задания">
+  <span class="task-toc-label">На странице</span>
+  <a href="#subtasks">19–21</a>
+  <a href="#theory">Теория</a>
+  <a href="#methods">Способы решения</a>
+  <a href="#mistakes">Ошибки</a>
+  <a href="#practice">Практика</a>
+</nav>
+
+<div class="task-layout">
+  <div class="task-main">
+    
+    
+<div class="callout">
+  <span class="callout-label">19–21</span>
+  <p>Страницы 19, 20 и 21 объединены: это одна игра с тремя вопросами. Ниже — теория, способы решения и форматы ответа для всех трёх номеров.</p>
+</div>
+    <section class="task-block">
+      <h2>Что проверяет</h2>
+      <p class="task-checked">Дискретные игры двух игроков с полной информацией: дерево перебора, выигрышные и проигрышные позиции, стратегии и счёт ходов.</p>
+      <p class="task-source">Основание: проект спецификации и кодификатора КИМ 2027. <a href="../documents.html#kim2027">Открыть документы <span aria-hidden="true">↗</span></a></p>
+    </section>
+    
+<section class="task-block" id="subtasks">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Одна игра — три задания</p>
+    <h2>Что спрашивают в 19, 20 и 21</h2>
+    <p class="block-lead">Это одна игра с тремя вопросами. Правила в каждом варианте свои, но рассуждение общее: строим позиции, размечаем выигрышные и проигрышные и считаем ходы.</p>
+  </div>
+  <div class="subtask-grid">
+<article class="theory-card" id="subtask-19">
+  <p class="mini-label">Задание 19</p>
+  <h3>Найдите позицию</h3>
+  <p>Обычно нужно найти одно значение S, при котором первый игрок не выигрывает сразу, а второй выигрывает своим первым ходом. Реже — наоборот.</p>
+  <p class="method-answer"><span>Ответ</span>одно число</p>
+</article>
+<article class="theory-card" id="subtask-20">
+  <p class="mini-label">Задание 20</p>
+  <h3>Найдите два значения</h3>
+  <p>Нужно найти два значения S для второго вопроса: например, Петя не выигрывает первым, но выигрывает вторым; в других вариантах — Ваня выигрывает сразу после любого хода Пети.</p>
+  <p class="method-answer"><span>Ответ</span>два числа</p>
+</article>
+<article class="theory-card" id="subtask-21">
+  <p class="mini-label">Задание 21</p>
+  <h3>Опишите стратегию</h3>
+  <p>Нужно найти значение S, при котором у игрока есть стратегия победы не позже второго своего хода, но нет гарантированной победы первым ходом. Роли игроков зависят от условия.</p>
+  <p class="method-answer"><span>Ответ</span>одно число или пара</p>
+</article></div>
+</section>
+    
+<section class="task-block task-block--theory" id="theory">
+  <div class="block-head">
+    <p class="eyebrow">Теория</p>
+    <h2>Что нужно знать</h2>
+    <p class="block-lead">Задания 19–21 проверяют одну и ту же идею — умение играть в дискретную игру без случайности и просчитывать стратегию на несколько ходов. Сначала читаем правила, затем строим дерево или рекурсию, и только потом отвечаем на конкретный вопрос.</p>
+  </div>
+  <div class="theory-checklist">
+    <p class="mini-label">Минимум для заданий 19–21</p>
+    <ul class="check-list"><li>читать правила и находить условие окончания</li><li>определять, кто делает первый ход</li><li>выписывать все ходы из позиции</li><li>размечать выигрышные и проигрышные позиции</li><li>считать ходы по уровням</li><li>понимать any/all в рекурсии</li><li>различать «первым ходом» и «не позже»</li><li>перебирать все S из диапазона</li><li>проверять оба значения для задания 20</li><li>записывать ответ в нужном формате</li></ul>
+  </div>
+  <div class="theory-grid">
+<article class="theory-card">
+  <h3>Три задания — одна игра</h3>
+  <p>Формально это три независимых задания, но в каждом варианте они опираются на одну игровую конструкцию. Меняется только вопрос: в 19 ищут позицию, в 20 — два значения, в 21 — стратегию и число ходов.</p>
+  <ul class="theory-list"><li>19: частый вариант — «Петя не может выиграть первым ходом, но Ваня выигрывает своим первым».</li><li>20: частый вариант — «Петя не выигрывает первым, но выигрывает вторым при любых ходах Вани».</li><li>21: «у игрока есть стратегия на первый или второй ход, но нет гарантии победы первым».</li><li>Формулировки меняются местами: роли Петя/Ваня и номера 19/20/21 могут отличаться от привычной схемы.</li><li>Главное — не номер задания, а вопрос: кто, каким ходом и при каких условиях выигрывает.</li></ul>
+  <div class="formula-inline"><code>19: одна позиция или одно значение S</code><code>20: два значения S</code><code>21: стратегия и число ходов</code></div>
+</article>
+<article class="theory-card">
+  <h3>Позиция и терминальное состояние</h3>
+  <p>Позиция — это всё, что нужно знать об игре в данный момент. У одной кучи это число S, у двух куч — пара (a, b), у трёх — тройка (a, b, c). Терминальное состояние задаётся условием окончания.</p>
+  <ul class="theory-list"><li>Порог: S ≥ N, S ≤ N, a + b ≥ N, a · b ≥ N, |a − b| ≥ N.</li><li>Свойство: простое число, палиндром, диапазон 666–999.</li><li>Ход может менять одну кучу, обе кучи или все три.</li><li>Если после перебора (например, больше 999) игрок проигрывает, terminal состоит из двух зон.</li><li>Терминальную проверку всегда делайте до проверки m == 0.</li></ul>
+  <div class="formula-inline"><code>нормальная игра: кто первым достиг терминала, тот выиграл</code><code>misère: кто первым достиг терминала, тот проиграл</code></div>
+</article>
+<article class="theory-card">
+  <h3>Выигрышные и проигрышные позиции</h3>
+  <p>Разметка строится с конца. Терминальная позиция считается проигрышной для того, чей ход: ходов больше нет. Дальше двигаемся назад по дереву.</p>
+  <ul class="theory-list"><li>Проигрышная (L): все ходы ведут в выигрышные позиции.</li><li>Выигрышная (W): есть хотя бы один ход в проигрышную.</li><li>Стратегия — на каждом своём ходу переводить игру в L.</li><li>Если позиция W, соперник не может изменить исход при правильной игре.</li><li>В задачах 19–21 чаще нужна не сама разметка, а позиция на нужном уровне дерева.</li></ul>
+  <div class="formula-inline"><code>W = существует ход в L</code><code>L = все ходы ведут в W</code></div>
+</article>
+<article class="theory-card">
+  <h3>Дерево и счёт ходов</h3>
+  <p>Уровни дерева чередуются: Петя, Ваня, Петя, Ваня. Номер хода — это номер полухода, а не номер игрока. Поэтому «второй ход Пети» — это третий полуход.</p>
+  <ul class="theory-list"><li>Петя: 1-й, 3-й, 5-й ход; Ваня: 2-й, 4-й, 6-й.</li><li>«Петя первым ходом» — m = 1; «Ваня своим первым» — m = 2.</li><li>«Петя вторым» — m = 3; «Ваня вторым» — m = 4.</li><li>«Не позже второго хода» — проверяйте и первый, и второй ход.</li><li>«За два хода» может означать два хода каждого — читайте формулировку буквально.</li></ul>
+  <div class="formula-inline"><code>m = 1 — Петя, m = 2 — Ваня, m = 3 — Петя, m = 4 — Ваня</code><code>нечётное m — победа Пети, чётное m — победа Вани</code></div>
+</article>
+<article class="theory-card">
+  <h3>Одна куча</h3>
+  <p>Состояние — одно число S. Ходы могут прибавлять, умножать, вычитать, делить или менять число по особому правилу. Порог может быть фиксированным или зависеть от начального S.</p>
+  <ul class="theory-list"><li>Типовые ходы: +k, +m, ×k, −k, //k, x², добавить сумму цифр.</li><li>Если ход зависит от чётности или делимости, перебирайте только разрешённые ходы.</li><li>Порог может быть фиксированным (N) или зависеть от S (например, 4S).</li><li>Стартовое S часто от 1 до N − 1; не включайте терминальные значения.</li><li>Для убывающих игр проверяйте, что ход не уводит в отрицательные значения.</li></ul>
+  <div class="formula-inline"><code>f(s, m): s ≥ N → m % 2 == 0</code><code>f(s, m): s ≤ N → m % 2 == 0</code></div>
+</article>
+<article class="theory-card">
+  <h3>Две кучи</h3>
+  <p>Состояние — пара (a, b). Ход может менять одну кучу или обе; это даёт два или четыре варианта. Фиксированная первая куча превращает задачу в перебор по S.</p>
+  <ul class="theory-list"><li>Выписывайте все ходы: (a + k, b), (a, b + k), (ka, b), (a, kb).</li><li>Если первая куча фиксирована, считайте f(11, s, m), f(13, s, m) и т. п.</li><li>Симметричные ходы (a + 2, b) и (a, b + 2) — разные позиции.</li><li>Терминал может быть по сумме, произведению, разности, максимуму или равенству.</li><li>Если кучи равны и правило особое, добавьте условие в генератор ходов.</li></ul>
+  <div class="formula-inline"><code>f(a, b, m): терминал по a + b, a · b или |a − b|</code><code>ходы: (a + k, b), (a, b + k), (ka, b), (a, kb)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Нестандартные правила</h3>
+  <p>В базе Kompege много вариантов с тремя кучами, табличкой, числом, запретом повторять ход и бонусными ходами. Все они решаются тем же шаблоном — меняется только генератор ходов и terminal.</p>
+  <ul class="theory-list"><li>Три кучи и табличка: состояние — кортеж; ход может менять все компоненты.</li><li>Ход зависит от числа: чётность, кратность, остаток, сумма цифр, система счисления.</li><li>Нельзя повторять последний ход: передавайте last_move в рекурсию.</li><li>Бонусный ход один раз: добавьте флаг used_bonus.</li><li>Диапазон выигрыша: 666–999 — победа, больше 999 — поражение.</li><li>Убывающая игра с проигрышем за terminal: инвертируйте условие победы.</li><li>Три игрока: ходы циклические, победа определяется на своём уровне.</li></ul>
+  <div class="formula-inline"><code>состояние может быть числом, парой, тройкой или кортежем</code><code>сначала terminal, потом генерация ходов</code></div>
+</article>
+<article class="theory-card">
+  <h3>Шаблон f(pos, m)</h3>
+  <p>Почти все программные решения из базы используют одну рекурсию. m — число полуходов, за которые проверяется победа. Чётность m задаёт игрока, а any/all — характер требования.</p>
+  <ul class="theory-list"><li>Сначала проверьте terminal — до проверки m == 0.</li><li>Terminal возвращает m % 2 == 0: на чётном m победа у Вани, на нечётном у Пети.</li><li>Если m == 0 и terminal не достигнут, текущий игрок не успел — возвращаем 0.</li><li>Сгенерируйте все ходы и вызовите f(child, m − 1).</li><li>Для нечётного m (Петя) — any; для чётного (Ваня) — all.</li><li>Для больших диапазонов добавьте lru_cache.</li></ul>
+  <div class="formula-inline"><code>if terminal: return m % 2 == 0</code><code>if m == 0: return 0</code><code>m % 2 == 1 → any(...), m % 2 == 0 → all(...)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Почему any и all чередуются</h3>
+  <p>На нечётном уровне ходит Петя: ему достаточно одного хорошего хода, поэтому any. На чётном уровне ходит Ваня: Петя должен быть готов к любому ответу, поэтому all.</p>
+  <ul class="theory-list"><li>Нечётный уровень — выбор Пети, поэтому any.</li><li>Чётный уровень — гарантия Вани при любом ходе Пети, поэтому all.</li><li>Если перепутать any и all, роли игроков и ответы 19/20/21 поменяются.</li><li>В задачах «Ваня выиграл после неудачного хода Пети» на первом уровне тоже any: Пете не нужно выбирать лучший ход.</li><li>В решениях из базы иногда меняют all на any для № 19 — это то же правило, записанное иначе.</li></ul>
+  <div class="formula-inline"><code>19: f(s, 2) или not f(s, 1) and f(s, 2)</code><code>20: not f(s, 1) and f(s, 3)</code><code>21: not f(s, 2) and f(s, 4)</code></div>
+</article>
+<article class="theory-card">
+  <h3>Границы, перебор и проверка</h3>
+  <p>Большая часть ошибок — не в рекурсии, а в границах и в неполном переборе. Определите диапазон S по условию и проверьте, что игра вообще завершается.</p>
+  <ul class="theory-list"><li>Верхняя граница перебора — по условию; не берите N вместо N − 1 без причины.</li><li>Если ход умножает, terminal должен срабатывать раньше, чем рекурсия уйдёт в бесконечность.</li><li>Для убывающих игр ограничьте снизу; не допускайте отрицательных куч.</li><li>Для больших S используйте lru_cache и не храните лишние состояния.</li><li>Проверьте найденное S вручную по дереву хотя бы на 2–3 хода.</li><li>Если ответ — два числа, проверьте оба и их порядок.</li></ul>
+  <div class="formula-inline"><code>диапазон: range(1, N) или range(lo, hi + 1)</code><code>ответ: min, max, sorted(...)[:2], sum или len</code></div>
+</article>
+<article class="theory-card">
+  <h3>Формат ответа</h3>
+  <p>Ответы 19–21 короткие, но именно в них чаще всего теряют балл: не тот порядок, лишнее число или сумма вместо количества.</p>
+  <ul class="theory-list"><li>19: чаще одно число — минимум, максимум, сумма или количество.</li><li>20: два числа; почти всегда «два наименьших» или «два наибольших».</li><li>21: одно число или пара; читайте, что именно просят.</li><li>Если просят сумму или количество — не записывайте сами значения.</li><li>Разделяйте числа пробелом, без запятых и единиц измерения.</li><li>Не добавляйте пояснения в поле ответа.</li></ul>
+  <div class="formula-inline"><code>одно число — без пробелов</code><code>два числа — через пробел в порядке условия</code></div>
+</article>
+<article class="theory-card">
+  <h3>План решения на экзамене</h3>
+  <p>В заданиях 19–21 ценится не скорость перебора, а аккуратная модель. Сначала правило и terminal, потом маленький пример, и только затем код и перебор S.</p>
+  <ul class="theory-list"><li>Прочитайте, кто ходит первым и что считается победой.</li><li>Выпишите все ходы и условие окончания.</li><li>Разберите маленький пример вручную на 2–3 хода.</li><li>Напишите f(pos, m) и проверьте её на этом примере.</li><li>Переберите S и примените фильтр нужного задания.</li><li>Проверьте один ответ по дереву и запишите его без пояснений.</li></ul>
+  <div class="formula-inline"><code>правило → terminal → пример → рекурсия → перебор → проверка</code></div>
+</article></div>
+  
+<div class="theory-example">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Разбор примера</p>
+    <h3>Учебный пример: одна куча, +1 или ×2</h3>
+    <p>Куча S, ход +1 или ×2, игра заканчивается, когда камней становится не менее 10. Петя ходит первым. Найдите ответы для 19, 20 и 21.</p>
+  </div>
+  <div class="theory-example-grid theory-example-grid--single"><div class="table-wrap"><table class="example-table">
+  <caption>Значения f(S, m): 1 — победа игрока, который делает ход на уровне m; 0 — победы нет.</caption>
+  <thead><tr><th>S</th><th>m=1<br>Петя 1-м</th><th>m=2<br>Ваня 1-м</th><th>m=3<br>Петя 2-м</th><th>m=4<br>Ваня 2-м</th></tr></thead>
+  <tbody>
+    <tr><th>1</th><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+    <tr><th>2</th><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><th>3</th><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><th>4</th><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+    <tr><th>5</th><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><th>6</th><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><th>7</th><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><th>8</th><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+    <tr><th>9</th><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+  </tbody>
+</table></div></div>
+  <ol class="task-steps"><li>Терминал: S ≥ 10. При m = 1 Петя может сразу закончить игру, поэтому у S = 5…9 стоит 1.</li><li>При m = 2 Ваня выигрывает своим первым ходом только из S = 4: из 5 он делает 10, из 8 — 16.</li><li>Для задания 19 берём минимальное S с f(S, 2) = 1: это 4.</li><li>Для задания 20 нужны S, где f(S, 1) = 0 и f(S, 3) = 1: это 2 и 3.</li><li>Для задания 21 нужно S, где f(S, 2) = 0 и f(S, 4) = 1: это 1.</li><li>Проверка для S = 4: Петя делает 4 → 5 или 4 → 8; в обоих случаях у Вани есть ход до 10 или 16.</li></ol>
+  <p class="example-answer"><span>Ответ</span>19: 4; 20: 2 и 3; 21: 1.</p>
+</div>
+</section>
+    
+<section class="task-block task-block--methods" id="methods">
+  <div class="block-head">
+    <p class="eyebrow">Способы решения</p>
+    <h2>Выберите метод под формулировку</h2>
+    <p class="block-lead">Методы собраны по решениям заданий 19–21 из базы Kompege. Начните с того, что именно нужно найти в условии.</p>
+  </div>
+  <div class="methods-list">
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">01</span>
+    <div>
+      <p class="eyebrow">когда позиций немного</p>
+      <h3>Дерево игры вручную</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Правило простое, S небольшое, нужно понять, кто и на каком ходе выигрывает.</p>
+  <ol class="task-steps"><li>Выпишите стартовую позицию и все ходы из неё.</li><li>Нарисуйте уровни: Петя, Ваня, Петя, Ваня.</li><li>Отметьте терминальные позиции и того, кто в них выигрывает.</li><li>Снизу вверх: позиция выигрышная, если есть ход в проигрышную.</li><li>Отметьте, на каком уровне находится победа: 1 — Петя первым, 2 — Ваня первым и т. д.</li><li>Проверьте все ходы, а не только очевидный.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Куча S, ход +1 или ×2, игра до S ≥ 10. Разберём S = 4.</p>
+  <pre class="code-block"><code>4 (Петя)
+├─ +1 → 5 (Ваня) ── ×2 → 10  ✔ Ваня
+└─ ×2 → 8 (Ваня)
+   ├─ +1 → 9 (Петя) ── +1 → 10  ✘ Ваня проигрывает
+   └─ ×2 → 16  ✔ Ваня</code></pre>
+  <p class="method-answer"><span>Ответ</span>Петя не может выиграть первым ходом, а Ваня выигрывает своим первым: S = 4.</p>
+</div>
+  <p class="method-source">По мотивам решений задач № 10128, 21156 и 31035; пример переработан в учебный.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">02</span>
+    <div>
+      <p class="eyebrow">стандартная рекурсия</p>
+      <h3>Одна куча: шаблон f(s, m)</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Одна куча, фиксированный порог, 2–3 хода, нужно перебрать все S.</p>
+  <ol class="task-steps"><li>Определите терминал и диапазон S по условию.</li><li>Напишите f(s, m): сначала terminal, затем m == 0.</li><li>Сгенерируйте все ходы из s.</li><li>Верните any для нечётного m и all для чётного.</li><li>Посчитайте f(s, 1), f(s, 2), f(s, 3) и f(s, 4) для всех S.</li><li>Отфильтруйте значения по формулировке 19, 20 или 21.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>S от 1 до 247, ходы +1, +2 или ×3, игра до S ≥ 248 (задача № 10128).</p>
+  <pre class="code-block"><code>def f(s, m):
+    if s &gt;= 248:
+        return m % 2 == 0
+    if m == 0:
+        return 0
+    moves = (s + 1, s + 2, s * 3)
+    h = [f(x, m - 1) for x in moves]
+    return any(h) if m % 2 else all(h)
+
+print(min(s for s in range(1, 248) if f(s, 2)))              # 19 → 82
+print(*[s for s in range(1, 248)
+        if not f(s, 1) and f(s, 3)][:2])                      # 20 → 80 81
+print(min(s for s in range(1, 248)
+          if not f(s, 2) and f(s, 4)))                        # 21 → 79</code></pre>
+  <p class="method-answer"><span>Ответ</span>19: 82; 20: 80, 81; 21: 79.</p>
+</div>
+  <p class="method-source">По мотивам задач № 10128, 11279, 31035 и 21156 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">03</span>
+    <div>
+      <p class="eyebrow">фиксированная первая куча</p>
+      <h3>Две кучи: состояние (a, b)</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Перед игроками две кучи; ход меняет одну из них, а вторая куча часто фиксирована.</p>
+  <ol class="task-steps"><li>Запишите состояние как пару (a, b).</li><li>Выпишите все ходы: изменить первую, изменить вторую.</li><li>Определите терминал по сумме, произведению или другому выражению.</li><li>Для фиксированной первой кучи считайте f(11, s, m) или f(13, s, m).</li><li>Переберите S и примените фильтр нужного задания.</li><li>Проверьте, что оба хода из пары учтены.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Первая куча 11, вторая S, ходы +2 или ×2, игра до суммы 131 (задача № 11275).</p>
+  <pre class="code-block"><code>def f(a, b, m):
+    if a + b &gt;= 131:
+        return m % 2 == 0
+    if m == 0:
+        return 0
+    moves = ((a + 2, b), (a * 2, b), (a, b + 2), (a, b * 2))
+    h = [f(x, y, m - 1) for x, y in moves]
+    return any(h) if m % 2 else all(h)
+
+print(min(s for s in range(1, 123) if f(11, s, 2)))          # 19 → 64
+print(*[s for s in range(1, 123)
+        if not f(11, s, 1) and f(11, s, 3)][:2])             # 20 → 32 62
+print(min(s for s in range(1, 123)
+          if not f(11, s, 2) and f(11, s, 4)))               # 21 → 60</code></pre>
+  <p class="method-answer"><span>Ответ</span>19: 64; 20: 32 и 62; 21: 60.</p>
+</div>
+  <p class="method-source">По мотивам задач № 11275, 11278, 16883 и 31481; у № 11275 есть видеоразбор.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">04</span>
+    <div>
+      <p class="eyebrow">состояние-кортеж</p>
+      <h3>Три кучи и табличка</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Куч три, есть табличка с парой чисел или ход меняет сразу несколько компонентов.</p>
+  <ol class="task-steps"><li>Запишите состояние как кортеж: (a, b, c) или (x, y).</li><li>Сгенерируйте ходы, которые меняют одну или все компоненты.</li><li>Проверьте terminal по максимуму, сумме или отдельному числу.</li><li>Не забывайте про ограничения на каждую компоненту.</li><li>Переберите S и примените фильтр 19/20/21.</li><li>Проверьте один ответ вручную по дереву.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Три кучки 2, 3 и S; ход — удвоить одну кучу или добавить по 2 во все; terminal — max ≥ 20 или сумма ≥ 25 (задача № 14954).</p>
+  <pre class="code-block"><code>def f(p, m):
+    a, b, c = p
+    if max(a, b, c) &gt;= 20 or a + b + c &gt;= 25:
+        return m % 2 == 0
+    if m == 0:
+        return 0
+    moves = ((2*a, b, c), (a, 2*b, c), (a, b, 2*c),
+             (a + 2, b + 2, c + 2))
+    h = [f(q, m - 1) for q in moves]
+    return any(h) if m % 2 else all(h)
+
+print(min(s for s in range(1, 20) if f((2, 3, s), 2)))       # 19 → 9
+print([s for s in range(1, 20)
+       if not f((2, 3, s), 1) and f((2, 3, s), 3)])          # 20 → 2, 3, ...
+print(min(s for s in range(1, 20)
+          if not f((2, 3, s), 2) and f((2, 3, s), 4)))       # 21 → 6</code></pre>
+  <p class="method-answer"><span>Ответ</span>19: 9; 20: 2 и 3 (два наименьших); 21: 6.</p>
+</div>
+  <p class="method-source">По мотивам задачи № 14954 (условие и видеоразбор) и № 9166 (табличка с парой чисел).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">05</span>
+    <div>
+      <p class="eyebrow">игра «на вычитание»</p>
+      <h3>Уменьшение и деление</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Игроки убирают камни или делят кучу; игра заканчивается при s ≤ N.</p>
+  <ol class="task-steps"><li>Запишите terminal: s ≤ N; победитель — тот, кто сделал последний ход.</li><li>Для деления используйте //, а при округлении вверх — (x + 1) // 2.</li><li>Проверьте, что ход не уводит в отрицательные значения.</li><li>Если terminal приносит поражение (misère), инвертируйте условие победы.</li><li>Для запрета повторять ход передавайте last_move в рекурсию.</li><li>Переберите S от N + 1 до разумной верхней границы.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Куча S, ходы −2, −6 или //4, игра до S ≤ 18 (задача № 29588).</p>
+  <pre class="code-block"><code>def f(s, m):
+    if s &lt;= 18:
+        return m % 2 == 0
+    if m == 0:
+        return 0
+    moves = (s - 2, s - 6, s // 4)
+    h = [f(x, m - 1) for x in moves]
+    return any(h) if m % 2 else all(h)
+
+print(max(s for s in range(19, 1000) if f(s, 2)))            # 19 → 77
+print(*[s for s in range(19, 1000)
+        if not f(s, 1) and f(s, 3)][:2])                     # 20 → 78 79
+print(min(s for s in range(19, 1000)
+          if not f(s, 2) and f(s, 4)))                       # 21 → 80</code></pre>
+  <p class="method-answer"><span>Ответ</span>19: 77 (наибольшее S); 20: 78 и 79; 21: 80.</p>
+</div>
+  <p class="method-source">По мотивам задач № 29588, 13912, 31227 и 16266; у № 16266 есть видеоразбор.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">06</span>
+    <div>
+      <p class="eyebrow">сумма, произведение, разность, простое число</p>
+      <h3>Нестандартное условие окончания</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Игра заканчивается не по порогу одной кучи, а по сумме, произведению, разности или свойству числа.</p>
+  <ol class="task-steps"><li>Выпишите terminal как единое условие.</li><li>Если условий несколько, используйте or.</li><li>Для произведения и разности проверяйте порядок чисел.</li><li>Для простого числа напишите is_prime и проверяйте его до ходов.</li><li>Для диапазона 666–999 добавьте вторую зону: больше 999 — поражение.</li><li>Проверьте, что terminal не пересекается с допустимыми ходами.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Две кучи, первая 3, вторая S; ходы +2 или ×2; игра до произведения ≥ 123 (задача № 9374).</p>
+  <pre class="code-block"><code>def f(a, b, m):
+    if a * b &gt;= 123:
+        return m % 2 == 0
+    if m == 0:
+        return 0
+    moves = ((a + 2, b), (a * 2, b), (a, b + 2), (a, b * 2))
+    h = [f(x, y, m - 1) for x, y in moves]
+    return any(h) if m % 2 else all(h)
+
+print(min(s for s in range(1, 41) if f(3, s, 2)))            # 19 → 19
+print(*[s for s in range(1, 41)
+        if not f(3, s, 1) and f(3, s, 3)][:2])               # 20 → 9 10
+print(min(s for s in range(1, 41)
+          if not f(3, s, 2) and f(3, s, 4)))                  # 21 → 15</code></pre>
+  <p class="method-answer"><span>Ответ</span>19: 19; 20: 9 и 10; 21: 15.</p>
+</div>
+  <p class="method-source">По мотивам задач № 9374, 31480, 31481, 28431, 28875 и 23336.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">07</span>
+    <div>
+      <p class="eyebrow">главный навык заданий 19–21</p>
+      <h3>Формулировка → фильтр</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Рекурсия уже написана; осталось правильно прочитать, какой именно ход и какая гарантия нужны.</p>
+  
+  <ul class="task-list"><li>«Ваня выиграл первым после неудачного хода Пети» → f(s, 2).</li><li>«Петя не может первым, но выигрывает вторым» → not f(s, 1) and f(s, 3).</li><li>«Ваня выигрывает первым или вторым, но не гарантирует первым» → not f(s, 2) and f(s, 4).</li><li>«Петя выигрывает не позже второго хода» → f(s, 1) or f(s, 3).</li><li>«Ровно вторым ходом» → not f(s, 1) and f(s, 3).</li><li>«Найдите два наименьших» → sorted(a)[:2]; «два наибольших» → sorted(a)[-2:].</li></ul>
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Универсальные фильтры для одной и той же функции f(s, m).</p>
+  <pre class="code-block"><code>a19 = [s for s in range(1, N) if f(s, 2)]
+a20 = [s for s in range(1, N) if not f(s, 1) and f(s, 3)]
+a21 = [s for s in range(1, N) if not f(s, 2) and f(s, 4)]
+
+print(min(a19))            # минимальное S для 19
+print(*sorted(a20)[:2])    # два наименьших для 20
+print(min(a21))            # минимальное S для 21</code></pre>
+  <p class="method-answer"><span>Ответ</span>Для задачи № 10128: 82; 80 и 81; 79.</p>
+</div>
+  <p class="method-source">По мотивам задач № 10128, 11276, 21156 и 31433.</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">08</span>
+    <div>
+      <p class="eyebrow">чтобы не потерять балл</p>
+      <h3>Проверка и оформление ответа</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Ответ уже найден; нужно проверить его и записать в нужном формате.</p>
+  <ol class="task-steps"><li>Убедитесь, что перебраны все S из диапазона.</li><li>Проверьте один ответ вручную по дереву на 2–3 хода.</li><li>Примените агрегат: min, max, sorted, sum или len.</li><li>Проверьте, что в 20 именно два значения, а не одно.</li><li>Проверьте порядок чисел, если он важен.</li><li>Запишите ответ без пояснений и единиц.</li></ol>
+  <ul class="task-list"><li>«Сумма найденных» → sum(a), а не сами значения.</li><li>«Количество» → len(a), а не сумма.</li><li>«Два наименьших» → sorted(a)[:2]; «два наибольших» → sorted(a)[-2:].</li><li>«Минимальное» → min(a); «максимальное» → max(a).</li><li>Если ответ — пара, сначала число, которое просят первым.</li><li>Не добавляйте пробелы внутри числа и запятые между числами.</li></ul>
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>Оформление ответов для трёх заданий.</p>
+  <pre class="code-block"><code>print(&quot;19:&quot;, min(a19))
+print(&quot;20:&quot;, *sorted(a20)[:2])
+print(&quot;21:&quot;, min(a21))
+
+# если просят сумму или количество:
+# print(sum(a20))
+# print(len(a20))</code></pre>
+  <p class="method-answer"><span>Ответ</span>Три строки ответа: 19 — одно число, 20 — два числа, 21 — одно число.</p>
+</div>
+  <p class="method-source">По мотивам решений задач № 10128, 11275, 21156, 29588 и 31482.</p>
+</article></div>
+  
+<div class="cheatsheet">
+  <p class="mini-label">Шпаргалка: формулировка → метод</p>
+  <div class="cheatsheet-wrap">
+    <table class="cheatsheet-table">
+      <thead><tr><th>В условии</th><th>Что делать</th></tr></thead>
+      <tbody><tr><td>«Петя не может первым, Ваня выигрывает первым»</td><td>f(s, 2)</td></tr><tr><td>«Петя выигрывает вторым, но не первым»</td><td>not f(s, 1) and f(s, 3)</td></tr><tr><td>«Ваня выигрывает первым или вторым»</td><td>f(s, 2) or f(s, 4)</td></tr><tr><td>«...но не гарантирует победу первым»</td><td>not f(s, 2) and f(s, 4)</td></tr><tr><td>«два наименьших S»</td><td>sorted(a)[:2]</td></tr><tr><td>«два наибольших S»</td><td>sorted(a)[-2:]</td></tr><tr><td>«сумма найденных S»</td><td>sum(a)</td></tr><tr><td>«количество значений S»</td><td>len(a)</td></tr><tr><td>«одна куча»</td><td>f(s, m) и список ходов</td></tr><tr><td>«две кучи»</td><td>f(a, b, m) и четыре хода</td></tr><tr><td>«три кучи»</td><td>f((a, b, c), m)</td></tr><tr><td>«убрать или уменьшить»</td><td>terminal s ≤ N, победитель — последний ход</td></tr><tr><td>«нельзя повторять ход»</td><td>передавать last_move в рекурсию</td></tr><tr><td>«бонус один раз»</td><td>флаг used_bonus</td></tr><tr><td>«666–999 победа, &gt;999 поражение»</td><td>две terminal-зоны</td></tr><tr><td>«ответ — два числа»</td><td>записать через пробел в порядке условия</td></tr></tbody>
+    </table>
+  </div>
+</div>
+  
+<div class="video-block">
+  <p class="mini-label">Видеоразборы по теме</p>
+  <div class="video-list"><a class="video-link" href="https://vkvideo.ru/video-225440929_456239146?t=5212" target="_blank" rel="noopener noreferrer"><span class="video-label">Убрать 3 или разделить на 4</span><span class="video-meta">№ 20528 · 1:26:52</span><span class="video-host" title="VK Видео"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#0077FF" d="m9.489.004.729-.003h3.564l.73.003.914.01.433.007.418.011.403.014.388.016.374.021.36.025.345.03.333.033c1.74.196 2.933.616 3.833 1.516.9.9 1.32 2.092 1.516 3.833l.034.333.029.346.025.36.02.373.025.588.012.41.013.644.009.915.004.98-.001 3.313-.003.73-.01.914-.007.433-.011.418-.014.403-.016.388-.021.374-.025.36-.03.345-.033.333c-.196 1.74-.616 2.933-1.516 3.833-.9.9-2.092 1.32-3.833 1.516l-.333.034-.346.029-.36.025-.373.02-.588.025-.41.012-.644.013-.915.009-.98.004-3.313-.001-.73-.003-.914-.01-.433-.007-.418-.011-.403-.014-.388-.016-.374-.021-.36-.025-.345-.03-.333-.033c-1.74-.196-2.933-.616-3.833-1.516-.9-.9-1.32-2.092-1.516-3.833l-.034-.333-.029-.346-.025-.36-.02-.373-.025-.588-.012-.41-.013-.644-.009-.915-.004-.98.001-3.313.003-.73.01-.914.007-.433.011-.418.014-.403.016-.388.021-.374.025-.36.03-.345.033-.333c.196-1.74.616-2.933 1.516-3.833.9-.9 2.092-1.32 3.833-1.516l.333-.034.346-.029.36-.025.373-.02.588-.025.41-.012.644-.013.915-.009ZM6.79 7.3H4.05c.13 6.24 3.25 9.99 8.72 9.99h.31v-3.57c2.01.2 3.53 1.67 4.14 3.57h2.84c-.78-2.84-2.83-4.41-4.11-5.01 1.28-.74 3.08-2.54 3.51-4.98h-2.58c-.56 1.98-2.22 3.78-3.8 3.95V7.3H10.5v6.92c-1.6-.4-3.62-2.34-3.71-6.92Z"/></svg></span><span class="video-host-name">VK Видео</span></span></a><a class="video-link" href="https://rutube.ru/video/c9d893fd48bcf18e5c314a79dfc1b567/?t=5285" target="_blank" rel="noopener noreferrer"><span class="video-label">Убрать 3 или разделить на 3</span><span class="video-meta">№ 31227 · 1:28:05</span><span class="video-host" title="RuTube"><span class="video-host-icon"><svg viewBox="0 0 132 132" aria-hidden="true" focusable="false"><rect width="132" height="132" fill="#100943"/><circle cx="132" cy="66" r="66" fill="#ED143B"/><path fill="#fff" d="M81.5361 62.9865H42.5386V47.5547H81.5361C83.814 47.5547 85.3979 47.9518 86.1928 48.6451C86.9877 49.3385 87.4801 50.6245 87.4801 52.5031V58.0441C87.4801 60.0234 86.9877 61.3094 86.1928 62.0028C85.3979 62.6961 83.814 62.9925 81.5361 62.9925V62.9865ZM84.2115 33.0059H26V99H42.5386V77.5294H73.0176L87.4801 99H106L90.0546 77.4287C95.9333 76.5575 98.573 74.756 100.75 71.7869C102.927 68.8179 104.019 64.071 104.019 57.7359V52.7876C104.019 49.0303 103.621 46.0613 102.927 43.7857C102.233 41.51 101.047 39.5307 99.362 37.7528C97.5824 36.0698 95.6011 34.8845 93.2223 34.0904C90.8435 33.3971 87.8716 33 84.2115 33V33.0059Z"/></svg></span><span class="video-host-name">RuTube</span></span></a><a class="video-link" href="https://rutube.ru/video/7c0ebcce36a4bbbf101adb0b5aa17f1d/?t=2745" target="_blank" rel="noopener noreferrer"><span class="video-label">Убрать 2 или 5, разделить на 2</span><span class="video-meta">№ 13960 · 45:45</span><span class="video-host" title="RuTube"><span class="video-host-icon"><svg viewBox="0 0 132 132" aria-hidden="true" focusable="false"><rect width="132" height="132" fill="#100943"/><circle cx="132" cy="66" r="66" fill="#ED143B"/><path fill="#fff" d="M81.5361 62.9865H42.5386V47.5547H81.5361C83.814 47.5547 85.3979 47.9518 86.1928 48.6451C86.9877 49.3385 87.4801 50.6245 87.4801 52.5031V58.0441C87.4801 60.0234 86.9877 61.3094 86.1928 62.0028C85.3979 62.6961 83.814 62.9925 81.5361 62.9925V62.9865ZM84.2115 33.0059H26V99H42.5386V77.5294H73.0176L87.4801 99H106L90.0546 77.4287C95.9333 76.5575 98.573 74.756 100.75 71.7869C102.927 68.8179 104.019 64.071 104.019 57.7359V52.7876C104.019 49.0303 103.621 46.0613 102.927 43.7857C102.233 41.51 101.047 39.5307 99.362 37.7528C97.5824 36.0698 95.6011 34.8845 93.2223 34.0904C90.8435 33.3971 87.8716 33 84.2115 33V33.0059Z"/></svg></span><span class="video-host-name">RuTube</span></span></a><a class="video-link" href="https://rutube.ru/video/1877d89dbfae66ff56faca6144f82de8/?t=3035" target="_blank" rel="noopener noreferrer"><span class="video-label">Сложные ходы: +4, +7, ×4</span><span class="video-meta">№ 22437 · 50:35</span><span class="video-host" title="RuTube"><span class="video-host-icon"><svg viewBox="0 0 132 132" aria-hidden="true" focusable="false"><rect width="132" height="132" fill="#100943"/><circle cx="132" cy="66" r="66" fill="#ED143B"/><path fill="#fff" d="M81.5361 62.9865H42.5386V47.5547H81.5361C83.814 47.5547 85.3979 47.9518 86.1928 48.6451C86.9877 49.3385 87.4801 50.6245 87.4801 52.5031V58.0441C87.4801 60.0234 86.9877 61.3094 86.1928 62.0028C85.3979 62.6961 83.814 62.9925 81.5361 62.9925V62.9865ZM84.2115 33.0059H26V99H42.5386V77.5294H73.0176L87.4801 99H106L90.0546 77.4287C95.9333 76.5575 98.573 74.756 100.75 71.7869C102.927 68.8179 104.019 64.071 104.019 57.7359V52.7876C104.019 49.0303 103.621 46.0613 102.927 43.7857C102.233 41.51 101.047 39.5307 99.362 37.7528C97.5824 36.0698 95.6011 34.8845 93.2223 34.0904C90.8435 33.3971 87.8716 33 84.2115 33V33.0059Z"/></svg></span><span class="video-host-name">RuTube</span></span></a><a class="video-link" href="https://youtu.be/UIruSfci5Kc?t=3525" target="_blank" rel="noopener noreferrer"><span class="video-label">Одна куча: +1, +3 или ×2</span><span class="video-meta">№ 7091 · 58:45</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/IJem5v-f894?t=3220" target="_blank" rel="noopener noreferrer"><span class="video-label">Одна куча: +1 или ×2</span><span class="video-meta">№ 10102 · 53:40</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/3rNLobV07b0?t=5045" target="_blank" rel="noopener noreferrer"><span class="video-label">Две кучи: +3 или ×2</span><span class="video-meta">№ 4110 · 1:24:05</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/7oyG0Zlzi2I?t=5900" target="_blank" rel="noopener noreferrer"><span class="video-label">Две кучи: +1 или ×2</span><span class="video-meta">№ 3581 · 1:38:20</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/BMVaYPPqB2k?t=4486" target="_blank" rel="noopener noreferrer"><span class="video-label">Две кучи: +2 или ×3</span><span class="video-meta">№ 11238 · 1:14:46</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/HHxeThN-EwE?t=7522" target="_blank" rel="noopener noreferrer"><span class="video-label">Три кучи</span><span class="video-meta">№ 14954 · 2:05:22</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/w7du6qYh4TQ?t=7945" target="_blank" rel="noopener noreferrer"><span class="video-label">Убрать 10 или разделить на 2</span><span class="video-meta">№ 16266 · 2:12:25</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/A8HJbTajxVE?t=3422" target="_blank" rel="noopener noreferrer"><span class="video-label">Убрать 3 или разделить на 2</span><span class="video-meta">№ 13912 · 57:02</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/F-m3eSGDJlo?t=6430" target="_blank" rel="noopener noreferrer"><span class="video-label">Произведение и сумма</span><span class="video-meta">№ 9374 · 1:47:10</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/b4bb8xOx84g?t=6295" target="_blank" rel="noopener noreferrer"><span class="video-label">Пара чисел на табличке</span><span class="video-meta">№ 9166 · 1:44:55</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/C4vAu1dpEr8?t=10002" target="_blank" rel="noopener noreferrer"><span class="video-label">Три игрока</span><span class="video-meta">№ 10721 · 2:46:42</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a></div>
+  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+</div>
+  <p class="method-source-note">По базе Kompege: 835 задач по теме «теория игр» (в базе вся тема отмечена номером 19, поэтому статистика общая для 19–21), 62 решения (58 программных и 4 текстовых) и 239 видеоразборов (163 YouTube, 45 VK, 31 Rutube). Страницы 19, 20 и 21 объединены, потому что это одна игра с тремя вопросами. При подготовке методов использованы решения задач № 10128, 11275, 11276, 11279, 11280, 11282, 11284, 11285, 11287, 11627, 11720, 12750, 14316, 15196, 16266, 16306, 16587, 16707, 16883, 17099, 17808, 17986, 19750, 20427, 21156, 21856, 22477, 23329, 23451, 23592, 25863, 27456, 28431, 28875, 29588, 30016, 31035, 31433, 31480, 31481, 31482 и 31483; дополнительно использованы условия и видеоразборы задач № 7091, 4110, 3581, 14954, 13912, 9374, 9166, 10721, 31227, 13960, 22437 и 20528; примеры переработаны в учебные.</p>
+</section>
+    <section class="task-block" id="mistakes">
+      <h2>Типичные ошибки</h2>
+      <ul class="task-list task-list--mistakes"><li>перепутан игрок или номер хода</li><li>учтены не все ходы</li><li>неверное терминальное условие</li><li>ошибка на единицу в диапазоне S</li><li>перепутаны any и all</li><li>найдено одно значение вместо двух</li><li>не проверен порядок чисел в ответе</li></ul>
+    </section>
+    
+    
+    <section class="task-block" id="practice">
+      <h2>Практика</h2>
+      
+<div class="practice-grid">
+  <a class="practice-link" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener noreferrer">
+    <span class="practice-label">ФИПИ</span><span class="practice-title">Открытый банк заданий</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80.%20%D0%A2%D0%B5%D0%BE%D1%80%D0%B5%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D1%8B%20%D0%B8%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B8.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Навигатор · 2026</span><span class="practice-title">Теория</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/inf_11_2027/%D0%98%D0%9D%D0%A4-11%20%D0%95%D0%93%D0%AD%202027%20%D0%94%D0%95%D0%9C%D0%9E.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Демоверсия</span><span class="practice-title">КИМ 2027</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0.%202026.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Методика</span><span class="practice-title">Разбор ошибок 2026</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+</div>
+<p class="practice-note">Навигатор и методические рекомендации опубликованы в 2026 году: номера заданий в них могут отличаться от нумерации 2027 года. Ориентируйтесь на тему.</p>
+    </section>
+    
+<div class="related-links">
+  <span class="related-label">Смотрите также</span>
+  <a class="related-link" href="18.html">18 · Таблицы: анализ и оптимизация</a><a class="related-link" href="22.html">22 · Параллельные вычисления</a>
+</div>
+    <nav class="prev-next" aria-label="Соседние задания">
+      <a class="prev-next-link" href="18.html"><span>← Предыдущее</span><strong>18 · Таблицы: анализ и оптимизация</strong></a>
+      <a class="prev-next-link prev-next-link--next" href="22.html"><span>Следующее →</span><strong>22 · Параллельные вычисления</strong></a>
+    </nav>
+  </div>
+
+  <aside class="task-aside">
+    <div class="aside-card">
+      <div class="aside-head">
+        <span>Карта заданий</span>
+        <span class="map-progress" data-progress-count>0 / 27</span>
+      </div>
+      <div class="task-map task-map--compact" data-task-map><a class="task-cell task-cell--digital task-cell--compact" href="01.html" data-task="1" data-section="digital" data-title="Графы и таблицы" data-caption="&lt;strong&gt;Задание 1&lt;/strong&gt; · Графы и таблицы · Цифровая грамотность · 1 балл" aria-label="Задание 1: Графы и таблицы"><span>1</span></a><a class="task-cell task-cell--theory task-cell--compact" href="02.html" data-task="2" data-section="theory" data-title="Логические функции" data-caption="&lt;strong&gt;Задание 2&lt;/strong&gt; · Логические функции · Теория · 1 балл" aria-label="Задание 2: Логические функции"><span>2</span></a><a class="task-cell task-cell--it task-cell--compact" href="03.html" data-task="3" data-section="it" data-title="Базы данных" data-caption="&lt;strong&gt;Задание 3&lt;/strong&gt; · Базы данных · Информационные технологии · 1 балл" aria-label="Задание 3: Базы данных"><span>3</span></a><a class="task-cell task-cell--theory task-cell--compact" href="04.html" data-task="4" data-section="theory" data-title="Коды и условие Фано" data-caption="&lt;strong&gt;Задание 4&lt;/strong&gt; · Коды и условие Фано · Теория · 1 балл" aria-label="Задание 4: Коды и условие Фано"><span>4</span></a><a class="task-cell task-cell--algo task-cell--compact" href="05.html" data-task="5" data-section="algo" data-title="Алгоритмы исполнителя" data-caption="&lt;strong&gt;Задание 5&lt;/strong&gt; · Алгоритмы исполнителя · Алгоритмы · 1 балл" aria-label="Задание 5: Алгоритмы исполнителя"><span>5</span></a><a class="task-cell task-cell--algo task-cell--compact" href="06.html" data-task="6" data-section="algo" data-title="Исполнители и координаты" data-caption="&lt;strong&gt;Задание 6&lt;/strong&gt; · Исполнители и координаты · Алгоритмы · 1 балл" aria-label="Задание 6: Исполнители и координаты"><span>6</span></a><a class="task-cell task-cell--theory task-cell--compact" href="07.html" data-task="7" data-section="theory" data-title="Графика и звук" data-caption="&lt;strong&gt;Задание 7&lt;/strong&gt; · Графика и звук · Теория · 1 балл" aria-label="Задание 7: Графика и звук"><span>7</span></a><a class="task-cell task-cell--theory task-cell--compact" href="08.html" data-task="8" data-section="theory" data-title="Комбинаторика и коды" data-caption="&lt;strong&gt;Задание 8&lt;/strong&gt; · Комбинаторика и коды · Теория · 1 балл" aria-label="Задание 8: Комбинаторика и коды"><span>8</span></a><a class="task-cell task-cell--it task-cell--compact" href="09.html" data-task="9" data-section="it" data-title="Электронные таблицы" data-caption="&lt;strong&gt;Задание 9&lt;/strong&gt; · Электронные таблицы · Информационные технологии · 1 балл" aria-label="Задание 9: Электронные таблицы"><span>9</span></a><a class="task-cell task-cell--digital task-cell--compact" href="10.html" data-task="10" data-section="digital" data-title="IP-адреса и маски" data-caption="&lt;strong&gt;Задание 10&lt;/strong&gt; · IP-адреса и маски · Цифровая грамотность · 1 балл" aria-label="Задание 10: IP-адреса и маски"><span>10</span></a><a class="task-cell task-cell--theory task-cell--compact" href="11.html" data-task="11" data-section="theory" data-title="Объём сообщения" data-caption="&lt;strong&gt;Задание 11&lt;/strong&gt; · Объём сообщения · Теория · 1 балл" aria-label="Задание 11: Объём сообщения"><span>11</span></a><a class="task-cell task-cell--algo task-cell--compact" href="12.html" data-task="12" data-section="algo" data-title="Исполнитель МТ" data-caption="&lt;strong&gt;Задание 12&lt;/strong&gt; · Исполнитель МТ · Алгоритмы · 1 балл" aria-label="Задание 12: Исполнитель МТ"><span>12</span></a><a class="task-cell task-cell--algo task-cell--compact" href="13.html" data-task="13" data-section="algo" data-title="Ход исполнения алгоритма" data-caption="&lt;strong&gt;Задание 13&lt;/strong&gt; · Ход исполнения алгоритма · Алгоритмы · 1 балл" aria-label="Задание 13: Ход исполнения алгоритма"><span>13</span></a><a class="task-cell task-cell--theory task-cell--compact" href="14.html" data-task="14" data-section="theory" data-title="Системы счисления" data-caption="&lt;strong&gt;Задание 14&lt;/strong&gt; · Системы счисления · Теория · 1 балл" aria-label="Задание 14: Системы счисления"><span>14</span></a><a class="task-cell task-cell--theory task-cell--compact" href="15.html" data-task="15" data-section="theory" data-title="Логика и множества" data-caption="&lt;strong&gt;Задание 15&lt;/strong&gt; · Логика и множества · Теория · 1 балл" aria-label="Задание 15: Логика и множества"><span>15</span></a><a class="task-cell task-cell--algo task-cell--compact" href="16.html" data-task="16" data-section="algo" data-title="Рекурсия" data-caption="&lt;strong&gt;Задание 16&lt;/strong&gt; · Рекурсия · Алгоритмы · 1 балл" aria-label="Задание 16: Рекурсия"><span>16</span></a><a class="task-cell task-cell--algo task-cell--compact" href="17.html" data-task="17" data-section="algo" data-title="Обработка последовательности" data-caption="&lt;strong&gt;Задание 17&lt;/strong&gt; · Обработка последовательности · Алгоритмы · 1 балл" aria-label="Задание 17: Обработка последовательности"><span>17</span></a><a class="task-cell task-cell--it task-cell--compact" href="18.html" data-task="18" data-section="it" data-title="Таблицы: анализ и оптимизация" data-caption="&lt;strong&gt;Задание 18&lt;/strong&gt; · Таблицы: анализ и оптимизация · Информационные технологии · 1 балл" aria-label="Задание 18: Таблицы: анализ и оптимизация"><span>18</span></a><a class="task-cell task-cell--theory is-current task-cell--merged task-cell--compact" href="19.html" data-task="19" data-section="theory" data-title="Теория игр" data-caption="&lt;strong&gt;Задание 19&lt;/strong&gt; · Теория игр · Теория · 1 балл" aria-label="Задание 19: Теория игр"><span>19</span></a><a class="task-cell task-cell--theory is-current task-cell--merged task-cell--compact" href="19.html#subtask-20" data-task="20" data-section="theory" data-title="Теория игр: две кучи" data-caption="&lt;strong&gt;Задание 20&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 20: Теория игр: две кучи"><span>20</span></a><a class="task-cell task-cell--theory is-current task-cell--merged task-cell--compact" href="19.html#subtask-21" data-task="21" data-section="theory" data-title="Теория игр: стратегия" data-caption="&lt;strong&gt;Задание 21&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 21: Теория игр: стратегия"><span>21</span></a><a class="task-cell task-cell--theory task-cell--compact" href="22.html" data-task="22" data-section="theory" data-title="Параллельные вычисления" data-caption="&lt;strong&gt;Задание 22&lt;/strong&gt; · Параллельные вычисления · Теория · 1 балл" aria-label="Задание 22: Параллельные вычисления"><span>22</span></a><a class="task-cell task-cell--theory task-cell--compact" href="23.html" data-task="23" data-section="theory" data-title="Графы: пути" data-caption="&lt;strong&gt;Задание 23&lt;/strong&gt; · Графы: пути · Теория · 1 балл" aria-label="Задание 23: Графы: пути"><span>23</span></a><a class="task-cell task-cell--algo task-cell--compact" href="24.html" data-task="24" data-section="algo" data-title="Символьные строки" data-caption="&lt;strong&gt;Задание 24&lt;/strong&gt; · Символьные строки · Алгоритмы · 1 балл" aria-label="Задание 24: Символьные строки"><span>24</span></a><a class="task-cell task-cell--algo task-cell--compact" href="25.html" data-task="25" data-section="algo" data-title="Натуральные числа" data-caption="&lt;strong&gt;Задание 25&lt;/strong&gt; · Натуральные числа · Алгоритмы · 1 балл" aria-label="Задание 25: Натуральные числа"><span>25</span></a><a class="task-cell task-cell--algo task-cell--compact" href="26.html" data-task="26" data-section="algo" data-title="Массив: сортировка" data-caption="&lt;strong&gt;Задание 26&lt;/strong&gt; · Массив: сортировка · Алгоритмы · 2 балла" aria-label="Задание 26: Массив: сортировка"><span>26</span></a><a class="task-cell task-cell--it task-cell--compact" href="27.html" data-task="27" data-section="it" data-title="Анализ данных" data-caption="&lt;strong&gt;Задание 27&lt;/strong&gt; · Анализ данных · Информационные технологии · 2 балла" aria-label="Задание 27: Анализ данных"><span>27</span></a></div>
+      <a class="aside-link" href="index.html">Все задания <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="aside-card aside-card--progress">
+      <p class="aside-label">Прогресс</p>
+      <button class="btn btn-primary progress-toggle" type="button" data-progress-toggle="19,20,21" aria-pressed="false">Отметить как изученное</button>
+      <p class="progress-note" data-progress-text>0 из 27 изучено</p>
+      <div class="progress-line" aria-hidden="true"><span data-progress-bar></span></div>
+    </div>
+    <div class="aside-card">
+      <p class="aside-label">Быстрые ссылки</p>
+      <a class="aside-link" href="../documents.html#kim2027">Демоверсия 2027 <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html#method">Навигатор и методика <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html">Все документы <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-mark">ЕГЭ · Информатика · 2027</p>
+      <p class="footer-note">Разбор заданий, ключевые темы и официальные документы. Составлено 3 ноября 2026. Не является официальным ресурсом ФИПИ или Рособрнадзора.</p>
+    </div>
+    <div>
+      <p class="footer-title">Разделы</p>
+      <p class="footer-note"><a href="../index.html">Главная</a> · <a href="../tasks/index.html">Все задания</a> · <a href="../documents.html">Документы</a></p>
+      <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
+    </div>
+    <div>
+      <p class="footer-title">Первоисточники</p>
+      <p class="footer-note"><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ</a> · <a href="https://obrnadzor.gov.ru/gia/gia-11/" target="_blank" rel="noopener noreferrer">Рособрнадзор</a> · <a href="https://regulation.gov.ru/projects/172223/" target="_blank" rel="noopener noreferrer">проект расписания</a></p>
+      <p class="footer-note">Права на документы принадлежат их правообладателям. Копии сохранены для ознакомления и подготовки.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>

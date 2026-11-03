@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Задание 5 ЕГЭ по информатике — Алгоритмы исполнителя</title>
+<meta name="description" content="Разобрать алгоритм, который строит R по записи N, и найти подходящее N, R или их количество. Теория, способы решения и типичные ошибки. ЕГЭ-2027, информатика.">
+<meta name="theme-color" content="#F0F1EB">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">К содержанию</a>
+
+<header class="topbar">
+  <a class="brand" href="../index.html" aria-label="На главную">
+    <span class="brand-mark" aria-hidden="true">И</span>
+    <span class="brand-text">ЕГЭ · Информатика<small>подготовка по заданиям</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Основная навигация">
+    <a href="../index.html">Главная</a>
+    <a href="../tasks/index.html" class="is-active" aria-current="page">Задания</a>
+    <a href="../documents.html">Документы</a>
+  </nav>
+  <div class="topbar-meta"><span>Задание 5 из 27</span><span>Алгоритмы</span></div>
+</header>
+<main id="main">
+
+<nav class="breadcrumb" aria-label="Хлебные крошки"><a href="../index.html">Главная</a><span class="crumb-sep">/</span><a href="index.html">Задания</a><span class="crumb-sep">/</span><span aria-current="page">Задание 5</span></nav>
+
+<section class="task-hero">
+  <div class="task-number" aria-hidden="true">05</div>
+  <div class="task-hero-copy">
+    <p class="eyebrow">Алгоритмы и программирование · 1 балл</p>
+    <h1>Алгоритмы исполнителя</h1>
+    <p class="task-subtitle">Запись числа и новое число R</p>
+    <p class="lead">Разобрать алгоритм, который строит R по записи N, и найти подходящее N, R или их количество.</p>
+    <div class="task-badges">
+      <span class="badge badge-section badge-section--algo">Алгоритмы</span>
+      <span class="badge badge-answer">целое число</span>
+      
+    </div>
+  </div>
+</section>
+
+
+<nav class="task-toc" aria-label="На странице задания">
+  <span class="task-toc-label">На странице</span>
+  
+  <a href="#theory">Теория</a>
+  <a href="#methods">Способы решения</a>
+  <a href="#mistakes">Ошибки</a>
+  <a href="#practice">Практика</a>
+</nav>
+
+<div class="task-layout">
+  <div class="task-main">
+    
+    
+    <section class="task-block">
+      <h2>Что проверяет</h2>
+      <p class="task-checked">Определение возможных результатов работы простейших алгоритмов управления исполнителями и вычислительных алгоритмов. Определение исходных данных, при которых алгоритм может дать требуемый результат.</p>
+      <p class="task-source">Основание: проект спецификации и кодификатора КИМ 2027. <a href="../documents.html#kim2027">Открыть документы <span aria-hidden="true">↗</span></a></p>
+    </section>
+    
+    
+<section class="task-block task-block--theory" id="theory">
+  <div class="block-head">
+    <p class="eyebrow">Теория</p>
+    <h2>Что нужно знать</h2>
+    <p class="block-lead">Задание 5 проверяет умение читать формальный алгоритм, который строит новое число R по записи исходного N, и находить N, R или их количество. В 2027 году формулировка прежняя: 1 первичный балл, раздел «Алгоритмы и программирование».</p>
+  </div>
+  <div class="theory-checklist">
+    <p class="mini-label">Минимум для задания 5</p>
+    <ul class="check-list"><li>что подаётся на вход и что выводится на экран</li><li>в какой системе счисления ведётся запись</li><li>как перевести N в p-ичную запись и обратно</li><li>какие действия выполняются над записью</li><li>от чего зависит ветвление алгоритма</li><li>что значит «дописать слева» и «дописать справа»</li><li>как ведут себя ведущие нули</li><li>что именно нужно найти: N, R или количество</li><li>где границы строгие, а где нестрогие</li><li>в какой системе записать ответ</li></ul>
+  </div>
+  <div class="theory-grid">
+<article class="theory-card">
+  <h3>Как устроено задание 5</h3>
+  <p>Дан короткий алгоритм: он получает натуральное число N и строит по нему новое число R. Почти всегда работа идёт с записью N в некоторой системе счисления: запись преобразуют, а результат читают как число в той же или другой системе. Нужно либо выполнить алгоритм, либо восстановить N по известному R.</p>
+  <ul class="theory-list"><li>Вход — натуральное N, иногда с ограничением: двузначное, N &gt; 9, 100 ≤ N ≤ 200.</li><li>Шаг 1 — перевод N в систему счисления с основанием p: 2, 3, 4, 5, 6, 7, 8, 16, 20, 25, 32, 36.</li><li>Шаг 2 — действия над записью: дописать, приписать, заменить, переставить, перевернуть, удалить разряды.</li><li>Шаг 3 — перевод записи обратно в десятичную систему: это и есть R.</li><li>Вопрос — про N или про R: минимум, максимум, количество, ближайшее значение, кратность.</li><li>Ответ — целое число; иногда его просят записать в недесятичной системе.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Запись числа в системе счисления</h3>
+  <p>Позиционная запись — это сумма степеней основания. Цифра в каждом разряде показывает, сколько раз соответствующая степень p входит в число. Одна и та же последовательность цифр в разных системах означает разные числа.</p>
+  <ul class="theory-list"><li>В p-ичной системе допустимы цифры от 0 до p − 1: число, записанное как 12 в пятеричной системе, равно 7, а в двоичной такой записи не существует.</li><li>Ведущий ноль не считается разрядом: 012 и 12 — одно и то же число.</li><li>k-разрядные числа лежат в диапазоне от p^(k−1) до p^k − 1.</li><li>Для p &gt; 10 цифры после 9 обозначают буквами: A = 10, B = 11, … Z = 35.</li><li>Порядок букв иногда задают в условии — тогда int(s, p) не подойдёт, переводите вручную.</li></ul>
+  <div class="formula-inline"><code>N = d(k−1)·p^(k−1) + … + d1·p + d0</code><code>k = ⌊log_p N⌋ + 1</code></div>
+</article>
+<article class="theory-card">
+  <h3>Перевод в p-ичную запись и обратно</h3>
+  <p>Перевод в p-ичную запись — это последовательное деление на p: остатки дают цифры от младшей к старшей. Обратный перевод — умножение на p и сложение, либо готовая функция int(s, p).</p>
+  <ul class="theory-list"><li>Делите N на p, пока не получится 0; остатки читайте в обратном порядке.</li><li>В Python bin(n)[2:], oct(n)[2:] и hex(n)[2:] отбрасывают префиксы 0b, 0o и 0x.</li><li>Универсальная функция: while n: s = str(n % p) + s; n //= p.</li><li>Обратно: int(s, p). Для цифр-букв основание не больше 36.</li><li>Ручная проверка: запись 123 в системе p равна 1·p² + 2·p + 3.</li></ul>
+  <div class="formula-inline"><code>N mod p — младшая цифра</code><code>N // p — оставшиеся разряды</code><code>int(s, p) — обратный перевод</code></div>
+</article>
+<article class="theory-card">
+  <h3>Действия над записью</h3>
+  <p>Все преобразования — это операции над строкой цифр. Полезно помнить их арифметический смысл: приписывание разряда сдвигает число, а не просто добавляет цифру.</p>
+  <ul class="theory-list"><li>Дописать цифру d справа: для промежуточного числа N&#x27; это N&#x27;·p + d.</li><li>Приписать блок T справа: N&#x27;·p^|T| + int(T, p).</li><li>Приписать блок T слева: int(T, p)·p^|S| + N&#x27;.</li><li>Перевернуть: s[::-1]; поменять первую и последнюю: s[-1] + s[1:-1] + s[0].</li><li>Удалить разряды: срез s[:-2] или s[2:]; продублировать: s + s[-2:].</li><li>Заменить цифры: s.replace(&#x27;1&#x27;, &#x27;2&#x27;); циклическую замену делайте через временный символ.</li></ul>
+  <div class="formula-inline"><code>S + d → N&#x27;·p + d</code><code>S + T → N&#x27;·p^|T| + int(T, p)</code><code>T + S → int(T, p)·p^|S| + N&#x27;</code></div>
+</article>
+<article class="theory-card">
+  <h3>Условия ветвления</h3>
+  <p>Алгоритм выбирает ветку по свойству числа N или его записи. Ошибка в определении ветки — самая частая причина неверного ответа, поэтому сначала выпишите условие, а потом выполняйте действия.</p>
+  <ul class="theory-list"><li>Свойства N: чётность, кратность k, простота, попадание в диапазон.</li><li>Свойства записи: сумма цифр, количество единиц или нулей, первая и последняя цифра, палиндром, число разрядов.</li><li>Смотрите, о какой системе речь: сумма цифр двоичной и сумма цифр десятичной записи — разные вещи.</li><li>Условие «делится на 4» относится к N, а не к записи.</li><li>Если ветки похожи, выпишите их в две колонки и сравните, что именно меняется.</li></ul>
+  
+</article>
+<article class="theory-card">
+  <h3>Ведущие нули, длина и недостижимые R</h3>
+  <p>После переворота, замены или сдвига в начале записи могут появиться нули. Они не меняют число, но меняют длину строки, а от длины зависит, куда приписывается следующий блок. Поэтому либо удаляйте нули явно, либо сразу переводите запись в число.</p>
+  <ul class="theory-list"><li>int(s, p) сам отбрасывает ведущие нули.</li><li>Если нужна длина без ведущих нулей: len(s.lstrip(&#x27;0&#x27;)).</li><li>Не всякое число между двумя результатами достижимо: R — образ алгоритма, а не отрезок.</li><li>Проверяя «минимальное R &gt; A», перебирайте N, а не A + 1.</li><li>Для «ближайшего к A» сравнивайте abs(r − A), а не только r &gt; A.</li></ul>
+  <div class="formula-inline"><code>|R| = |N| + k после приписывания k разрядов</code></div>
+</article>
+<article class="theory-card">
+  <h3>Границы перебора</h3>
+  <p>Почти все задачи 5 решаются перебором N, но диапазон нужно оценивать, чтобы не перебирать лишнего и не остановиться раньше времени. Приписывание k разрядов умножает число примерно на p^k.</p>
+  <ul class="theory-list"><li>Один разряд: R ≈ N·p; два разряда: R ≈ N·p²; три: R ≈ N·p³.</li><li>Если R &lt; B, то N примерно меньше B / p^k — берём диапазон с запасом в 2–3 раза.</li><li>Если N ограничено (N ≤ 1000), перебирайте ровно этот диапазон.</li><li>10^5–10^7 простых итераций Python проходит за секунды.</li><li>Для «наибольшего N» нельзя прерывать цикл на первом подходящем: нужен максимум.</li><li>Проверяйте верхнюю границу: иногда ответ упирается именно в неё.</li></ul>
+  <div class="formula-inline"><code>R ≈ N·p^k</code><code>N ≈ R / p^k</code><code>N ≤ p^k − 1 для k-разрядного N</code></div>
+</article>
+<article class="theory-card">
+  <h3>Проверка и формат ответа</h3>
+  <p>Ответ в задании 5 — целое число, но перед записью полезно сделать обратную проверку: подставить найденное N в алгоритм и убедиться, что получается нужное R.</p>
+  <ul class="theory-list"><li>Перечитайте вопрос: просят N или R, минимум или максимум, количество или сумму.</li><li>Проверьте строгость границ: «больше 250» и «не меньше 250» — разные условия.</li><li>Сверьтесь с примером из условия, если он дан: он проверяет понимание правила.</li><li>Если ответ просят в p-ичной системе, переведите его и запишите цифры без пробелов.</li><li>Буквы в ответе записывайте так, как указано в условии, обычно заглавными.</li><li>Не округляйте и не отбрасывайте разряды, если этого нет в правиле.</li></ul>
+  
+</article></div>
+  
+<div class="theory-example">
+  <div class="block-head block-head--small">
+    <p class="eyebrow">Разбор примера</p>
+    <h3>Учебный пример: четверичная запись и граница R</h3>
+    <p>Автомат получает натуральное число N. 1) Строится четверичная запись N. 2) Если N делится на 4, к записи справа дописываются две последние цифры. 3) Если N на 4 не делится, остаток от деления умножается на 4, переводится в четверичную запись и дописывается справа. 4) Результат переводится в десятичную систему. Найдите минимальное R, большее 250.</p>
+  </div>
+  <div class="theory-example-grid theory-example-grid--single"><div class="table-wrap"><table class="example-table">
+  <caption>Работа алгоритма для небольших N</caption>
+  <thead><tr><th>N</th><th>Запись N в 4-чной</th><th>Ветка</th><th>Дописываем</th><th>Запись R</th><th>R</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>1</td><td>остаток 1</td><td>10</td><td>110</td><td>20</td></tr>
+    <tr><td>2</td><td>2</td><td>остаток 2</td><td>20</td><td>220</td><td>40</td></tr>
+    <tr><td>3</td><td>3</td><td>остаток 3</td><td>30</td><td>330</td><td>60</td></tr>
+    <tr><td>4</td><td>10</td><td>делится на 4</td><td>10</td><td>1010</td><td>68</td></tr>
+    <tr><td>5</td><td>11</td><td>остаток 1</td><td>10</td><td>1110</td><td>84</td></tr>
+    <tr><td>6</td><td>12</td><td>остаток 2</td><td>20</td><td>1220</td><td>104</td></tr>
+    <tr><td>7</td><td>13</td><td>остаток 3</td><td>30</td><td>1330</td><td>124</td></tr>
+    <tr><td>8</td><td>20</td><td>делится на 4</td><td>20</td><td>2020</td><td>136</td></tr>
+    <tr><td>14</td><td>32</td><td>остаток 2</td><td>20</td><td>3220</td><td>232</td></tr>
+    <tr><td>15</td><td>33</td><td>остаток 3</td><td>30</td><td>3330</td><td>252</td></tr>
+    <tr><td>16</td><td>100</td><td>делится на 4</td><td>00</td><td>10000</td><td>256</td></tr>
+  </tbody>
+</table></div></div>
+  <ol class="task-steps"><li>Разбираем правило по шагам: перевод в четверичную запись, дописывание, обратный перевод.</li><li>Для маленьких N видно, что R примерно в 16 раз больше N: дописываются два разряда, значит R ≈ 16N.</li><li>Поэтому граница 250 достигается около N = 250 / 16 ≈ 15,6.</li><li>Проверяем N = 14: запись 32, дописываем 20, получаем 3220 в четверичной — это 232.</li><li>Проверяем N = 15: запись 33, дописываем 30, получаем 3330 в четверичной — это 252.</li><li>Следующее значение N = 16 даёт 256. Перебор подтверждает, что минимальное R, большее 250, равно 252: числа 250 и 251 недостижимы.</li></ol>
+  <p class="example-answer"><span>Ответ</span>252 (при N = 15).</p>
+</div>
+</section>
+    
+<section class="task-block task-block--methods" id="methods">
+  <div class="block-head">
+    <p class="eyebrow">Способы решения</p>
+    <h2>Выберите метод под формулировку</h2>
+    <p class="block-lead">Методы собраны по решениям задания 5 из базы Kompege. Начните с того, что именно нужно найти в условии.</p>
+  </div>
+  <div class="methods-list">
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">01</span>
+    <div>
+      <p class="eyebrow">универсальный способ</p>
+      <h3>Универсальный шаблон: функция и перебор</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Правило записано по шагам, а вопрос — про N, R или их количество.</p>
+  <ol class="task-steps"><li>Оформите алгоритм функцией f(n): перевод в p-ичную запись, обработка строки, обратный перевод.</li><li>Определите, что возвращает функция — число N или число R.</li><li>Задайте диапазон перебора с запасом: обычно достаточно 1..10^6.</li><li>В цикле отфильтруйте подходящие значения: r &gt; A, r &lt; B, r % k == 0.</li><li>Соберите кандидатов в список или множество и выберите min, max или len.</li><li>Сверьте ответ с примером из условия и сделайте обратную подстановку.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 25970 строится пятиричная запись N. Если N делится на 5, слева дописывается 12, а справа 03; иначе слева 4, а справа 10. Нужно минимальное R, большее 1207. Перебор даёт N = 6: запись 11, после обработки 41110 в пятеричной системе, то есть 2655. При N = 5 получается 4503, а при N &lt; 5 — меньше 1207, поэтому минимальное подходящее R равно 2655.</p>
+  <pre class="code-block"><code>def base(n, p):
+    s = &#x27;&#x27;
+    while n:
+        s = str(n % p) + s
+        n //= p
+    return s or &#x27;0&#x27;
+
+def f(n):
+    s = base(n, 5)
+    if n % 5 == 0:
+        s = &#x27;12&#x27; + s + &#x27;03&#x27;
+    else:
+        s = &#x27;4&#x27; + s + &#x27;10&#x27;
+    return int(s, 5)
+
+best = None
+for n in range(1, 10**6):
+    r = f(n)
+    if r &gt; 1207 and (best is None or r &lt; best):
+        best = r
+print(best)  # 2655</code></pre>
+  <p class="method-answer"><span>Ответ</span>2655</p>
+</div>
+  <p class="method-source">По мотивам задачи № 25970 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">02</span>
+    <div>
+      <p class="eyebrow">когда ответ — число N</p>
+      <h3>Обратный ход: найти N по ограничению на R</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Спрашивают наибольшее или наименьшее N, при котором R попадает в диапазон или равно заданному числу.</p>
+  <ol class="task-steps"><li>Реализуйте f(n), возвращающую R.</li><li>Оцените границы: R ≈ N·p^k, значит N ≈ R / p^k.</li><li>Переберите N в этих границах с запасом.</li><li>Отфильтруйте N по условию на R.</li><li>Для «наибольшего N» возьмите максимум, для «наименьшего» — минимум.</li><li>Подставьте найденное N в алгоритм и проверьте R.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 25973: четверичная запись; если N делится на 4, слева приписываются первые две цифры, иначе справа дописывается четверичная запись (N mod 4)·4. Нужно наибольшее N, при котором R &lt; 784. Для N = 47 запись 233, дописываем 30 и получаем 23330 в четверичной — это 764. Для N = 48 запись 300, слева приписываем 30 и получаем 30300 — это 816, уже больше 784.</p>
+  
+  <p class="method-answer"><span>Ответ</span>47</p>
+</div>
+  <p class="method-source">По мотивам задачи № 25973 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">03</span>
+    <div>
+      <p class="eyebrow">когда ответ — число R</p>
+      <h3>Найти R при ограничении на N</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Задано ограничение на N: диапазон, число разрядов или «N не больше».</p>
+  <ol class="task-steps"><li>Выпишите границы N из условия.</li><li>Переберите только эти N, не расширяя диапазон без нужды.</li><li>Для каждого N посчитайте R по правилу.</li><li>Примените дополнительное условие: чётность, кратность, простота, палиндром.</li><li>Выберите минимальное или максимальное подходящее R.</li><li>Сравните результат с примерами, которые даны в условии.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 16308 строится троичная запись. Если N кратно 3, справа дописывается 02; иначе слева приписывается 1, а справа 2. Нужно максимальное R &lt; 167. Для N = 18 запись 200, дописываем 02 и получаем 20002 в троичной — это 164. Остальные подходящие значения меньше: N = 19 даёт 140, N = 20 — 143, N = 21 — уже 191 и не подходит. Поэтому максимум равен 164.</p>
+  
+  <p class="method-answer"><span>Ответ</span>164</p>
+</div>
+  <p class="method-source">По мотивам задачи № 16308 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">04</span>
+    <div>
+      <p class="eyebrow">когда сказано «заменяются» или «меняются местами»</p>
+      <h3>Замена цифр и перестановки</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Правило заменяет одни цифры на другие, меняет первую и последнюю или переставляет разряды.</p>
+  <ol class="task-steps"><li>Выпишите замену парами: 0 → 1, 1 → 2, 2 → 0.</li><li>Для циклической замены (1 ↔ 2) используйте временный символ: replace(&#x27;1&#x27;, &#x27;*&#x27;), replace(&#x27;2&#x27;, &#x27;1&#x27;), replace(&#x27;*&#x27;, &#x27;2&#x27;).</li><li>Для обмена первой и последней цифры: s[-1] + s[1:-1] + s[0].</li><li>Для соседних разрядов используйте срезы и конкатенацию.</li><li>Проверьте ведущие нули: после замены или перестановки они могут появиться.</li><li>Переведите результат обратно в десятичную систему и сравните с условием.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 21473 строится троичная запись. Если сумма цифр кратна 4, все 1 и 2 меняются местами, а слева дописывается 10. Иначе справа дописывается 20, а второй и третий разряды заменяются на 0 и 2. Нужно максимальное N, дающее наименьшее R &gt; 302. Наименьшее такое R равно 303, оно получается при N = 27, 30, 33, 36, 39, 45 и 51.</p>
+  
+  <p class="method-answer"><span>Ответ</span>51</p>
+</div>
+  <p class="method-source">По мотивам задачи № 21473 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">05</span>
+    <div>
+      <p class="eyebrow">когда запись переворачивают или дублируют</p>
+      <h3>Переворот, дублирование и срезы</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Правило переворачивает запись, дублирует её, удаляет или сдвигает разряды.</p>
+  <ol class="task-steps"><li>Разложите правило на операции: s[::-1], s + s, s + s[:2], s[2:].</li><li>Помните, что s[::-1] переворачивает всю строку, включая ведущие нули.</li><li>Если сказано «удалить незначащие нули», сразу переводите запись в число через int(s, p).</li><li>При приписывании слева порядок важен: T + S и S + T дают разные числа.</li><li>Считайте R через int(s, p) после всех операций.</li><li>Проверьте пример из условия: он обычно показывает оба случая.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 23603 строится двоичная запись. Если N делится на 4, запись дублируется справа; иначе перевёрнутая запись приписывается слева. Нужно минимальное R, большее 3600. Для N = 56 запись 111000, дублируем и получаем 111000111000 в двоичной — это 3640.</p>
+  
+  <p class="method-answer"><span>Ответ</span>3640 (при N = 56).</p>
+</div>
+  <p class="method-source">По мотивам задачи № 23603 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">06</span>
+    <div>
+      <p class="eyebrow">когда работают с цифрами самого N</p>
+      <h3>Десятичные цифры: сумма, произведение, максимум</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Алгоритм считает сумму, произведение, максимум или минимум цифр десятичной записи, а не переводит N в другую систему.</p>
+  <ol class="task-steps"><li>Получите цифры числа: [int(c) for c in str(n)].</li><li>Посчитайте нужные величины: sum, max, min, среднее, произведение.</li><li>Соберите новое число по правилу: склейте строки в нужном порядке.</li><li>Сортируйте так, как сказано: числа по возрастанию или строки лексикографически.</li><li>Аккуратно с нулями: обычное произведение с нулём даёт 0, а «произведение ненулевых цифр» — нет.</li><li>Переберите N и сверьте ответ с примером из условия.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 25091 по цифрам N считаются S, целая часть среднего A, разности S − max и S − min, затем они записываются в порядке неубывания, а слева дописывается произведение ненулевых цифр результата. Нужно наименьшее N, у которого сумма цифр R равна 41. Для N = 189: S = 18, A = 6, D1 = 9, D2 = 17, получается 6917, произведение 6·9·1·7 = 378, значит R = 3786917, а сумма его цифр равна 41.</p>
+  
+  <p class="method-answer"><span>Ответ</span>189</p>
+</div>
+  <p class="method-source">По мотивам задачи № 25091 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">07</span>
+    <div>
+      <p class="eyebrow">когда спрашивают «сколько»</p>
+      <h3>Количество чисел и различных R</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Нужно посчитать количество подходящих N или количество различных R.</p>
+  <ol class="task-steps"><li>Определите, что считают: N, R или пары значений.</li><li>Для количества N используйте счётчик в цикле.</li><li>Для количества различных R используйте множество set().</li><li>Не путайте len(set) с числом подходящих N: одно R может получаться несколькими способами.</li><li>Проверьте границы диапазона: включительно или исключительно.</li><li>Оцените время: миллион простых итераций для Python — норма.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 28330 N меняется от 500 до 700. Строится двоичная запись числа N − (N mod 4), затем слева дописывается 10, если количество единиц в двоичной записи N кратно 4, иначе 11. Нужно количество различных R. Собираем результаты в множество: получается 91 различное число, хотя N в диапазоне 201.</p>
+  
+  <p class="method-answer"><span>Ответ</span>91</p>
+</div>
+  <p class="method-source">По мотивам задачи № 28330 (база Kompege).</p>
+</article>
+<article class="method-card">
+  <header class="method-head">
+    <span class="method-num">08</span>
+    <div>
+      <p class="eyebrow">когда p = 17, 19, 20, 25, 30, 32, 36</p>
+      <h3>Основания больше 10 и свой алфавит</h3>
+    </div>
+  </header>
+  <p class="method-when"><strong>Когда использовать:</strong> Основание больше 10, и цифры записывают латинскими буквами.</p>
+  <ol class="task-steps"><li>Выпишите алфавит: 0–9, затем A–Z. Иногда порядок букв задан в условии.</li><li>При переводе остаток n % p — это индекс символа в алфавите.</li><li>Обратный перевод: int(s, p) при стандартном алфавите, иначе считайте вручную.</li><li>При замене цифр работайте с индексом символа, а не с int(c).</li><li>Следите, что цифра меньше основания: в 20-ричной системе нет цифры T.</li><li>Ответ в p-ичной системе записывайте заглавными буквами без пробелов.</li></ol>
+  
+  
+<div class="method-example">
+  <p class="mini-label">Пример</p>
+  <p>В задаче № 19913 строится 20-ричная запись, каждая цифра увеличивается на 1 по модулю 20, а в начало записывается последняя цифра двоичной записи N. Нужно наименьшее N, у которого результат содержит не менее трёх разрядов и хотя бы две буквы. Для N = 189 запись 99, после увеличения AA, последняя двоичная цифра 1, итог 1AA.</p>
+  
+  <p class="method-answer"><span>Ответ</span>189 (результат 1AA в 20-ричной системе).</p>
+</div>
+  <p class="method-source">По мотивам задачи № 19913 (база Kompege).</p>
+</article></div>
+  
+<div class="cheatsheet">
+  <p class="mini-label">Шпаргалка: формулировка → метод</p>
+  <div class="cheatsheet-wrap">
+    <table class="cheatsheet-table">
+      <thead><tr><th>В условии</th><th>Что делать</th></tr></thead>
+      <tbody><tr><td>«наименьшее N»</td><td>перебор по возрастанию, первое подходящее</td></tr><tr><td>«наибольшее N, при котором R &lt; B»</td><td>перебор N, фильтр по R, максимум</td></tr><tr><td>«минимальное R, большее A»</td><td>перебор N, минимум среди R &gt; A</td></tr><tr><td>«сколько существует N»</td><td>счётчик подходящих значений</td></tr><tr><td>«сколько различных R»</td><td>множество set и его длина</td></tr><tr><td>«R кратно, простое или палиндром»</td><td>проверка после перевода в десятичную</td></tr><tr><td>«дописывается справа»</td><td>s + d, то есть N·p + d</td></tr><tr><td>«дописывается слева»</td><td>d + s, старшие разряды</td></tr><tr><td>«переворачивается»</td><td>s[::-1], незначащие нули исчезают</td></tr><tr><td>«основание больше 10»</td><td>алфавит 0–9, A–Z; int(s, p)</td></tr><tr><td>«ответ в системе счисления»</td><td>перевести и записать без пробелов</td></tr></tbody>
+    </table>
+  </div>
+</div>
+  
+<div class="video-block">
+  <p class="mini-label">Видеоразборы по теме</p>
+  <div class="video-list"><a class="video-link" href="https://youtu.be/fYxg0H0wTr8?t=1520" target="_blank" rel="noopener noreferrer"><span class="video-label">Дописывание разрядов в двоичной записи</span><span class="video-meta">№ 4 · 25:20</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/_wahePzTf3Q?t=1203" target="_blank" rel="noopener noreferrer"><span class="video-label">Восьмибитная запись и инверсия</span><span class="video-meta">№ 262 · 20:03</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/8T24N0ybjks?t=1423" target="_blank" rel="noopener noreferrer"><span class="video-label">Переворот записи и ведущие нули</span><span class="video-meta">№ 713 · 23:43</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/act5r2CwqCQ?t=1108" target="_blank" rel="noopener noreferrer"><span class="video-label">Замена цифр в записи</span><span class="video-meta">№ 13407 · 18:28</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/z5vfpkFuwwk?t=1453" target="_blank" rel="noopener noreferrer"><span class="video-label">Наибольшее и наименьшее число из цифр</span><span class="video-meta">№ 206 · 24:13</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a><a class="video-link" href="https://youtu.be/BH9CYGLqnL4?t=475" target="_blank" rel="noopener noreferrer"><span class="video-label">Сумма цифр и дописывание остатка</span><span class="video-meta">№ 4585 · 7:55</span><span class="video-host" title="YouTube"><span class="video-host-icon"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span><span class="video-host-name">YouTube</span></span></a></div>
+  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+</div>
+  <p class="method-source-note">По базе Kompege: 1 157 задач, 84 решения (81 программное и 3 текстовых) и 294 видеоразбора по заданию 5. При подготовке методов использованы решения задач № 25970, 25973, 16308, 21473, 23603, 25091, 28330 и 19913; примеры переработаны в учебные.</p>
+</section>
+    <section class="task-block" id="mistakes">
+      <h2>Типичные ошибки</h2>
+      <ul class="task-list task-list--mistakes"><li>путаются N и R</li><li>неверная система счисления</li><li>не учтена строгость границ</li><li>забыты незначащие нули</li><li>перебор остановлен слишком рано</li></ul>
+    </section>
+    
+<section class="task-block">
+  <h2>Ключевые формулы</h2>
+  <ul class="formula-list"><li><code>N = Σ d(i) · p^i — развёрнутая запись</code></li><li><code>int(s, p) — перевод записи в десятичную</code></li><li><code>S + d → N&#x27; · p + d — дописать цифру справа</code></li><li><code>R ≈ N · p^k — рост после k приписанных разрядов</code></li></ul>
+</section>
+    
+    <section class="task-block" id="practice">
+      <h2>Практика</h2>
+      
+<div class="practice-grid">
+  <a class="practice-link" href="https://ege.fipi.ru/bank/" target="_blank" rel="noopener noreferrer">
+    <span class="practice-label">ФИПИ</span><span class="practice-title">Открытый банк заданий</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9D%D0%B0%D0%B2%D0%B8%D0%B3%D0%B0%D1%82%D0%BE%D1%80.%20%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D1%8B%20%D0%B8%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Навигатор · 2026</span><span class="practice-title">Алгоритмы</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/inf_11_2027/%D0%98%D0%9D%D0%A4-11%20%D0%95%D0%93%D0%AD%202027%20%D0%94%D0%95%D0%9C%D0%9E.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Демоверсия</span><span class="practice-title">КИМ 2027</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+  <a class="practice-link" href="../%D0%98%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D0%B8%D0%BA%D0%B8/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D1%8B/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%B4%D0%BB%D1%8F%20%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B5%D0%B9.%20%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B8%D0%BA%D0%B0.%202026.pdf" target="_blank" rel="noopener">
+    <span class="practice-label">Методика</span><span class="practice-title">Разбор ошибок 2026</span><span class="practice-arrow" aria-hidden="true">↗</span>
+  </a>
+</div>
+<p class="practice-note">Навигатор и методические рекомендации опубликованы в 2026 году: номера заданий в них могут отличаться от нумерации 2027 года. Ориентируйтесь на тему.</p>
+    </section>
+    
+<div class="related-links">
+  <span class="related-label">Смотрите также</span>
+  <a class="related-link" href="06.html">06 · Исполнители и координаты</a><a class="related-link" href="12.html">12 · Исполнитель МТ</a><a class="related-link" href="13.html">13 · Ход исполнения алгоритма</a><a class="related-link" href="14.html">14 · Системы счисления</a>
+</div>
+    <nav class="prev-next" aria-label="Соседние задания">
+      <a class="prev-next-link" href="04.html"><span>← Предыдущее</span><strong>04 · Коды и условие Фано</strong></a>
+      <a class="prev-next-link prev-next-link--next" href="06.html"><span>Следующее →</span><strong>06 · Исполнители и координаты</strong></a>
+    </nav>
+  </div>
+
+  <aside class="task-aside">
+    <div class="aside-card">
+      <div class="aside-head">
+        <span>Карта заданий</span>
+        <span class="map-progress" data-progress-count>0 / 27</span>
+      </div>
+      <div class="task-map task-map--compact" data-task-map><a class="task-cell task-cell--digital task-cell--compact" href="01.html" data-task="1" data-section="digital" data-title="Графы и таблицы" data-caption="&lt;strong&gt;Задание 1&lt;/strong&gt; · Графы и таблицы · Цифровая грамотность · 1 балл" aria-label="Задание 1: Графы и таблицы"><span>1</span></a><a class="task-cell task-cell--theory task-cell--compact" href="02.html" data-task="2" data-section="theory" data-title="Логические функции" data-caption="&lt;strong&gt;Задание 2&lt;/strong&gt; · Логические функции · Теория · 1 балл" aria-label="Задание 2: Логические функции"><span>2</span></a><a class="task-cell task-cell--it task-cell--compact" href="03.html" data-task="3" data-section="it" data-title="Базы данных" data-caption="&lt;strong&gt;Задание 3&lt;/strong&gt; · Базы данных · Информационные технологии · 1 балл" aria-label="Задание 3: Базы данных"><span>3</span></a><a class="task-cell task-cell--theory task-cell--compact" href="04.html" data-task="4" data-section="theory" data-title="Коды и условие Фано" data-caption="&lt;strong&gt;Задание 4&lt;/strong&gt; · Коды и условие Фано · Теория · 1 балл" aria-label="Задание 4: Коды и условие Фано"><span>4</span></a><a class="task-cell task-cell--algo is-current task-cell--compact" href="05.html" data-task="5" data-section="algo" data-title="Алгоритмы исполнителя" data-caption="&lt;strong&gt;Задание 5&lt;/strong&gt; · Алгоритмы исполнителя · Алгоритмы · 1 балл" aria-label="Задание 5: Алгоритмы исполнителя"><span>5</span></a><a class="task-cell task-cell--algo task-cell--compact" href="06.html" data-task="6" data-section="algo" data-title="Исполнители и координаты" data-caption="&lt;strong&gt;Задание 6&lt;/strong&gt; · Исполнители и координаты · Алгоритмы · 1 балл" aria-label="Задание 6: Исполнители и координаты"><span>6</span></a><a class="task-cell task-cell--theory task-cell--compact" href="07.html" data-task="7" data-section="theory" data-title="Графика и звук" data-caption="&lt;strong&gt;Задание 7&lt;/strong&gt; · Графика и звук · Теория · 1 балл" aria-label="Задание 7: Графика и звук"><span>7</span></a><a class="task-cell task-cell--theory task-cell--compact" href="08.html" data-task="8" data-section="theory" data-title="Комбинаторика и коды" data-caption="&lt;strong&gt;Задание 8&lt;/strong&gt; · Комбинаторика и коды · Теория · 1 балл" aria-label="Задание 8: Комбинаторика и коды"><span>8</span></a><a class="task-cell task-cell--it task-cell--compact" href="09.html" data-task="9" data-section="it" data-title="Электронные таблицы" data-caption="&lt;strong&gt;Задание 9&lt;/strong&gt; · Электронные таблицы · Информационные технологии · 1 балл" aria-label="Задание 9: Электронные таблицы"><span>9</span></a><a class="task-cell task-cell--digital task-cell--compact" href="10.html" data-task="10" data-section="digital" data-title="IP-адреса и маски" data-caption="&lt;strong&gt;Задание 10&lt;/strong&gt; · IP-адреса и маски · Цифровая грамотность · 1 балл" aria-label="Задание 10: IP-адреса и маски"><span>10</span></a><a class="task-cell task-cell--theory task-cell--compact" href="11.html" data-task="11" data-section="theory" data-title="Объём сообщения" data-caption="&lt;strong&gt;Задание 11&lt;/strong&gt; · Объём сообщения · Теория · 1 балл" aria-label="Задание 11: Объём сообщения"><span>11</span></a><a class="task-cell task-cell--algo task-cell--compact" href="12.html" data-task="12" data-section="algo" data-title="Исполнитель МТ" data-caption="&lt;strong&gt;Задание 12&lt;/strong&gt; · Исполнитель МТ · Алгоритмы · 1 балл" aria-label="Задание 12: Исполнитель МТ"><span>12</span></a><a class="task-cell task-cell--algo task-cell--compact" href="13.html" data-task="13" data-section="algo" data-title="Ход исполнения алгоритма" data-caption="&lt;strong&gt;Задание 13&lt;/strong&gt; · Ход исполнения алгоритма · Алгоритмы · 1 балл" aria-label="Задание 13: Ход исполнения алгоритма"><span>13</span></a><a class="task-cell task-cell--theory task-cell--compact" href="14.html" data-task="14" data-section="theory" data-title="Системы счисления" data-caption="&lt;strong&gt;Задание 14&lt;/strong&gt; · Системы счисления · Теория · 1 балл" aria-label="Задание 14: Системы счисления"><span>14</span></a><a class="task-cell task-cell--theory task-cell--compact" href="15.html" data-task="15" data-section="theory" data-title="Логика и множества" data-caption="&lt;strong&gt;Задание 15&lt;/strong&gt; · Логика и множества · Теория · 1 балл" aria-label="Задание 15: Логика и множества"><span>15</span></a><a class="task-cell task-cell--algo task-cell--compact" href="16.html" data-task="16" data-section="algo" data-title="Рекурсия" data-caption="&lt;strong&gt;Задание 16&lt;/strong&gt; · Рекурсия · Алгоритмы · 1 балл" aria-label="Задание 16: Рекурсия"><span>16</span></a><a class="task-cell task-cell--algo task-cell--compact" href="17.html" data-task="17" data-section="algo" data-title="Обработка последовательности" data-caption="&lt;strong&gt;Задание 17&lt;/strong&gt; · Обработка последовательности · Алгоритмы · 1 балл" aria-label="Задание 17: Обработка последовательности"><span>17</span></a><a class="task-cell task-cell--it task-cell--compact" href="18.html" data-task="18" data-section="it" data-title="Таблицы: анализ и оптимизация" data-caption="&lt;strong&gt;Задание 18&lt;/strong&gt; · Таблицы: анализ и оптимизация · Информационные технологии · 1 балл" aria-label="Задание 18: Таблицы: анализ и оптимизация"><span>18</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html" data-task="19" data-section="theory" data-title="Теория игр" data-caption="&lt;strong&gt;Задание 19&lt;/strong&gt; · Теория игр · Теория · 1 балл" aria-label="Задание 19: Теория игр"><span>19</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-20" data-task="20" data-section="theory" data-title="Теория игр: две кучи" data-caption="&lt;strong&gt;Задание 20&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 20: Теория игр: две кучи"><span>20</span></a><a class="task-cell task-cell--theory task-cell--merged task-cell--compact" href="19.html#subtask-21" data-task="21" data-section="theory" data-title="Теория игр: стратегия" data-caption="&lt;strong&gt;Задание 21&lt;/strong&gt; · в теме 19–21 · Теория · 1 балл" aria-label="Задание 21: Теория игр: стратегия"><span>21</span></a><a class="task-cell task-cell--theory task-cell--compact" href="22.html" data-task="22" data-section="theory" data-title="Параллельные вычисления" data-caption="&lt;strong&gt;Задание 22&lt;/strong&gt; · Параллельные вычисления · Теория · 1 балл" aria-label="Задание 22: Параллельные вычисления"><span>22</span></a><a class="task-cell task-cell--theory task-cell--compact" href="23.html" data-task="23" data-section="theory" data-title="Графы: пути" data-caption="&lt;strong&gt;Задание 23&lt;/strong&gt; · Графы: пути · Теория · 1 балл" aria-label="Задание 23: Графы: пути"><span>23</span></a><a class="task-cell task-cell--algo task-cell--compact" href="24.html" data-task="24" data-section="algo" data-title="Символьные строки" data-caption="&lt;strong&gt;Задание 24&lt;/strong&gt; · Символьные строки · Алгоритмы · 1 балл" aria-label="Задание 24: Символьные строки"><span>24</span></a><a class="task-cell task-cell--algo task-cell--compact" href="25.html" data-task="25" data-section="algo" data-title="Натуральные числа" data-caption="&lt;strong&gt;Задание 25&lt;/strong&gt; · Натуральные числа · Алгоритмы · 1 балл" aria-label="Задание 25: Натуральные числа"><span>25</span></a><a class="task-cell task-cell--algo task-cell--compact" href="26.html" data-task="26" data-section="algo" data-title="Массив: сортировка" data-caption="&lt;strong&gt;Задание 26&lt;/strong&gt; · Массив: сортировка · Алгоритмы · 2 балла" aria-label="Задание 26: Массив: сортировка"><span>26</span></a><a class="task-cell task-cell--it task-cell--compact" href="27.html" data-task="27" data-section="it" data-title="Анализ данных" data-caption="&lt;strong&gt;Задание 27&lt;/strong&gt; · Анализ данных · Информационные технологии · 2 балла" aria-label="Задание 27: Анализ данных"><span>27</span></a></div>
+      <a class="aside-link" href="index.html">Все задания <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="aside-card aside-card--progress">
+      <p class="aside-label">Прогресс</p>
+      <button class="btn btn-primary progress-toggle" type="button" data-progress-toggle="5" aria-pressed="false">Отметить как изученное</button>
+      <p class="progress-note" data-progress-text>0 из 27 изучено</p>
+      <div class="progress-line" aria-hidden="true"><span data-progress-bar></span></div>
+    </div>
+    <div class="aside-card">
+      <p class="aside-label">Быстрые ссылки</p>
+      <a class="aside-link" href="../documents.html#kim2027">Демоверсия 2027 <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html#method">Навигатор и методика <span aria-hidden="true">↗</span></a>
+      <a class="aside-link" href="../documents.html">Все документы <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <p class="footer-mark">ЕГЭ · Информатика · 2027</p>
+      <p class="footer-note">Разбор заданий, ключевые темы и официальные документы. Составлено 3 ноября 2026. Не является официальным ресурсом ФИПИ или Рособрнадзора.</p>
+    </div>
+    <div>
+      <p class="footer-title">Разделы</p>
+      <p class="footer-note"><a href="../index.html">Главная</a> · <a href="../tasks/index.html">Все задания</a> · <a href="../documents.html">Документы</a></p>
+      <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
+    </div>
+    <div>
+      <p class="footer-title">Первоисточники</p>
+      <p class="footer-note"><a href="https://fipi.ru/ege/demoversii-specifikacii-kodifikatory" target="_blank" rel="noopener noreferrer">ФИПИ</a> · <a href="https://obrnadzor.gov.ru/gia/gia-11/" target="_blank" rel="noopener noreferrer">Рособрнадзор</a> · <a href="https://regulation.gov.ru/projects/172223/" target="_blank" rel="noopener noreferrer">проект расписания</a></p>
+      <p class="footer-note">Права на документы принадлежат их правообладателям. Копии сохранены для ознакомления и подготовки.</p>
+    </div>
+  </div>
+</footer>
+<script src="../assets/site.js" defer></script>
+</body>
+</html>
