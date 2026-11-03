@@ -1585,9 +1585,61 @@ def render_task_page(num: int) -> str:
     return page_shell(title, description, "../", "tasks", content, meta=f'<span>{page_label} из 27</span><span>{esc(section["short"])}</span>')
 
 
+def render_credit_banner() -> str:
+    return '''
+<section class="credit-banner" id="sources" aria-labelledby="credit-title">
+  <div class="credit-banner-copy">
+    <p class="eyebrow">Источники материалов</p>
+    <h2 id="credit-title">Сайт создан<br>на материалах<br><em>КомпЕГЭ</em></h2>
+    <p class="credit-lead">База заданий, решения, видеоразборы и методические подходы взяты с сайта <a href="https://kompege.ru/" target="_blank" rel="noopener noreferrer">КомпЕГЭ</a> и переработаны в учебные разборы. Ссылки на первоисточники сохранены на страницах заданий.</p>
+    <p class="credit-fine">Проект не является официальным ресурсом ФИПИ, Рособрнадзора или КомпЕГЭ. Права на исходные материалы принадлежат их авторам.</p>
+  </div>
+  <nav class="credit-links" aria-label="Ссылки на первоисточники">
+    <a class="credit-link" href="https://kompege.ru/" target="_blank" rel="noopener noreferrer">
+      <span class="credit-link-index" aria-hidden="true">01</span>
+      <span class="credit-link-body">
+        <span class="credit-link-label">Сайт</span>
+        <strong>КомпЕГЭ</strong>
+        <span class="credit-link-desc">База заданий, решений и видеоразборов</span>
+      </span>
+      <span class="credit-link-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="credit-link" href="https://vk.ru/ege_info_open" target="_blank" rel="noopener noreferrer">
+      <span class="credit-link-index" aria-hidden="true">02</span>
+      <span class="credit-link-body">
+        <span class="credit-link-label">ВКонтакте</span>
+        <strong>Открытый курс</strong>
+        <span class="credit-link-desc">Группа открытого курса КомпЕГЭ в ВК<br>ЕГЭ Информатика 2027 | Открытый курс</span>
+      </span>
+      <span class="credit-link-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="credit-link" href="https://kompege.ru/course" target="_blank" rel="noopener noreferrer">
+      <span class="credit-link-index" aria-hidden="true">03</span>
+      <span class="credit-link-body">
+        <span class="credit-link-label">Сайт</span>
+        <strong>Открытый курс</strong>
+        <span class="credit-link-desc">Бесплатные материалы открытого курса КомпЕГЭ</span>
+      </span>
+      <span class="credit-link-arrow" aria-hidden="true">↗</span>
+    </a>
+    <a class="credit-link" href="https://promo.kompege.ru/" target="_blank" rel="noopener noreferrer">
+      <span class="credit-link-index" aria-hidden="true">04</span>
+      <span class="credit-link-body">
+        <span class="credit-link-label">Годовой курс</span>
+        <strong>Записаться на годовой курс</strong>
+        <span class="credit-link-desc">Страница курса и запись на 2026/27</span>
+      </span>
+      <span class="credit-link-arrow" aria-hidden="true">↗</span>
+    </a>
+  </nav>
+</section>
+'''
+
+
 def build_home() -> None:
     task_groups = render_task_groups("tasks/")
     content = f'''
+{render_credit_banner()}
 <section class="home-hero">
   <div class="home-hero-copy reveal">
     <p class="eyebrow">ЕГЭ · Информатика · 2027</p>

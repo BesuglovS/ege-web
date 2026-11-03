@@ -1914,6 +1914,155 @@ footer a {
   color: var(--rule-strong);
 }
 
+/* ---------------------------------------------------------- credit banner */
+
+.credit-banner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(360px, 0.88fr);
+  align-items: end;
+  gap: clamp(28px, 4vw, 56px);
+  margin: clamp(24px, 4vw, 44px) 0 0;
+  padding: clamp(28px, 4.5vw, 56px);
+  background: #f3ecdd;
+  border: 1px solid #cbbb9c;
+  border-top: 7px solid var(--red);
+  color: var(--ink);
+}
+
+.credit-banner-copy {
+  min-width: 0;
+}
+
+.credit-banner .eyebrow {
+  margin-bottom: 14px;
+  color: var(--red-dark);
+}
+
+.credit-banner h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(42px, 6.4vw, 92px);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  color: var(--ink);
+}
+
+.credit-banner h2 em {
+  font-style: normal;
+  color: var(--red);
+}
+
+.credit-lead {
+  max-width: 58ch;
+  margin: 24px 0 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #454b45;
+}
+
+.credit-lead a {
+  color: var(--red-dark);
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.credit-lead a:hover {
+  color: var(--ink);
+}
+
+.credit-fine {
+  max-width: 68ch;
+  margin: 18px 0 0;
+  font-family: var(--mono);
+  font-size: 9px;
+  line-height: 1.65;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #767b6d;
+}
+
+.credit-links {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #cdbfa3;
+}
+
+.credit-link {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  border-bottom: 1px solid #cdbfa3;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 150ms ease, padding 150ms ease;
+}
+
+.credit-link:hover {
+  padding-left: 6px;
+  color: var(--red-dark);
+}
+
+.credit-link-index {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--ochre);
+}
+
+.credit-link-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.credit-link-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--ochre);
+}
+
+.credit-link strong {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.credit-link-desc {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.credit-link-arrow {
+  font-size: 19px;
+  line-height: 1;
+  color: var(--red);
+  transition: transform 150ms ease;
+}
+
+.credit-link:hover .credit-link-arrow {
+  transform: translate(2px, -2px);
+}
+
+.credit-link:hover .credit-link-desc {
+  color: var(--ink);
+}
+
+.credit-banner :focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+}
+
 /* -------------------------------------------------------------- home hero */
 
 .home-hero {
@@ -3358,6 +3507,17 @@ footer a {
 }
 
 @media (max-width: 920px) {
+  .credit-banner {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 32px;
+  }
+
+  .credit-links {
+    max-width: 560px;
+    min-width: 0;
+  }
+
   .home-hero {
     grid-template-columns: 1fr;
     gap: 30px;
@@ -3458,6 +3618,25 @@ footer a {
 }
 
 @media (max-width: 640px) {
+  .credit-banner {
+    margin-top: 20px;
+    padding: 24px 20px;
+    border-top-width: 5px;
+  }
+
+  .credit-banner h2 {
+    font-size: clamp(32px, 9.5vw, 48px);
+  }
+
+  .credit-lead {
+    margin-top: 18px;
+    font-size: 14px;
+  }
+
+  .credit-link {
+    padding: 14px 0;
+  }
+
   .site-nav {
     gap: 14px;
   }
