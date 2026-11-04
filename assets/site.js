@@ -327,6 +327,382 @@
     });
   }
 
+  /* ---------------------------------------------------------- video overrides */
+
+  const VIDEO_OVERRIDES_KEY = "ege-video-overrides-v1";
+
+  const escapeHtml = (value) =>
+    String(value || "").replace(/[&<>"']/g, (ch) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;",
+    }[ch]));
+
+  function readVideoOverrides() {
+    try {
+      const raw = localStorage.getItem(VIDEO_OVERRIDES_KEY);
+      const parsed = raw ? JSON.parse(raw) : {};
+      return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function writeVideoOverrides(overrides) {
+    try {
+      localStorage.setItem(VIDEO_OVERRIDES_KEY, JSON.stringify(overrides));
+    } catch {
+      /* localStorage may be unavailable */
+    }
+  }
+
+  function formatVideoTime(start) {
+    const total = Math.max(0, Number(start) || 0);
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    const parts = [];
+    if (h) parts.push(`${h}h`);
+    if (m) parts.push(`${m}m`);
+    if (s || !parts) parts.push(`${s}s`);
+    return parts.join("");
+  }
+
+  function parseVideoStart(value) {
+    const text = String(value || "").trim();
+    if (/^\d+$/.test(text)) return Number(text);
+    const parts = text.split(":").map((part) => Number(part));
+    if (parts.length === 2 && parts.every(Number.isFinite)) {
+      return parts[0] * 60 + parts[1];
+    }
+    if (parts.length === 3 && parts.every(Number.isFinite)) {
+      return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    }
+    const match = text.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/);
+    if (match && (match[1] || match[2] || match[3])) {
+      return Number(match[1] || 0) * 3600 + Number(match[2] || 0) * 60 + Number(match[3] || 0);
+    }
+    return null;
+  }
+
+  function videoRowHtml(item) {
+    const key = escapeHtml(item.key);
+    const taskLabel = item.task === 19 ? "19–21" : String(item.task).padStart(2, "0");
+    const condition = item.condition
+      ? `<details class="report-details"><summary>Условие</summary><p class="report-condition">${escapeHtml(item.condition)}</p></details>`
+      : '<span class="report-empty">—</span>';
+    const code = item.code
+      ? `<details class="report-details"><summary>Код</summary><pre class="code-block"><code>${escapeHtml(item.code)}</code></pre></details>`
+      : '<span class="report-empty">—</span>';
+    const answer = item.answer ? `<span class="report-answer">${escapeHtml(item.answer)}</span>` : '<span class="report-empty">—</span>';
+    const search = [item.task, item.task_title, item.section_label, item.year, item.title, item.condition, item.code, item.answer].join(" ").toLowerCase();
+    return `<tr class="report-row" data-video-row data-fragment-key="${key}" data-task="${item.task}" data-section="${escapeHtml(item.section)}" data-year="${escapeHtml(item.year)}" data-has-condition="${item.condition ? 1 : 0}" data-has-code="${item.code ? 1 : 0}" data-has-answer="${item.answer ? 1 : 0}" data-search="${escapeHtml(search)}">
+  <td class="report-task"><a class="report-task-link" href="tasks/${String(item.task).padStart(2, "0")}.html"><span class="report-task-num">${taskLabel}</span><span class="report-task-title">${escapeHtml(item.task_title)}</span></a></td>
+  <td class="report-fragment"><span class="report-year">${escapeHtml(item.year)} · ${escapeHtml(item.time)}</span><span class="report-fragment-title">${escapeHtml(item.title)}</span><a class="report-video-link" href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">Смотреть <span aria-hidden="true">↗</span></a></td>
+  <td>${condition}</td><td>${code}</td><td>${answer}</td>
+</tr>`;
+  }
+
+  function initVideoReportOverrides() {
+    const overrides = readVideoOverrides();
+    if (!Object.keys(overrides).length) return;
+    const tbody = document.querySelector(".report-table tbody");
+    if (!tbody) return;
+    Object.values(overrides).forEach((item) => {
+      const row = document.querySelector(`[data-video-row][data-fragment-key="${CSS.escape(item.key)}"]`);
+      if (item.deleted) {
+        if (row) row.remove();
+        return;
+      }
+      if (row) {
+        const cells = row.children;
+        if (item.condition) {
+          if (cells[2].querySelector(".report-condition")) cells[2].querySelector(".report-condition").textContent = item.condition;
+          else cells[2].innerHTML = `<details class="report-details"><summary>Условие</summary><p class="report-condition">${escapeHtml(item.condition)}</p></details>`;
+        } else {
+          cells[2].innerHTML = '<span class="report-empty">—</span>';
+        }
+        if (item.code) {
+          if (cells[3].querySelector(".code-block code")) cells[3].querySelector(".code-block code").textContent = item.code;
+          else cells[3].innerHTML = `<details class="report-details"><summary>Код</summary><pre class="code-block"><code>${escapeHtml(item.code)}</code></pre></details>`;
+        } else {
+          cells[3].innerHTML = '<span class="report-empty">—</span>';
+        }
+        cells[4].innerHTML = item.answer ? `<span class="report-answer">${escapeHtml(item.answer)}</span>` : '<span class="report-empty">—</span>';
+        const year = row.querySelector(".report-year");
+        if (year) year.textContent = `${item.year || ""} · ${item.time || ""}`;
+        const title = row.querySelector(".report-fragment-title");
+        if (title) title.textContent = item.title || "";
+        const link = row.querySelector(".report-video-link");
+        if (link) link.href = item.url || "#";
+        row.dataset.year = item.year || "";
+        row.dataset.hasCondition = item.condition ? "1" : "0";
+        row.dataset.hasCode = item.code ? "1" : "0";
+        row.dataset.hasAnswer = item.answer ? "1" : "0";
+        row.dataset.search = [row.dataset.task, item.task_title, item.section_label, item.year, item.title, item.condition, item.code, item.answer].join(" ").toLowerCase();
+      } else {
+        tbody.insertAdjacentHTML("beforeend", videoRowHtml(item));
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------- video report */
+
+  function initVideoReport() {
+    const search = document.getElementById("video-search");
+    const task = document.getElementById("video-task");
+    const year = document.getElementById("video-year");
+    const section = document.getElementById("video-section");
+    const hasCondition = document.getElementById("video-has-condition");
+    const hasCode = document.getElementById("video-has-code");
+    const hasAnswer = document.getElementById("video-has-answer");
+    const reset = document.getElementById("video-reset");
+    const count = document.getElementById("video-count");
+    const empty = document.getElementById("video-empty");
+    const rows = Array.from(document.querySelectorAll("[data-video-row]"));
+    if (!search || !rows.length || !count || !empty) return;
+
+    const apply = () => {
+      const tokens = searchIndex(search.value).split(" ").filter(Boolean);
+      let visible = 0;
+      rows.forEach((row) => {
+        const show =
+          (task.value === "all" || row.dataset.task === task.value) &&
+          (year.value === "all" || row.dataset.year === year.value) &&
+          (section.value === "all" || row.dataset.section === section.value) &&
+          (!hasCondition.checked || row.dataset.hasCondition === "1") &&
+          (!hasCode.checked || row.dataset.hasCode === "1") &&
+          (!hasAnswer.checked || row.dataset.hasAnswer === "1") &&
+          (tokens.length === 0 ||
+            tokens.every((token) => searchIndex(row.dataset.search).includes(token)));
+        row.classList.toggle("is-hidden", !show);
+        if (show) visible += 1;
+      });
+      count.textContent = `${visible} ${plural(
+        visible,
+        "фрагмент",
+        "фрагмента",
+        "фрагментов"
+      )}`;
+      empty.hidden = visible !== 0;
+    };
+
+    search.addEventListener("input", apply);
+    [task, year, section, hasCondition, hasCode, hasAnswer].forEach((el) =>
+      el.addEventListener("change", apply)
+    );
+    reset.addEventListener("click", () => {
+      search.value = "";
+      task.value = "all";
+      year.value = "all";
+      section.value = "all";
+      hasCondition.checked = false;
+      hasCode.checked = false;
+      hasAnswer.checked = false;
+      apply();
+      search.focus();
+    });
+    document.addEventListener("keydown", (event) => {
+      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+      if (event.key === "/" && !typing) {
+        event.preventDefault();
+        search.focus();
+        search.select();
+      }
+    });
+    apply();
+  }
+
+  /* -------------------------------------------------------------- video editor */
+
+  function initVideoEditor() {
+    const dataNode = document.getElementById("video-fragments-data");
+    const list = document.getElementById("editor-list");
+    if (!dataNode || !list) return;
+
+    const base = JSON.parse(dataNode.textContent);
+    const taskMeta = {};
+    base.forEach((item) => {
+      taskMeta[item.task] = {
+        task_title: item.task_title,
+        section: item.section,
+        section_label: item.section_label,
+      };
+    });
+    let overrides = readVideoOverrides();
+
+    const dialog = document.getElementById("fragment-dialog");
+    const form = document.getElementById("fragment-form");
+    const formTitle = document.getElementById("fragment-dialog-title");
+    const error = document.getElementById("fragment-error");
+    const search = document.getElementById("video-search");
+    const taskFilter = document.getElementById("video-task");
+    const yearFilter = document.getElementById("video-year");
+    const hasCondition = document.getElementById("video-has-condition");
+    const hasCode = document.getElementById("video-has-code");
+    const hasAnswer = document.getElementById("video-has-answer");
+    const count = document.getElementById("editor-count");
+    const empty = document.getElementById("editor-empty");
+    let editingKey = "";
+
+    const toClock = (start) => {
+      const total = Math.max(0, Number(start) || 0);
+      const h = Math.floor(total / 3600);
+      const m = Math.floor((total % 3600) / 60);
+      const s = total % 60;
+      return h ? `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}` : `${m}:${String(s).padStart(2, "0")}`;
+    };
+
+    const merged = () => {
+      const map = new Map();
+      base.forEach((item) => map.set(item.key, { ...item }));
+      Object.values(overrides).forEach((item) => {
+        if (item.deleted) map.delete(item.key);
+        else map.set(item.key, { ...(map.get(item.key) || {}), ...item });
+      });
+      return [...map.values()].sort((a, b) => a.task - b.task || a.start - b.start || a.title.localeCompare(b.title, "ru"));
+    };
+
+    const render = () => {
+      const items = merged();
+      const tokens = searchIndex(search.value).split(" ").filter(Boolean);
+      let visible = 0;
+      list.innerHTML = items.map((item) => {
+        const show =
+          (taskFilter.value === "all" || String(item.task) === taskFilter.value) &&
+          (yearFilter.value === "all" || item.year === yearFilter.value) &&
+          (!hasCondition.checked || !!item.condition) &&
+          (!hasCode.checked || !!item.code) &&
+          (!hasAnswer.checked || !!item.answer) &&
+          (tokens.length === 0 || tokens.every((token) => searchIndex([item.task, item.task_title, item.year, item.title, item.condition, item.code, item.answer].join(" ")).includes(token)));
+        if (!show) return "";
+        visible += 1;
+        return `<article class="editor-item" data-editor-row data-key="${escapeHtml(item.key)}">
+  <div class="editor-item-head"><span class="editor-item-task">${item.task === 19 ? "19–21" : String(item.task).padStart(2, "0")} · ${escapeHtml(item.task_title)}</span><span class="editor-item-time">${escapeHtml(item.year)} · ${escapeHtml(item.time)}</span></div>
+  <h3>${escapeHtml(item.title)}</h3>
+  <p class="editor-item-condition">${escapeHtml(item.condition || "Условие не заполнено")}</p>
+  <p class="editor-item-meta">${item.code ? "Код есть" : "Кода нет"} · ${item.answer ? `Ответ: ${escapeHtml(item.answer)}` : "Ответа нет"}</p>
+  <button class="btn btn-ghost editor-edit" type="button" data-edit-key="${escapeHtml(item.key)}">Редактировать</button>
+</article>`;
+      }).join("");
+      count.textContent = `${visible} ${plural(visible, "фрагмент", "фрагмента", "фрагментов")}`;
+      empty.hidden = visible !== 0;
+    };
+
+    const openDialog = (item) => {
+      editingKey = item ? item.key : "";
+      formTitle.textContent = item ? "Редактирование фрагмента" : "Новый фрагмент";
+      form.elements.task.value = item ? String(item.task) : (taskFilter.value !== "all" ? taskFilter.value : "1");
+      form.elements.year.value = item ? item.year : (yearFilter.value !== "all" ? yearFilter.value : "2024");
+      form.elements.start.value = item ? toClock(item.start) : "";
+      form.elements.title.value = item ? item.title : "";
+      form.elements.url.value = item ? item.url : "";
+      form.elements.condition.value = item ? item.condition : "";
+      form.elements.code.value = item ? item.code : "";
+      form.elements.answer.value = item ? item.answer : "";
+      error.hidden = true;
+      document.getElementById("fragment-delete").hidden = !item;
+      dialog.showModal();
+    };
+
+    list.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-edit-key]");
+      if (!button) return;
+      const item = merged().find((row) => row.key === button.dataset.editKey);
+      if (item) openDialog(item);
+    });
+
+    document.getElementById("editor-add").addEventListener("click", () => openDialog(null));
+    document.getElementById("fragment-cancel").addEventListener("click", () => dialog.close());
+    document.getElementById("fragment-cancel-2").addEventListener("click", () => dialog.close());
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const start = parseVideoStart(form.elements.start.value);
+      if (start === null) {
+        error.textContent = "Не удалось разобрать время. Укажите мм:сс, чч:мм:сс или секунды.";
+        error.hidden = false;
+        return;
+      }
+      const task = Number(form.elements.task.value);
+      const meta = taskMeta[task] || { task_title: "", section: "", section_label: "" };
+      const key = editingKey || `local-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+      const old = merged().find((row) => row.key === key) || {};
+      const item = {
+        ...old,
+        key,
+        task,
+        task_title: meta.task_title,
+        section: meta.section,
+        section_label: meta.section_label,
+        year: form.elements.year.value.trim(),
+        start,
+        time: toClock(start),
+        title: form.elements.title.value.trim(),
+        num: old.num || "",
+        condition: form.elements.condition.value.trim(),
+        code: form.elements.code.value.trim(),
+        answer: form.elements.answer.value.trim(),
+        url: form.elements.url.value.trim(),
+        deleted: false,
+      };
+      overrides[key] = item;
+      writeVideoOverrides(overrides);
+      dialog.close();
+      render();
+    });
+
+    document.getElementById("fragment-delete").addEventListener("click", () => {
+      if (!editingKey) return;
+      overrides[editingKey] = { ...(merged().find((row) => row.key === editingKey) || {}), key: editingKey, deleted: true };
+      writeVideoOverrides(overrides);
+      dialog.close();
+      render();
+    });
+
+    document.getElementById("editor-export").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(Object.values(overrides), null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "video_overrides.json";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+
+    document.getElementById("editor-import").addEventListener("change", async (event) => {
+      const file = event.target.files[0];
+      if (!file) return;
+      try {
+        const parsed = JSON.parse(await file.text());
+        const items = Array.isArray(parsed) ? parsed : Object.values(parsed);
+        items.forEach((item) => {
+          if (item && item.key) overrides[item.key] = item;
+        });
+        writeVideoOverrides(overrides);
+        render();
+      } catch {
+        error.textContent = "Не удалось прочитать JSON.";
+        error.hidden = false;
+        dialog.showModal();
+      }
+      event.target.value = "";
+    });
+
+    document.getElementById("editor-reset").addEventListener("click", () => {
+      if (!window.confirm("Сбросить все локальные правки?")) return;
+      overrides = {};
+      writeVideoOverrides(overrides);
+      render();
+    });
+
+    [search, taskFilter, yearFilter, hasCondition, hasCode, hasAnswer].forEach((el) =>
+      el.addEventListener(el.tagName === "INPUT" && el.type === "search" ? "input" : "change", render)
+    );
+    render();
+  }
+
   /* ----------------------------------------------------------------- viewer */
 
   function initViewer() {
@@ -420,5 +796,8 @@
   initTaskFilters();
   initTaskProgress();
   initMapCaption();
+  initVideoReportOverrides();
+  initVideoReport();
+  initVideoEditor();
   initViewer();
 })();

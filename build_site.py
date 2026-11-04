@@ -823,6 +823,8 @@ def topbar(prefix: str, active: str, meta: str | None = None) -> str:
   <nav class="site-nav" aria-label="Основная навигация">
     {nav_item("home", f"{prefix}index.html", "Главная")}
     {nav_item("tasks", f"{prefix}tasks/index.html", "Задания")}
+    {nav_item("videos", f"{prefix}videos.html", "Видео")}
+    {nav_item("editor", f"{prefix}editor.html", "Редактор")}
     {nav_item("documents", f"{prefix}documents.html", "Документы")}
   </nav>
   <div class="topbar-meta">{meta_html}</div>
@@ -863,7 +865,7 @@ def footer(prefix: str) -> str:
     </div>
     <div>
       <p class="footer-title">Разделы</p>
-      <p class="footer-note"><a href="{prefix}index.html">Главная</a> · <a href="{prefix}tasks/index.html">Все задания</a> · <a href="{prefix}documents.html">Документы</a></p>
+      <p class="footer-note"><a href="{prefix}index.html">Главная</a> · <a href="{prefix}tasks/index.html">Все задания</a> · <a href="{prefix}videos.html">Видеоразборы</a> · <a href="{prefix}editor.html">Редактор</a> · <a href="{prefix}documents.html">Документы</a></p>
       <p class="footer-note">27 заданий · 29 первичных баллов · 235 минут</p>
     </div>
     <div>
@@ -998,21 +1000,25 @@ def render_map_panel(prefix: str = "tasks/") -> str:
 def render_task_card(task: dict, prefix: str = "tasks/") -> str:
     num = task["num"]
     section = TASK_SECTIONS[task["section"]]
-    pts = task_points(num)
     classes = ["task-card", f"task-card--{task['section']}"]
     flag = ""
     if task.get("subtasks"):
+        merged_nums = [spec["num"] for spec in task["subtasks"]]
+        pts = sum(task_points(n) for n in merged_nums)
+        num_label = f"{merged_nums[0]}–{merged_nums[-1]}"
         classes.append("task-card--merged")
-        flag = '<span class="task-card-flag">19–21 · одна страница</span>'
-    elif task.get("merged_into"):
-        classes.append("task-card--merged-part")
-        flag = f'<span class="task-card-flag">часть темы {task["merged_into"]}–21</span>'
-    search = f'{num} {task["title"]} {task["subtitle"]} {task["summary"]} {section["label"]}'.lower()
+        flag = f'<span class="task-card-flag">{num_label} · одна страница</span>'
+        search_num = " ".join(str(n) for n in merged_nums)
+    else:
+        pts = task_points(num)
+        num_label = f"{num:02d}"
+        search_num = str(num)
+    search = f'{search_num} {task["title"]} {task["subtitle"]} {task["summary"]} {section["label"]}'.lower()
     return f'''
 <a class="{" ".join(classes)}" href="{task_href(num, prefix)}"
    data-task-card data-task="{num}" data-section="{task["section"]}" data-search="{esc(search)}">
   <span class="task-card-top">
-    <span class="task-card-num">{num:02d}</span>
+    <span class="task-card-num">{num_label}</span>
     <span class="task-card-points">{point_word(pts)}</span>
   </span>
   <span class="task-card-title">{esc(task["title"])}</span>
@@ -1025,7 +1031,11 @@ def render_task_card(task: dict, prefix: str = "tasks/") -> str:
 def render_task_groups(prefix: str = "tasks/") -> str:
     groups = []
     for key, section in TASK_SECTIONS.items():
-        cards = "".join(render_task_card(TASK_BY_NUM[num], prefix) for num in section["tasks"])
+        cards = "".join(
+            render_task_card(TASK_BY_NUM[num], prefix)
+            for num in section["tasks"]
+            if not TASK_BY_NUM[num].get("merged_into")
+        )
         merged_note = ""
         if any(num in MERGED_NUMS for num in section["tasks"]):
             merged_note = (
@@ -1385,7 +1395,7 @@ def render_task_methods(task: dict) -> str:
 <div class="video-block">
   <p class="mini-label">Видеоразборы по теме</p>
   <div class="video-list">{links}</div>
-  <p class="video-note">Ссылки и таймкоды взяты из базы Kompege.</p>
+  <p class="video-note">Видеоразборы открытого курса КомпЕГЭ; для заданий 8–12 и 27 — дополнительные разборы демоверсии 2027.</p>
 </div>'''
 
     source_note = ""
@@ -1407,16 +1417,114 @@ def render_task_methods(task: dict) -> str:
 </section>'''
 
 
+def fmt_time(seconds) -> str:
+    h, rem = divmod(int(seconds), 3600)
+    m, s = divmod(rem, 60)
+    if h:
+        return f"{h}:{m:02d}:{s:02d}"
+    return f"{m:02d}:{s:02d}"
+
+
+def render_video_archive(task: dict) -> str:
+    rows = task.get("video_archive") or []
+    if not rows:
+        return ""
+    items = []
+    for row in rows:
+        num = f'<span class="archive-num">{esc(row["num"])}</span>' if row.get("num") else ""
+        condition = ""
+        if row.get("condition"):
+            condition = f'<p class="archive-condition">{esc(row["condition"])}</p>'
+        code = ""
+        if row.get("code"):
+            code = f'<pre class="code-block"><code>{esc(row["code"])}</code></pre>'
+        answer = ""
+        if row.get("answer"):
+            answer = f'<p class="method-answer"><span>Ответ</span>{esc(row["answer"])}</p>'
+        empty = ""
+        if not (condition or code or answer):
+            empty = '<p class="archive-empty">В этом фрагменте — теория или пояснение; решение показано в видео.</p>'
+        when = fmt_time(row.get("start", 0))
+        items.append(f'''
+<details class="archive-item" data-fragment-key="{esc(fragment_key(task["num"], row))}" data-task="{task["num"]}">
+  <summary>
+    <span class="archive-time">{esc(row.get("year", ""))} · {when}</span>
+    <span class="archive-title">{esc(row.get("title", ""))}</span>
+    {num}
+  </summary>
+  <div class="archive-body">
+    {condition}
+    {code}
+    {answer}
+    {empty}
+    <p class="solution-link"><a href="{esc(row["url"])}" target="_blank" rel="noopener noreferrer">Смотреть с {when} <span aria-hidden="true">↗</span></a></p>
+  </div>
+</details>''')
+    return f'''
+<section class="task-block task-block--archive" id="video-archive">
+  <div class="block-head">
+    <p class="eyebrow">Полный архив</p>
+    <h2>Все фрагменты видеоразборов</h2>
+    <p class="block-lead">По одному пункту на каждую главу: условие или код из кадра, ответ и ссылка. Источники задач — КомпЕГЭ, сайт К. Полякова, ФИПИ и другие; номер берётся из кадра. Текст с экрана распознан автоматически, служебные строки и артефакты удалены; если текст нечитаем, остаются название, таймкод и ссылка.</p>
+  </div>
+  <details class="archive-block">
+    <summary>Показать все фрагменты ({len(rows)})</summary>
+    <div class="archive-list">{"".join(items)}</div>
+  </details>
+</section>'''
+
+
+def render_video_solutions(task: dict) -> str:
+    rows = task.get("video_solutions") or []
+    if not rows:
+        return ""
+    cards = []
+    for row in rows:
+        code = ""
+        if row.get("code"):
+            code = f'<pre class="code-block"><code>{esc(row["code"])}</code></pre>'
+        answer = ""
+        if row.get("answer"):
+            answer = f'<p class="method-answer"><span>Ответ</span>{esc(row["answer"])}</p>'
+        cards.append(f'''
+<article class="method-card solution-card">
+  <header class="method-head solution-head">
+    <span class="solution-num">{esc(row.get("num", ""))}</span>
+    <div>
+      <p class="eyebrow">разбор из видео · {esc(row.get("year", ""))}</p>
+      <h3>{esc(row["title"])}</h3>
+    </div>
+  </header>
+  <p class="solution-condition">{esc(row.get("condition", ""))}</p>
+  {code}
+  {answer}
+  <p class="solution-link"><a href="{esc(row["url"])}" target="_blank" rel="noopener noreferrer">Смотреть с {esc(row.get("time", ""))} <span aria-hidden="true">↗</span></a></p>
+</article>''')
+    return f'''
+<section class="task-block task-block--solutions" id="video-solutions">
+  <div class="block-head">
+    <p class="eyebrow">Разборы из видео</p>
+    <h2>Задачи, которые разбирают в курсе</h2>
+    <p class="block-lead">Условия и код показаны в кадре в конце соответствующего фрагмента. Источники задач — КомпЕГЭ, сайт К. Полякова, ФИПИ и другие.</p>
+  </div>
+  <div class="video-solutions">{"".join(cards)}</div>
+</section>'''
+
+
 def render_task_toc(task: dict) -> str:
     if not task.get("theory") and not task.get("methods"):
         return ""
     subtasks_link = '<a href="#subtasks">19–21</a>' if task.get("subtasks") else ""
+    solutions_link = '<a href="#video-solutions">Разборы из видео</a>' if task.get("video_solutions") else ""
+    archive_link = '<a href="#video-archive">Полный архив</a>' if task.get("video_archive") else ""
     return f'''
 <nav class="task-toc" aria-label="На странице задания">
   <span class="task-toc-label">На странице</span>
   {subtasks_link}
   <a href="#theory">Теория</a>
   <a href="#methods">Способы решения</a>
+  {solutions_link}
+  {archive_link}
   <a href="#mistakes">Ошибки</a>
   <a href="#practice">Практика</a>
 </nav>'''
@@ -1474,6 +1582,8 @@ def render_task_page(num: int) -> str:
 
     theory_html = render_task_theory(task)
     methods_html = render_task_methods(task)
+    video_solutions_html = render_video_solutions(task)
+    video_archive_html = render_video_archive(task)
     subtasks_html = render_task_subtasks(task)
     toc_html = render_task_toc(task)
 
@@ -1539,6 +1649,8 @@ def render_task_page(num: int) -> str:
     {subtasks_html}
     {knowledge_html}
     {solution_html}
+    {video_solutions_html}
+    {video_archive_html}
     <section class="task-block" id="mistakes">
       <h2>Типичные ошибки</h2>
       <ul class="task-list task-list--mistakes">{mistakes}</ul>
@@ -1591,7 +1703,8 @@ def render_credit_banner() -> str:
   <div class="credit-banner-copy">
     <p class="eyebrow">Источники материалов</p>
     <h2 id="credit-title">Сайт создан<br>на материалах<br><em>КомпЕГЭ</em></h2>
-    <p class="credit-lead">База заданий, решения, видеоразборы и методические подходы взяты с сайта <a href="https://kompege.ru/" target="_blank" rel="noopener noreferrer">КомпЕГЭ</a> и переработаны в учебные разборы. Ссылки на первоисточники сохранены на страницах заданий.</p>
+    <p class="credit-agencies">ФИПИ и Рособрнадзора</p>
+    <p class="credit-lead">Материалы сайта <a href="https://kompege.ru/" target="_blank" rel="noopener noreferrer">КомпЕГЭ</a> переработаны в учебные разборы. Ссылки на первоисточники сохранены на страницах заданий.</p>
     <p class="credit-fine">Проект не является официальным ресурсом ФИПИ, Рособрнадзора или КомпЕГЭ. Права на исходные материалы принадлежат их авторам.</p>
   </div>
   <nav class="credit-links" aria-label="Ссылки на первоисточники">
@@ -1981,11 +2094,265 @@ def build_documents() -> None:
     print(f"documents.html: {len(page):,} bytes; documents: {total_files}")
 
 
+def fragment_key(task_num: int, item: dict) -> str:
+    return str(item.get("key") or f"{task_num}|{int(item.get('start', 0))}|{item.get('url', '')}")
+
+
+def apply_video_overrides() -> None:
+    path = ROOT / "video_overrides.json"
+    if not path.exists():
+        return
+    try:
+        overrides = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        print(f"video_overrides.json: пропущен ({exc})")
+        return
+    if not isinstance(overrides, list):
+        print("video_overrides.json: ожидается массив")
+        return
+    changed = 0
+    for override in overrides:
+        if not isinstance(override, dict):
+            continue
+        try:
+            task = TASK_BY_NUM[int(override.get("task"))]
+        except (TypeError, ValueError, KeyError):
+            continue
+        rows = task.setdefault("video_archive", [])
+        key = str(override.get("key", ""))
+        found = next((row for row in rows if fragment_key(task["num"], row) == key), None)
+        if override.get("deleted"):
+            if found:
+                rows.remove(found)
+                changed += 1
+            continue
+        fields = {
+            "key": key,
+            "year": str(override.get("year", "")),
+            "start": int(override.get("start", 0) or 0),
+            "title": str(override.get("title", "")),
+            "num": str(override.get("num", "")),
+            "condition": str(override.get("condition", "")),
+            "answer": str(override.get("answer", "")),
+            "code": str(override.get("code", "")),
+            "url": str(override.get("url", "")),
+        }
+        if found:
+            found.update(fields)
+        else:
+            rows.append(fields)
+        changed += 1
+    if changed:
+        for task in TASKS:
+            if task.get("video_archive"):
+                task["video_archive"].sort(key=lambda item: (int(item.get("start", 0)), item.get("title", "")))
+        print(f"video_overrides.json: применено {changed}")
+
+
+def build_editor_page() -> None:
+    fragments = []
+    for task in TASKS:
+        if task.get("merged_into"):
+            continue
+        section = TASK_SECTIONS[task["section"]]
+        for item in task.get("video_archive") or []:
+            fragments.append({
+                "key": fragment_key(task["num"], item),
+                "task": task["num"],
+                "task_title": task["title"],
+                "section": task["section"],
+                "section_label": section["label"],
+                "year": item.get("year", ""),
+                "start": int(item.get("start", 0)),
+                "time": fmt_time(item.get("start", 0)),
+                "title": item.get("title", ""),
+                "num": item.get("num", ""),
+                "condition": item.get("condition", ""),
+                "answer": item.get("answer", ""),
+                "code": item.get("code", ""),
+                "url": item.get("url", ""),
+            })
+    payload = json.dumps(fragments, ensure_ascii=False).replace("</", "<\\/")
+    content = f'''
+{breadcrumbs("", [("index.html", "Главная"), ("videos.html", "Видеоразборы"), (None, "Редактор")])}
+
+<section class="report-hero">
+  <p class="eyebrow">Видеоразборы · редактор</p>
+  <h1>Редактирование фрагментов</h1>
+  <p class="lead">Можно исправить условие, код, ответ или ссылку и добавить недостающий фрагмент. Изменения сохраняются в браузере и экспортируются в JSON.</p>
+  <p class="editor-actions"><a class="btn btn-ghost" href="videos.html">К отчёту</a> <button class="btn btn-ghost" id="editor-add" type="button">Добавить фрагмент</button> <button class="btn btn-ghost" id="editor-export" type="button">Экспорт JSON</button> <label class="btn btn-ghost editor-import">Импорт JSON<input id="editor-import" type="file" accept="application/json,.json" hidden></label> <button class="btn btn-ghost" id="editor-reset" type="button">Сбросить правки</button></p>
+</section>
+
+<section class="report-toolbar" aria-label="Фильтры редактора">
+  <div class="report-search-row">
+    <label class="search-label" for="video-search">Поиск по фрагментам</label>
+    <input id="video-search" type="search" placeholder="задание, тема, слово из условия, код" autocomplete="off">
+  </div>
+  <div class="report-filter-grid">
+    <label>Задание<select id="video-task"><option value="all">Все задания</option>{''.join(f'<option value="{t["num"]}">{("19–21" if t.get("subtasks") else f"{t["num"]:02d}")} · {esc(t["title"])}</option>' for t in TASKS if not t.get("merged_into"))}</select></label>
+    <label>Год<select id="video-year"><option value="all">Все годы</option><option value="2027">2027</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option></select></label>
+    <label class="report-check"><input type="checkbox" id="video-has-condition"> С условием</label>
+    <label class="report-check"><input type="checkbox" id="video-has-code"> С кодом</label>
+    <label class="report-check"><input type="checkbox" id="video-has-answer"> С ответом</label>
+  </div>
+  <p class="report-count" id="editor-count">{len(fragments)} фрагментов</p>
+</section>
+
+<div class="editor-list" id="editor-list"></div>
+<p class="report-empty-state" id="editor-empty" hidden>Ничего не найдено.</p>
+
+<dialog class="editor-dialog" id="fragment-dialog">
+  <form method="dialog" id="fragment-form">
+    <div class="editor-dialog-head">
+      <p class="eyebrow" id="fragment-dialog-title">Фрагмент</p>
+      <button class="editor-close" type="button" id="fragment-cancel" aria-label="Закрыть">×</button>
+    </div>
+    <div class="editor-form-grid">
+      <label>Задание<select name="task" id="fragment-task">{''.join(f'<option value="{t["num"]}">{("19–21" if t.get("subtasks") else f"{t["num"]:02d}")} · {esc(t["title"])}</option>' for t in TASKS if not t.get("merged_into"))}</select></label>
+      <label>Год<input name="year" id="fragment-year" inputmode="numeric" placeholder="2024"></label>
+      <label>Начало (мм:сс или сек)<input name="start" id="fragment-start" placeholder="2:25" required></label>
+      <label class="editor-wide">Название фрагмента<input name="title" id="fragment-title" required></label>
+      <label class="editor-wide">Ссылка на видео<input name="url" id="fragment-url" type="url" required></label>
+      <label class="editor-wide">Условие<textarea name="condition" id="fragment-condition" rows="5"></textarea></label>
+      <label class="editor-wide">Код<textarea name="code" id="fragment-code" rows="8"></textarea></label>
+      <label>Ответ<input name="answer" id="fragment-answer"></label>
+    </div>
+    <p class="editor-error" id="fragment-error" hidden></p>
+    <div class="editor-dialog-actions">
+      <button class="btn btn-ghost" type="button" id="fragment-delete">Удалить</button>
+      <span></span>
+      <button class="btn btn-ghost" type="button" id="fragment-cancel-2">Отмена</button>
+      <button class="btn btn-primary" type="submit">Сохранить</button>
+    </div>
+  </form>
+</dialog>
+<script type="application/json" id="video-fragments-data">{payload}</script>
+'''
+    page = page_shell(
+        "Редактор видеоразборов — ЕГЭ по информатике 2027",
+        "Редактирование условий, кода и ответов фрагментов видеоразборов; добавление недостающих фрагментов и экспорт правок в JSON.",
+        "",
+        "editor",
+        content,
+    )
+    (ROOT / "editor.html").write_text(page, encoding="utf-8")
+    print(f"editor.html: {len(page):,} bytes; fragments: {len(fragments)}")
+
+
+def build_videos_report() -> None:
+    rows = []
+    with_condition = with_code = with_answer = 0
+    for task in TASKS:
+        if task.get("merged_into"):
+            continue
+        num = task["num"]
+        section = TASK_SECTIONS[task["section"]]
+        num_label = "19–21" if task.get("subtasks") else f"{num:02d}"
+        href = task_href(num, "tasks/")
+        for item in task.get("video_archive") or []:
+            cond = item.get("condition") or ""
+            code = item.get("code") or ""
+            answer = item.get("answer") or ""
+            if cond:
+                with_condition += 1
+            if code:
+                with_code += 1
+            if answer:
+                with_answer += 1
+            condition_html = (
+                f'<details class="report-details"><summary>Условие</summary><p class="report-condition">{esc(cond)}</p></details>'
+                if cond else '<span class="report-empty">—</span>'
+            )
+            code_html = (
+                f'<details class="report-details"><summary>Код</summary><pre class="code-block"><code>{esc(code)}</code></pre></details>'
+                if code else '<span class="report-empty">—</span>'
+            )
+            answer_html = f'<span class="report-answer">{esc(answer)}</span>' if answer else '<span class="report-empty">—</span>'
+            search = " ".join((str(num), task["title"], section["label"], item.get("year", ""), item.get("title", ""), cond, code, answer)).lower()
+            rows.append(f'''
+<tr class="report-row" data-video-row data-fragment-key="{esc(fragment_key(num, item))}" data-task="{num}" data-section="{task["section"]}" data-year="{esc(item.get("year", ""))}"
+    data-has-condition="{1 if cond else 0}" data-has-code="{1 if code else 0}" data-has-answer="{1 if answer else 0}"
+    data-search="{esc(search)}">
+  <td class="report-task"><a class="report-task-link" href="{href}"><span class="report-task-num">{num_label}</span><span class="report-task-title">{esc(task["title"])}</span></a></td>
+  <td class="report-fragment"><span class="report-year">{esc(item.get("year", ""))} · {fmt_time(item.get("start", 0))}</span><span class="report-fragment-title">{esc(item.get("title", ""))}</span><a class="report-video-link" href="{esc(item["url"])}" target="_blank" rel="noopener noreferrer">Смотреть <span aria-hidden="true">↗</span></a></td>
+  <td>{condition_html}</td>
+  <td>{code_html}</td>
+  <td>{answer_html}</td>
+</tr>''')
+
+    task_options = ['<option value="all">Все задания</option>']
+    for task in TASKS:
+        if task.get("merged_into"):
+            continue
+        label = "19–21 · Теория игр" if task.get("subtasks") else f'{task["num"]:02d} · {task["title"]}'
+        task_options.append(f'<option value="{task["num"]}">{esc(label)}</option>')
+    year_options = ['<option value="all">Все годы</option>'] + [
+        f'<option value="{year}">{year}</option>' for year in ("2027", "2026", "2025", "2024")
+    ]
+    section_options = ['<option value="all">Все разделы</option>'] + [
+        f'<option value="{key}">{esc(section["label"])}</option>' for key, section in TASK_SECTIONS.items()
+    ]
+
+    content = f'''
+{breadcrumbs("", [("index.html", "Главная"), (None, "Видеоразборы")])}
+
+<section class="report-hero">
+  <p class="eyebrow">Видеоразборы · полный архив</p>
+  <h1>Все фрагменты видеоразборов</h1>
+  <p class="lead">Задание, условие из кадра, код решения, ответ и ссылка на точное место в видео.</p>
+  <div class="report-stats">
+    <div><strong>{len(rows)}</strong><span>фрагментов</span></div>
+    <div><strong>{with_condition}</strong><span>с условием</span></div>
+    <div><strong>{with_code}</strong><span>с кодом</span></div>
+    <div><strong>{with_answer}</strong><span>с ответом</span></div>
+  </div>
+</section>
+
+<section class="report-toolbar" aria-label="Фильтры видеоразборов">
+  <div class="report-search-row">
+    <label class="search-label" for="video-search">Поиск по фрагментам</label>
+    <input id="video-search" type="search" placeholder="задание, тема, слово из условия, код" autocomplete="off">
+    <button class="btn btn-ghost" id="video-reset" type="button">Сбросить фильтры</button>
+  </div>
+  <div class="report-filter-grid">
+    <label>Задание<select id="video-task">{''.join(task_options)}</select></label>
+    <label>Год<select id="video-year">{''.join(year_options)}</select></label>
+    <label>Раздел<select id="video-section">{''.join(section_options)}</select></label>
+    <label class="report-check"><input type="checkbox" id="video-has-condition"> С условием</label>
+    <label class="report-check"><input type="checkbox" id="video-has-code"> С кодом</label>
+    <label class="report-check"><input type="checkbox" id="video-has-answer"> С ответом</label>
+  </div>
+  <p class="report-count" id="video-count">{len(rows)} фрагментов</p>
+</section>
+
+<div class="report-table-wrap">
+  <table class="report-table">
+    <thead><tr><th>Задание</th><th>Фрагмент</th><th>Условие</th><th>Код</th><th>Ответ</th></tr></thead>
+    <tbody>{''.join(rows)}</tbody>
+  </table>
+</div>
+<p class="report-empty-state" id="video-empty" hidden>Ничего не найдено. Измените запрос или сбросьте фильтры.</p>
+'''
+
+    page = page_shell(
+        "Видеоразборы: все фрагменты — ЕГЭ по информатике 2027",
+        "Полный архив фрагментов видеоразборов ЕГЭ по информатике: задание, условие, код, ответ и ссылка на точное место в видео.",
+        "",
+        "videos",
+        content,
+    )
+    (ROOT / "videos.html").write_text(page, encoding="utf-8")
+    print(f"videos.html: {len(page):,} bytes; fragments: {len(rows)}")
+
+
 def build() -> None:
+    apply_video_overrides()
     build_documents()
     build_home()
     build_tasks_index()
     build_task_pages()
+    build_videos_report()
+    build_editor_page()
     print("site built")
 
 
